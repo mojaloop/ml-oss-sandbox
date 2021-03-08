@@ -1,12 +1,35 @@
-# OSS-Lab
+# OSS-Sandbox
 
-This directory contains common setup notes, configs and scripts for the OSS-Sandbox.
+This directory contains common setup notes, configs and scripts for the Mojaloop OSS-Sandbox.
 
+__See the sandbox here: http://beta.moja-lab.live__
+
+## Quick Start
+
+```bash
+# base switch and infra
+make install-switch
+make install-ingress
+make install-dev-portal
+
+# simulators and testing toolkits
+make install-simulators
+make install-ttk
+
+# TODO: health checks
+
+# seed the environment
+make run-ml-bootstrap
+
+# PISP features and simulators
+make install-pisp
+make install-pisp-simulators
+```
 
 ## Tools
 
 - API Gateway: `Kong`
-- Tools (in addition to )
+- Tools
   - dev-portal (./dev-portal) - a simple developer-based homepage for the Sandbox
   - ml-bootstrap - ts based cli tool for 
 - testing toolkit instances:

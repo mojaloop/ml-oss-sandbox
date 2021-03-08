@@ -31,13 +31,23 @@ install-ttk:
 	helm upgrade --install --namespace ml-app figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
 	helm upgrade --install --namespace ml-app eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
 
+# Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
 install-pisp:
+	@echo 'todo!'
+
+install-pisp-simulators: .pisp-demo-server-secret
+	# pisp-demo-server, required for pineapple pay/demo app flutter
 	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
+	# TODO: are we using this?
+	# Special ttk instance
+	helm upgrade --install --namespace ml-app tp-ttk mojaloop/ml-testing-toolkit --values ./pisp-demo/tp-ttk.yaml
+	kubectl apply -f ./pisp-demo/ingress-tp-ttk.yaml
 
 run-ml-bootstrap:
 	ELB_URL=beta.moja-lab.live/api/admin
 	FSPIOP_URL=beta.moja-lab.live/api/fspiop  
 	echo ${ELB_URL}
+	# TODO: change to the proper location!
 	cd ../ml-bootstrap && npm run reseed:docker-live
 
 uninstall-switch:
@@ -51,7 +61,19 @@ uninstall-ingress:
 	kubectl delete -f ./charts/ingress_ttk.yaml
 
 uninstall-pisp:
+	@echo "todo!"
+
+uninstall-pisp-simulators:
 	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
+
+
+##
+# Utils
+##
+health-check-pisp-simluators:
+	curl beta.moja-lab.live/pineapple/app/health | jq
+	curl beta.moja-lab.live/pineapple/mojaloop/health | jq
+
 
 
 # install: .add-repos .install-base install-switch install-participants
@@ -74,22 +96,27 @@ uninstall-pisp:
 
 # uninstall-all: uninstall-switch clean-install-base clean-add-repos
 
-# ##
-# # Stateful make commands
-# #
-# # These create respective `.command-name` files to stop make from
-# # running the same command multiple times
-# ##
-# .add-repos:
-# 	helm repo add public https://charts.helm.sh/incubator
-# 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-# 	@touch .add-repos
+##
+# Stateful make commands
+#
+# These create respective `.command-name` files to stop make from
+# running the same command multiple times
+##
+.add-repos:
+	helm repo add public https://charts.helm.sh/incubator
+	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+	@touch .add-repos
 
 # .install-base:
 # 	kubectl apply -f ./charts-base/deployment_setup.yaml
 # 	helm install kafka public/kafka --values ./charts-base/kafka_values.yaml
 # 	helm install nginx ingress-nginx/ingress-nginx --version 2.16.0
 # 	@touch .install-base
+
+.pisp-demo-server-secret:
+	kubectl create secret generic firebase-secret --from-file=../pisp-demo-server/secret/serviceAccountKey.json
+	@touch .pisp-demo-server-secret
+
 
 # clean-add-repos:
 # 	@rm -rf .add-repos
