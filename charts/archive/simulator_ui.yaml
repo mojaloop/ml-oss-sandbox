@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mojaloop-simulator-ui
+  labels:
+    app: mojaloop-simulator-ui
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # exeed the replicas by 1 pod
+  selector:
+    matchLabels:
+      app: mojaloop-simulator-ui
+  template:
+    metadata:
+      labels:
+        app: mojaloop-simulator-ui
+    spec:
+      # volumes:
+      #   - name: jws-private-key
+      #     secret:
+      #       secretName: {{ $participantId }}-jws-private-key
+      containers:
+        - name: mojaloop-simulator-ui
+          image: mojaloop/mojaloop-simulator-ui:v0.1.0
+          livenessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 8080
+          # env:
+          #   - name: DFSP_ID
+          #     value: {{ $participantId }}
+          #   - name: OUTBOUND_ENDPOINT
+          #     value: http://{{ $participantId }}-sdk-scheme-adapter:4001
+          #   - name: THIRDPARTY_OUTBOUND_ENDPOINT
+          #     value: http://{{ $participantId }}-thirdparty-scheme-adapter:4005
+          #   - name: HTTPS_ENABLED
+          #     value: 'false'
+          #   - name: MUTUAL_TLS_ENABLED
+          #     value: 'false'
+            # - name: VALIDATE_INBOUND_JWS
+              # value: 'FALSE'
+            # - name: JWS_SIGN
+              # value: 'FALSE'
+          # volumeMounts:
+          #   - name: jws-private-key
+          #     mountPath: "/jwsSigningKey/"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mojaloop-simulator-ui
+spec:
+  ports:
+    - port: 8080
+      name: ui
+  selector:
+    app: mojaloop-simulator-ui
+  clusterIP: None
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mojaloop-simulator-ui
+  annotations:
+    kubernetes.io/ingress.class: kong
+    # konghq.com/strip-path: "true"
+
+    # This is required to rewrite paths to services that contain multiple endpoints, 
+    # e.g. /participants and /parties are both on the account-lookup-service
+    # konghq.com/plugins: fspiop-rewrite
+
+spec:
+  rules:
+    - host: simulator-ui.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: mojaloop-simulator-ui
+              servicePort: 8080
+    # - http:
+    #     paths:
+    #       - path: /public/simulator
+    #         backend:
+    #           serviceName: mojaloop-simulator-ui
+    #           servicePort: 8080

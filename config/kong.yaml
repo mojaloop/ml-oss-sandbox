@@ -1,0 +1,110 @@
+#ref: https://github.com/Kong/charts/blob/main/charts/kong/values.yaml
+
+# Specify Kong proxy service configuration
+proxy:
+  # Enable creating a Kubernetes service for the proxy
+  enabled: true
+  type: LoadBalancer
+  # If you want to specify annotations for the proxy service, uncomment the following
+  # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
+  annotations:
+    hello.world/yes: "true"
+    # Specify the aws annotations here I guess
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:eu-west-2:886403637725:certificate/87c897e0-2e4b-4b88-9d01-cd4e212a0dcb"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
+
+  #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+
+  http:
+    # Enable plaintext HTTP listen for the proxy
+    enabled: true
+    servicePort: 80
+    containerPort: 8000
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32080
+    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+    parameters: []
+
+  tls:
+    # Enable HTTPS listen for the proxy
+    enabled: true
+    servicePort: 443
+    containerPort: 8443
+    # Set a target port for the TLS port in proxy service, useful when using TLS
+    # termination on an ELB.
+    # overrideServiceTargetPort: 8000
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32443
+    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+    parameters:
+    - http2
+
+  # Define stream (TCP) listen
+  # To enable, remove "{}", uncomment the section below, and select your desired
+  # ports and parameters. Listens are dynamically named after their servicePort,
+  # e.g. "stream-9000" for the below.
+  stream: {}
+    #   # Set the container (internal) and service (external) ports for this listen.
+    #   # These values should normally be the same. If your environment requires they
+    #   # differ, note that Kong will match routes based on the containerPort only.
+    # - containerPort: 9000
+    #   servicePort: 9000
+    #   # Optionally set a static nodePort if the service type is NodePort
+    #   # nodePort: 32080
+    #   # Additional listen parameters, e.g. "ssl", "reuseport", "backlog=16384"
+    #   # "ssl" is required for SNI-based routes. It is not supported on versions <2.0
+    #   parameters: []
+
+  # Kong proxy ingress settings.
+  # Note: You need this only if you are using another Ingress Controller
+  # to expose Kong outside the k8s cluster.
+  ingress:
+    # Enable/disable exposure using ingress.
+    enabled: false
+    hosts: []
+    # TLS section. Unlike other ingresses, this follows the format at
+    # https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+    # tls:
+    # - hosts:
+    #   - 1.example.com
+    #   secretName: example1-com-tls-secret
+    # - hosts:
+    #   - 2.example.net
+    #   secretName: example2-net-tls-secret
+    # Map of ingress annotations.
+    annotations: {}
+    # Ingress path.
+    path: /
+
+  externalIPs: []
+
+# Custom Kong plugins can be loaded into Kong by mounting the plugin code
+# into the file-system of Kong container.
+# The plugin code should be present in ConfigMap or Secret inside the same
+# namespace as Kong is being installed.
+# The `name` property refers to the name of the ConfigMap or Secret
+# itself, while the pluginName refers to the name of the plugin as it appears
+# in Kong.
+# Subdirectories (which are optional) require separate ConfigMaps/Secrets.
+# "path" indicates their directory under the main plugin directory: the example
+# below will mount the contents of kong-plugin-rewriter-migrations at "/opt/kong/rewriter/migrations".
+plugins: {}
+  # configMaps:
+  # - pluginName: rewriter
+  #   name: kong-plugin-rewriter
+  #   subdirectories:
+  #   - name: kong-plugin-rewriter-migrations
+  #     path: migrations
+  # secrets:
+  # - pluginName: rewriter
+  #   name: kong-plugin-rewriter
+# Inject specified secrets as a volume in Kong Container at path /etc/secrets/{secret-name}/
+# This can be used to override default SSL certificates.
+# Be aware that the secret name will be used verbatim, and that certain types
+# of punctuation (e.g. `.`) can cause issues.
+# Example configuration
+# secretVolumes:
+# - kong-proxy-tls
+# - kong-admin-tls
+secretVolumes: []

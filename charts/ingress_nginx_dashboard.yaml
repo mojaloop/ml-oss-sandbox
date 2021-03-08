@@ -1,0 +1,25 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard-google
+  namespace: kubernetes-dashboard
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+
+    # nginx.ingress.kubernetes.io/secure-backends: "true"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  tls:
+    - secretName: tls-secret
+  rules:
+    - host: dashboard.beta.moja-lab.live
+      http:
+        paths:
+        - path: /(.*)
+          backend:
+            serviceName: kubernetes-dashboard
+            servicePort: 443

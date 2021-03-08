@@ -1,0 +1,258 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+    field.cattle.io/publicEndpoints: '[{"addresses":["\u003cnil\u003e"],"port":80,"protocol":"HTTP","serviceName":"ml-app:mojaloop-sim-applebank-scheme-adapter","ingressName":"ml-app:simulators","hostname":"applebank-sdk-scheme-adapter-inbound.beta.moja-lab.live","path":"/(.*)","allNodes":true},{"addresses":["\u003cnil\u003e"],"port":80,"protocol":"HTTP","serviceName":"ml-app:mojaloop-sim-applebank-scheme-adapter","ingressName":"ml-app:simulators","hostname":"applebank-sdk-scheme-adapter-outbound.beta.moja-lab.live","path":"/(.*)","allNodes":true}]'
+    meta.helm.sh/release-name: mojaloop
+    meta.helm.sh/release-namespace: ml-app
+  creationTimestamp: "2021-01-13T08:03:37Z"
+  generation: 3
+  labels:
+    app.kubernetes.io/instance: mojaloop
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: mojaloop-sim-applebank-scheme-adapter
+    app.kubernetes.io/version: 11.2.1
+    helm.sh/chart: mojaloop-simulator-11.1.0
+  name: mojaloop-sim-applebank-scheme-adapter
+  namespace: ml-app
+  resourceVersion: "4684056"
+  selfLink: /apis/apps/v1/namespaces/ml-app/deployments/mojaloop-sim-applebank-scheme-adapter
+  uid: 9fc187c9-f01f-4c5e-92d9-61be085e38ed
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: mojaloop
+      app.kubernetes.io/name: mojaloop-sim-applebank-scheme-adapter
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/instance: mojaloop
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: mojaloop-sim-applebank-scheme-adapter
+        app.kubernetes.io/version: 11.2.1
+        helm.sh/chart: mojaloop-simulator-11.1.0
+    spec:
+      containers:
+      - env:
+        - name: CACHE_HOST
+          value: mojaloop-sim-applebank-cache
+        - name: BACKEND_ENDPOINT
+          value: mojaloop-sim-applebank-backend:3000
+        - name: DFSP_ID
+          value: applebank
+        - name: IN_CA_CERT_PATH
+          value: /secrets/inbound-cacert.pem
+        - name: IN_CA_CERT_PATH
+          value: ./secrets/inbound-cacert.pem
+        - name: IN_SERVER_CERT_PATH
+          value: /secrets/inbound-cert.pem
+        - name: IN_SERVER_CERT_PATH
+          value: ./secrets/inbound-cert.pem
+        - name: IN_SERVER_KEY_PATH
+          value: /secrets/inbound-key.pem
+        - name: IN_SERVER_KEY_PATH
+          value: ./secrets/inbound-key.pem
+        - name: OUT_CA_CERT_PATH
+          value: /secrets/outbound-cacert.pem
+        - name: OUT_CA_CERT_PATH
+          value: ./secrets/outbound-cacert.pem
+        - name: OUT_CLIENT_CERT_PATH
+          value: /secrets/outbound-cert.pem
+        - name: OUT_CLIENT_CERT_PATH
+          value: ./secrets/outbound-cert.pem
+        - name: OUT_CLIENT_KEY_PATH
+          value: /secrets/outbound-key.pem
+        - name: OUT_CLIENT_KEY_PATH
+          value: ./secrets/outbound-key.pem
+        - name: JWS_SIGNING_KEY_PATH
+          value: /jwsSigningKey/private.key
+        - name: JWS_SIGNING_KEY_PATH
+          value: /jwsSigningKey.key
+        - name: ALLOW_TRANSFER_WITHOUT_QUOTE
+          value: "true"
+        # - name: ALS_ENDPOINT
+        #   value: dev2-account-lookup.mojaloop.live
+        - name: AUTO_ACCEPT_PARTY
+          value: "true"
+        - name: AUTO_ACCEPT_QUOTES
+          value: "true"
+        # - name: BULK_QUOTES_ENDPOINT
+        #   value: dev2-quoting-service.mojaloop.live
+        # - name: BULK_TRANSFERS_ENDPOINT
+        #   value: dev2-bulk-api-adapter.mojaloop.live
+        - name: CACHE_PORT
+          value: "6379"
+        - name: CHECK_ILP
+          value: "false"
+        - name: ENABLE_OAUTH_TOKEN_ENDPOINT
+          value: "false"
+        - name: ENABLE_TEST_FEATURES
+          value: "true"
+        - name: EXPIRY_SECONDS
+          value: "60"
+        - name: ILP_SECRET
+          value: Quaixohyaesahju3thivuiChai5cahng
+        - name: INBOUND_LISTEN_PORT
+          value: "4000"
+        - name: INBOUND_MUTUAL_TLS_ENABLED
+          value: "false"
+        - name: JWS_SIGN
+          value: "true"
+        - name: JWS_SIGN_PUT_PARTIES
+          value: "true"
+        - name: JWS_VERIFICATION_KEYS_DIRECTORY
+          value: /jwsVerificationKeys
+        - name: LOG_INDENT
+          value: "0"
+        - name: MUTUAL_TLS_ENABLED
+          value: "false"
+        - name: OAUTH_CLIENT_KEY
+        - name: OAUTH_CLIENT_SECRET
+        - name: OAUTH_REFRESH_SECONDS
+          value: "3600"
+        - name: OAUTH_TOKEN_ENDPOINT
+        - name: OAUTH_TOKEN_ENDPOINT_CLIENT_KEY
+          value: test-client-key
+        - name: OAUTH_TOKEN_ENDPOINT_CLIENT_SECRET
+          value: test-client-secret
+        - name: OAUTH_TOKEN_ENDPOINT_LISTEN_PORT
+          value: "6000"
+        - name: OUTBOUND_LISTEN_PORT
+          value: "4001"
+        - name: OUTBOUND_MUTUAL_TLS_ENABLED
+          value: "false"
+        - name: PEER_ENDPOINT
+          value: beta.moja-lab.live/api/fspiop
+        # - name: QUOTES_ENDPOINT
+        #   value: dev2-quoting-service.mojaloop.live
+        - name: REJECT_EXPIRED_QUOTE_RESPONSES
+          value: "false"
+        - name: REJECT_EXPIRED_TRANSFER_FULFILS
+          value: "false"
+        - name: REJECT_TRANSFERS_ON_EXPIRED_QUOTES
+          value: "false"
+        - name: REQUEST_PROCESSING_TIMEOUT_SECONDS
+          value: "30"
+        - name: RESERVE_NOTIFICATION
+          value: "false"
+        - name: RESOURCE_VERSIONS
+          value: transfers=1.0,quotes=1.0
+        - name: SCHEME_NAME
+          value: default
+        - name: SIM_BACKEND_SERVICE_NAME
+          value: sim-applebank-backend
+        - name: SIM_CACHE_SERVICE_NAME
+          value: sim-applebank-cache
+        - name: SIM_NAME
+          value: applebank
+        - name: SIM_SCHEME_ADAPTER_SERVICE_NAME
+          value: sim-applebank-scheme-adapter
+        - name: TEST_LISTEN_PORT
+          value: "4002"
+        - name: TEST_MUTUAL_TLS_ENABLED
+          value: "false"
+        # - name: TRANSACTION_REQUESTS_ENDPOINT
+        #   value: dev2-transaction-requests-service.mojaloop.live
+        # - name: TRANSFERS_ENDPOINT
+        #   value: dev2-ml-api-adapter.mojaloop.live
+        - name: USE_QUOTE_SOURCE_FSP_AS_TRANSFER_PAYEE_FSP
+          value: "false"
+        - name: VALIDATE_INBOUND_JWS
+          value: "false"
+        - name: VALIDATE_INBOUND_PUT_PARTIES_JWS
+          value: "false"
+        - name: WS02_BEARER_TOKEN
+          value: 7718fa9b-be13-3fe7-87f0-a12cf1628168
+        - name: WSO2_AUTH_FAILURE_REQUEST_RETRIES
+          value: "0"
+        image: mojaloop/sdk-scheme-adapter:v11.8.0
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 4001
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: scheme-adapter
+        ports:
+        - containerPort: 4000
+          name: inboundapi
+          protocol: TCP
+        - containerPort: 4001
+          name: outboundapi
+          protocol: TCP
+        - containerPort: 4002
+          name: testapi
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 4001
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /jwsVerificationKeys
+          name: jws-public-keys
+        - mountPath: /jwsSigningKey/
+          name: jws-private-key
+        - mountPath: /secrets/
+          name: tls-secrets
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: dock-casa-secret
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: jws-private-key
+        secret:
+          defaultMode: 420
+          secretName: mojaloop-sim-applebank-jws-priv-key
+      - configMap:
+          defaultMode: 420
+          name: mojaloop-sim-jws-public-keys
+        name: jws-public-keys
+      - name: tls-secrets
+        secret:
+          defaultMode: 420
+          secretName: mojaloop-sim-applebank-tls-creds
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-01-13T08:04:48Z"
+    lastUpdateTime: "2021-01-13T08:04:48Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-01-13T08:03:45Z"
+    lastUpdateTime: "2021-01-13T08:26:35Z"
+    message: ReplicaSet "mojaloop-sim-applebank-scheme-adapter-648d58798b" has successfully
+      progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 3
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

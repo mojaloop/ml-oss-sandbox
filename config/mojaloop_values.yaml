@@ -1,0 +1,62 @@
+# Default values for central.
+# This is a YAML-formatted file.
+# Declare global configurations
+global: {}
+
+# Declare variables to be passed into your templates.
+
+ml-testing-toolkit:
+  enabled: true
+  ml-testing-toolkit-backend:
+    ingress:
+      enabled: true
+      hosts:
+        dev2-testing-toolkit-specapi.mojaloop.live:
+          port: 5000
+          paths: ['/']
+        dev2-testing-toolkit.mojaloop.live:
+          port: 5050
+          paths: ['/api/', '/socket.io/']
+    config:
+      user_config.json: {
+        "CALLBACK_RESOURCE_ENDPOINTS": {
+          "enabled": true,
+          "endpoints": [
+            {
+              "method": "put",
+              "path": "/parties/{Type}/{ID}",
+              "endpoint": "http://dev2-account-lookup.mojaloop.live"
+            },
+            {
+              "method": "put",
+              "path": "/quotes/{ID}",
+              "endpoint": "http://dev2-quoting-service.mojaloop.live"
+            },
+            {
+              "method": "put",
+              "path": "/transfers/{ID}",
+              "endpoint": "http://dev2-ml-api-adapter.mojaloop.live"
+            }
+          ]
+        },
+        "FSPID": "testingtoolkitdfsp",
+        "TRANSFERS_VALIDATION_WITH_PREVIOUS_QUOTES": true,
+        "TRANSFERS_VALIDATION_ILP_PACKET": true,
+        "TRANSFERS_VALIDATION_CONDITION": true,
+        "ILP_SECRET": "secret"
+      }
+  ml-testing-toolkit-frontend:
+    ingress:
+      enabled: true
+      hosts:
+        dev2-testing-toolkit.mojaloop.live:
+          port: 6060
+          paths: ['/']
+    config:
+      API_BASE_URL: http://dev2-testing-toolkit.mojaloop.live
+
+
+ml-ttk-posthook-setup:
+  postInstallHook:
+    enabled: true
+    weight: -5

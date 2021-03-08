@@ -1,0 +1,80 @@
+
+# env:
+  # ADMIN_LISTEN: 0.0.0.0:8444 ssl
+
+admin:
+  # Enable creating a Kubernetes service for the admin API
+  # Disabling this is recommended for most ingress controller configurations
+  # Enterprise users that wish to use Kong Manager with the controller should enable this
+  enabled: true
+  # type: ClusterIP 
+  # If you want to specify annotations for the admin service, uncomment the following
+  # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
+  annotations: {}
+  #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+
+  http:
+    # Enable plaintext HTTP listen for the admin API
+    # Disabling this and using a TLS listen only is recommended for most configuration
+    enabled: true
+    servicePort: 8001
+    containerPort: 8001
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32080
+    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+    parameters: []
+
+  tls:
+    # Enable HTTPS listen for the admin API
+    enabled: true
+    servicePort: 8444
+    containerPort: 8444
+    # Set a target port for the TLS port in the admin API service, useful when using TLS
+    # termination on an ELB.
+    # overrideServiceTargetPort: 8000
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32443
+    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+    parameters:
+    - http2
+
+  # Kong admin ingress settings. Useful if you want to expose the Admin
+  # API of Kong outside the k8s cluster.
+  ingress:
+    # Enable/disable exposure using ingress.
+    enabled: true
+    # TLS secret name.
+    # tls: kong-admin.example.com-tls
+    # Ingress hostname
+    hostname: kong-beta.moja-lab.live
+    # Map of ingress annotations.
+    annotations: {}
+    # Ingress path.
+    path: /
+
+# admin:
+#   enabled: true
+#   # annotations:
+#   #   konghq.com/protocol: "https"
+
+#   type: LoadBalancer
+#   http:
+#     enabled: true
+  # tls:
+  #   enabled: true
+  #   servicePort: 8444
+  #   containerPort: 8444
+  #   parameters:
+  #   - http2
+
+  # ingress:
+  #   enabled: true
+  #   tls: CHANGEME-admin-tls-secret
+  #   hostname: admin.kong.CHANGEME.example
+  #   annotations:
+  #     kubernetes.io/ingress.class: "kong"
+  #   path: /
+
+ingressController:
+  enabled: true
+  installCRDs: false

@@ -1,0 +1,80 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "-5"
+  creationTimestamp: "2020-12-17T00:53:36Z"
+  labels:
+    app.kubernetes.io/instance: mojaloop
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ml-ttk-posthook-setup
+    app.kubernetes.io/version: 11.3.0
+    controller-uid: 8ad711ea-2052-4e2b-9b2f-abb1ce9d1e0a
+    helm.sh/chart: ml-ttk-posthook-setup-11.0.0
+    job-name: mojaloop-ml-ttk-posthook-setup
+  name: mojaloop-ml-ttk-posthook-setup
+  namespace: ml-app
+  resourceVersion: "144335"
+  selfLink: /apis/batch/v1/namespaces/ml-app/jobs/mojaloop-ml-ttk-posthook-setup
+  uid: 8ad711ea-2052-4e2b-9b2f-abb1ce9d1e0a
+spec:
+  backoffLimit: 0
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - args:
+        - echo "Downloading the test collection..."; wget https://github.com/mojaloop/testing-toolkit-test-cases/archive/master.zip
+          -O downloaded-test-collections.zip; mkdir tmp_test_cases; unzip -d tmp_test_cases
+          -o downloaded-test-collections.zip; npm run cli -- -c cli-default-config.json
+          -e cli-testcase-environment.json -i tmp_test_cases/testing-toolkit-test-cases-master/collections/hub/provisioning
+          -u http://ttk-ml-testing-toolkit-backend:5050 --report-format html
+          --report-auto-filename-enable true --extra-summary-information="Test Suite:GP
+          Tests,Environment:Development"; echo "Done";
+        command:
+        - /bin/sh
+        - -c
+        envFrom:
+        - secretRef:
+            name: mojaloop-ml-ttk-posthook-setup-aws-creds
+        image: mojaloop/ml-testing-toolkit:v11.3.0
+        imagePullPolicy: Always
+        name: ml-ttk-posthook-setup
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/mojaloop-testing-toolkit/cli-testcase-environment.json
+          name: mojaloop-ml-ttk-posthook-setup-volume-testcase-environment-file
+          subPath: cli-testcase-environment.json
+        - mountPath: /opt/mojaloop-testing-toolkit/cli-default-config.json
+          name: mojaloop-ml-ttk-posthook-setup-volume-config-file-defaults
+          subPath: cli-default-config.json
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: cli-default-config.json
+            path: cli-default-config.json
+          name: mojaloop-ml-ttk-posthook-setup-config-file-defaults
+        name: mojaloop-ml-ttk-posthook-setup-volume-config-file-defaults
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: cli-testcase-environment.json
+            path: cli-testcase-environment.json
+          name: mojaloop-ml-ttk-posthook-setup-config-testcase-environment-file
+        name: mojaloop-ml-ttk-posthook-setup-volume-testcase-environment-file
+status:
+  active: 1
+  startTime: "2020-12-17T00:53:36Z"

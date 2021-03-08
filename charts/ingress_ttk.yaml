@@ -1,0 +1,119 @@
+---
+# Ingresses for Kong API Gateway to talk to the Admin APIs
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: ttk-rewrite
+config:
+  replace:
+    uri: "/$(uri_captures[1])"
+plugin: request-transformer
+---
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ttk
+  annotations:
+    kubernetes.io/ingress.class: kong
+    # konghq.com/strip-path: "true"
+    # This is required to rewrite paths to services that contain multiple endpoints, 
+    # e.g. /participants and /parties are both on the account-lookup-service
+    # konghq.com/plugins: ttk-rewrite
+spec:
+  rules:
+  # default install... no longer valid but a good ref
+    - host: ttk.beta.moja-lab.live
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: ttk-ml-testing-toolkit-backend
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: ttk-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: ttk-ml-testing-toolkit-backend
+              servicePort: 5050
+
+    - host: ttk-backend-1.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: ttk-ml-testing-toolkit-backend
+              servicePort: 5000
+
+    - host: eggmm-ttk.beta.moja-lab.live
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: eggmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: eggmm-ttk-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: eggmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5050
+
+    - host: eggmm-ttk-backend-fspiop.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: eggmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5000
+
+    - host: figmm-ttk.beta.moja-lab.live
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: figmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: figmm-ttk-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: figmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5050
+
+    - host: figmm-ttk-backend-fspiop.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: figmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5000
+    
+    - host: ppmm-ttk.beta.moja-lab.live
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: ppmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: ppmm-ttk-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: ppmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5050
+
+    - host: ppmm-ttk-backend-fspiop.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: ppmm-ttk-ml-testing-toolkit-backend
+              servicePort: 5000

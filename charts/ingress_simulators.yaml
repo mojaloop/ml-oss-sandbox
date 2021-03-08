@@ -1,0 +1,243 @@
+---
+# Ingresses for Kong API Gateway to talk to the Admin APIs
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: simulators-rewrite
+config:
+  replace:
+    uri: "/$(uri_captures[1])"
+plugin: request-transformer
+---
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: simulators
+  annotations:
+    kubernetes.io/ingress.class: kong
+    # konghq.com/strip-path: "true"
+    # This is required to rewrite paths to services that contain multiple endpoints, 
+    # e.g. /participants and /parties are both on the account-lookup-service
+    konghq.com/plugins: simulators-rewrite
+spec:
+  rules:
+    - host: payeefsp-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-payeefsp-backend
+              servicePort: 3003
+    - host: payerfsp-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-payerfsp-backend
+              servicePort: 3003
+    - host: testfsp1-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp1-backend
+              servicePort: 3003
+    - host: testfsp2-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp2-backend
+              servicePort: 3003    
+    - host: testfsp3-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp3-backend
+              servicePort: 3003
+    - host: testfsp4-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp4-backend
+              servicePort: 3003
+    - host: applebank-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-applebank-backend
+              servicePort: 3003
+    - host: bananabank-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-bananabank-backend
+              servicePort: 3003
+    - host: carrotmm-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-carrotmm-backend
+              servicePort: 3003
+    - host: duriantech-backend.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-duriantech-backend
+              servicePort: 3003
+    
+
+    #scheme adapter ingress - todo: others
+    - host: payeefsp-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-payeefsp-scheme-adapter
+              servicePort: 4000
+    - host: payeefsp-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-payeefsp-scheme-adapter
+              servicePort: 4001
+
+    - host: payerfsp-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-payerfsp-scheme-adapter
+              servicePort: 4000
+    - host: payerfsp-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-payerfsp-scheme-adapter
+              servicePort: 4001
+    
+    - host: testfsp1-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp1-scheme-adapter
+              servicePort: 4000
+    - host: testfsp1-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp1-scheme-adapter
+              servicePort: 4001
+    - host: testfsp2-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp2-scheme-adapter
+              servicePort: 4000
+    - host: testfsp2-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp2-scheme-adapter
+              servicePort: 4001
+    - host: testfsp3-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp3-scheme-adapter
+              servicePort: 4000
+    - host: testfsp3-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp3-scheme-adapter
+              servicePort: 4001
+
+    - host: testfsp4-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp4-scheme-adapter
+              servicePort: 4000
+    - host: testfsp4-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-testfsp4-scheme-adapter
+              servicePort: 4001
+    
+    - host: applebank-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-applebank-scheme-adapter
+              servicePort: 4000
+    - host: applebank-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-applebank-scheme-adapter
+              servicePort: 4001
+    
+    - host: bananabank-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-bananabank-scheme-adapter
+              servicePort: 4000
+    - host: bananabank-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-bananabank-scheme-adapter
+              servicePort: 4001
+
+    - host: carrotmm-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-carrotmm-scheme-adapter
+              servicePort: 4000
+    - host: carrotmm-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-carrotmm-scheme-adapter
+              servicePort: 4001
+
+    - host: duriantech-sdk-scheme-adapter-inbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-duriantech-scheme-adapter
+              servicePort: 4000
+    - host: duriantech-sdk-scheme-adapter-outbound.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: simulators-sim-duriantech-scheme-adapter
+              servicePort: 4001

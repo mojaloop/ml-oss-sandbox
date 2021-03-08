@@ -1,0 +1,94 @@
+---
+##
+# Dev Portal is a new service that devs can log in to 
+# to access the environment, get access tokens, view demos, etc.
+##
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-portal
+  labels:
+    app: dev-portal
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # exeed the replicas by 1 pod
+  selector:
+    matchLabels:
+      app: dev-portal
+  template:
+    metadata:
+      labels:
+        app: dev-portal
+    spec:
+      containers:
+        - name: dev-portal
+          image: ldaly/dev-portal:latest
+          livenessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 5000
+          readinessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 5000
+          # TODO: expose some sort of base url for easy configuration
+          # env:
+          #   - name: DFSP_ID
+          #     value: {{ $participantId }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # annotations:
+    # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-2:886403637725:certificate/87c897e0-2e4b-4b88-9d01-cd4e212a0dcb
+    # service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+  name: dev-portal
+spec:
+  ports:
+    - port: 5000
+      name: ui
+  selector:
+    app: dev-portal
+  clusterIP: None
+
+---
+# apiVersion: configuration.konghq.com/v1
+# kind: KongPlugin
+# metadata:
+#   name: fspiop-rewrite
+# config:
+#   replace:
+#     uri: "/$(uri_captures[1])"
+#     # uri: "/health"
+# # plugin: dev-portal-rewrite
+# plugin: request-transformer
+---
+
+# Ingresses for Kong API Gateway to talk to the portal
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dev-portal
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/strip-path: "true"
+    # konghq.com/protocols: "https"
+    konghq.com/protocols: "http,https"
+spec:
+  tls:
+    - secretName: tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: dev-portal
+              servicePort: 5000
+---

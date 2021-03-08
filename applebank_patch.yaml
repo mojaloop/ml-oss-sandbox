@@ -1,0 +1,6 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: PEER_ENDPOINT
+        value: beta.moja-lab.live/api/fspiop
