@@ -1,0 +1,17 @@
+account_lookup_service:
+  enabled: true
+
+auth_service:
+  enabled: true
+
+endpoint_registry:
+  enabled: true
+
+oracle_consent:
+  enabled: true
+
+thirdparty_api_adapter:
+  enabled: true
+
+transaction_requests_service:
+  enabled: true

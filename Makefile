@@ -33,7 +33,10 @@ install-ttk:
 
 # Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
 install-pisp:
-	@echo 'todo!'
+	# install the databases separately
+	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
+	# install the chart
+	helm upgrade --install --namespace ml-app thirdparty ./charts/thirdparty
 
 install-pisp-simulators: .pisp-demo-server-secret
 	# pisp-demo-server, required for pineapple pay/demo app flutter
@@ -70,9 +73,9 @@ uninstall-pisp-simulators:
 ##
 # Utils
 ##
-health-check-pisp-simluators:
-	curl beta.moja-lab.live/pineapple/app/health | jq
-	curl beta.moja-lab.live/pineapple/mojaloop/health | jq
+health-pisp-simulators:
+	curl -s beta.moja-lab.live/pineapple/app/health | jq
+	curl -s beta.moja-lab.live/pineapple/mojaloop/health | jq
 
 
 
