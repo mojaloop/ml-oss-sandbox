@@ -32,19 +32,17 @@ install-ttk:
 	helm upgrade --install --namespace ml-app eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
 
 # Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
-install-pisp:
+install-thirdparty:
 	# install the databases separately
 	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
 	# install the chart
 	helm upgrade --install --namespace ml-app thirdparty ./charts/thirdparty
 
-install-pisp-simulators: .pisp-demo-server-secret
+install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# pisp-demo-server, required for pineapple pay/demo app flutter
-	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
-	# TODO: are we using this?
-	# Special ttk instance
-	helm upgrade --install --namespace ml-app tp-ttk mojaloop/ml-testing-toolkit --values ./pisp-demo/tp-ttk.yaml
-	kubectl apply -f ./pisp-demo/ingress-tp-ttk.yaml
+	# kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
+	# pispa, dfspa, dfspb
+	helm upgrade --install --namespace ml-app thirdparty-simulators ./charts/thirdparty-simulators
 
 run-ml-bootstrap:
 	ELB_URL=beta.moja-lab.live/api/admin
@@ -63,17 +61,17 @@ uninstall-ingress:
 	kubectl delete -f ./charts/ingress_simulators.yaml
 	kubectl delete -f ./charts/ingress_ttk.yaml
 
-uninstall-pisp:
+uninstall-thirdparty:
 	@echo "todo!"
 
-uninstall-pisp-simulators:
+uninstall-thirdparty-simulators:
 	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
 
 
 ##
 # Utils
 ##
-health-pisp-simulators:
+health-thirdparty-simulators:
 	curl -s beta.moja-lab.live/pineapple/app/health | jq
 	curl -s beta.moja-lab.live/pineapple/mojaloop/health | jq
 
@@ -116,9 +114,9 @@ health-pisp-simulators:
 # 	helm install nginx ingress-nginx/ingress-nginx --version 2.16.0
 # 	@touch .install-base
 
-.pisp-demo-server-secret:
+.thirdparty-demo-server-secret:
 	kubectl create secret generic firebase-secret --from-file=../pisp-demo-server/secret/serviceAccountKey.json
-	@touch .pisp-demo-server-secret
+	@touch .thirdparty-demo-server-secret
 
 
 # clean-add-repos:

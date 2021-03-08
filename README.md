@@ -19,11 +19,11 @@ make install-ttk
 # TODO: health checks
 
 # PISP features and simulators
-make install-pisp
-make install-pisp-simulators
+make install-thirdparty
+make install-thirdparty-simulators
 
 # health check demo-server
-make health-pisp-simulators
+make health-thirdparty-simulators
 
 # seed the environment
 make run-ml-bootstrap
