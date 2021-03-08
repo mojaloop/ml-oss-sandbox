@@ -40,7 +40,7 @@ install-thirdparty:
 
 install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# pisp-demo-server, required for pineapple pay/demo app flutter
-	# kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
+	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
 	# pispa, dfspa, dfspb
 	helm upgrade --install --namespace ml-app thirdparty-simulators ./charts/thirdparty-simulators
 
@@ -49,6 +49,7 @@ run-ml-bootstrap:
 	FSPIOP_URL=beta.moja-lab.live/api/fspiop  
 	echo ${ELB_URL}
 	# TODO: change to the proper location!
+	# TODO: config file!
 	cd ../ml-bootstrap && npm run reseed:docker-live
 
 uninstall-switch:
@@ -66,6 +67,7 @@ uninstall-thirdparty:
 
 uninstall-thirdparty-simulators:
 	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
+	helm delete thirdparty-simulators
 
 
 ##

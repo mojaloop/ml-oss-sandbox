@@ -1,6 +1,12 @@
 central:
   # setting to false seems to have no effect
   enabled: true
+  centralledger:
+    centralledger-service:
+      containers:
+        api:
+          image:
+            tag: v13.1.1
 
 ml-api-adapter:
   # setting to false seems to have no effect
