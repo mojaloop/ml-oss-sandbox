@@ -24,7 +24,7 @@ spec:
             secretName: firebase-secret
       containers:
         - name: pisp-demo-server
-          image: mojaloop/pisp-demo-server:v0.1.6
+          image: mojaloop/pisp-demo-server:v0.1.7
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10

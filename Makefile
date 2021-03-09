@@ -15,17 +15,17 @@ BASE_URL = beta.moja-lab.live
 # Runners
 ##
 install-switch: .install-base
-	helm upgrade --install --namespace ml-app mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
+	helm upgrade --install --namespace ${NAMESPACE} mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
 
 # alternative to the above - in case you want to use the locally checked out mojaloop charts
 # for development
 install-switch-local: .install-base
 	# package local charts
 	# cd ../helm; ./package.sh
-	helm upgrade --install --namespace ml-app mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
+	helm upgrade --install --namespace ${NAMESPACE} mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
 
 install-ingress:
-	helm upgrade --install --namespace ml-app kong kong/kong -f ./config/kong_values.yaml
+	helm upgrade --install --namespace ${NAMESPACE} kong kong/kong -f ./config/kong_values.yaml
 	# TODO: figure out a better way to apply multi files
 	kubectl apply -f ./charts/ingress_kong_admin.yaml
 	kubectl apply -f ./charts/ingress_kong_fspiop.yaml
@@ -38,29 +38,29 @@ install-dev-portal:
 # Vanilla Simulators using standalone simulator chart
 # for simulators including PISP support - refer to `install-thirdparty-simulators`
 install-simulators:
-	helm upgrade --install --namespace ml-app simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
+	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
 	kubectl apply -f ./charts/ingress_simulators.yaml
 
 install-ttk:
-	helm upgrade --install --namespace ml-app figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
-	helm upgrade --install --namespace ml-app eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
+	helm upgrade --install --namespace ${NAMESPACE} figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
+	helm upgrade --install --namespace ${NAMESPACE} eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
 
 # Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
 install-thirdparty:
 	# install the databases separately
 	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
 	# install the chart
-	helm upgrade --install --namespace ml-app thirdparty ./charts/thirdparty
+	helm upgrade --install --namespace ${NAMESPACE} thirdparty ./charts/thirdparty
 
 install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# pisp-demo-server, required for pineapple pay/demo app flutter
 	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
 	# Applebank
-	helm upgrade --install --namespace ml-app thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
+	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
 
 run-ml-bootstrap:
-	ELB_URL=beta.moja-lab.live/api/admin
-	FSPIOP_URL=beta.moja-lab.live/api/fspiop  
+	ELB_URL=${BASE_URL}/api/admin
+	FSPIOP_URL=${BASE_URL}/api/fspiop  
 	echo ${ELB_URL}
 	# TODO: change to the proper location!
 	# TODO: config file!
@@ -242,5 +242,5 @@ watch-all:
 # Convenience function to switch back to the kubectx and ns we want
 switch-kube:
 	kubectx oss-lab-beta
-	kubens ml-app
+	kubens ${NAMESPACE}
 	helm list
