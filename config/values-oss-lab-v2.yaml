@@ -7,6 +7,54 @@ central:
         api:
           image:
             tag: v13.1.1
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    centralledger-handler-transfer-prepare:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    centralledger-handler-transfer-position:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    centralledger-handler-transfer-get:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    centralledger-handler-transfer-fulfil:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    centralledger-handler-timeout:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    centralledger-handler-admin-transfer:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    # We will BYO MySQL
+    mysql:
+      enabled: false
+
+    # TODO: disable kafka
+    kafka:
+      enabled: true
 
 ml-api-adapter:
   # setting to false seems to have no effect
@@ -1153,12 +1201,6 @@ finance-portal:
 finance-portal-settlement-management:
   enabled: false
 
-ml-testing-toolkit-backend:
-  enabled: false
-
-ml-testing-toolkit-frontend:
-  enabled: false
-
 ml-testing-toolkit:
   enabled: false
   ml-testing-toolkit-backend:
@@ -1201,7 +1243,7 @@ ml-testing-toolkit:
         "ILP_SECRET": "secret"
       }
   ml-testing-toolkit-frontend:
-    enabled: true
+    enabled: false
     ingress:
       enabled: false
       hosts:
@@ -1420,3 +1462,7 @@ ml-ttk-posthook-tests:
   #     "invalidToIdValue": "27713803099"
   #   }
   # }
+
+ml-ttk-test-validation:
+  tests:
+    enabled: false

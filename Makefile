@@ -14,8 +14,8 @@ install-switch: .install-base
 
 install-switch-local: .install-base
 	# package local charts
-	cd ../helm; ./package.sh
-	# helm upgrade --install --namespace ml-app mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
+	# cd ../helm; ./package.sh
+	helm upgrade --install --namespace ml-app mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
 
 install-ingress:
 	helm upgrade --install --namespace ml-app kong kong/kong -f ./config/kong_values.yaml
@@ -74,6 +74,11 @@ uninstall-thirdparty-simulators:
 	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
 	helm delete thirdparty-simulators
 
+uninstall-base:
+	kubectl delete -f ./charts/base/ss_mysql.yaml
+	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
+	rm -rf .install-base
+
 
 ##
 # Utils
@@ -118,7 +123,7 @@ health-thirdparty-simulators:
 # Installs base prerequisites: kafka and mysql
 .install-base:
 	kubectl apply -f ./charts/base/ss_mysql.yaml
-	helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
+	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
 	@touch .install-base
 
 
