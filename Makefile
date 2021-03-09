@@ -12,7 +12,7 @@ NAMESPACE = ml-app
 BASE_URL = beta.moja-lab.live
 
 ##
-# Runners
+# installation
 ##
 install-switch: .install-base
 	helm upgrade --install --namespace ${NAMESPACE} mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
@@ -58,16 +58,34 @@ install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# Applebank
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
 
-run-ml-bootstrap:
+##
+# application tools
+##
+
+run-ml-bootstrap: run-ml-bootstrap-hub run-ml-bootstrap-participants run-ml-bootstrap-parties
+
+run-ml-bootstrap-hub:
 	ELB_URL=${BASE_URL}/api/admin
 	FSPIOP_URL=${BASE_URL}/api/fspiop  
-	echo ${ELB_URL}
-	# TODO: change to the proper location!
-	# TODO: config file!
 	# TODO: run ml-bootstrap inline with npx
 	cd ../ml-bootstrap && npm run ml-bootstrap -- hub -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+
+run-ml-bootstrap-participants:
+	ELB_URL=${BASE_URL}/api/admin
+	FSPIOP_URL=${BASE_URL}/api/fspiop  
+	# TODO: run ml-bootstrap inline with npx
 	cd ../ml-bootstrap && npm run ml-bootstrap -- participants -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+
+run-ml-bootstrap-parties:
+	ELB_URL=${BASE_URL}/api/admin
+	FSPIOP_URL=${BASE_URL}/api/fspiop  
+	# TODO: run ml-bootstrap inline with npx
 	cd ../ml-bootstrap && npm run ml-bootstrap -- parties -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+
+
+##
+# uninstallation
+##
 
 uninstall-switch:
 	helm delete mojaloop
@@ -96,10 +114,11 @@ uninstall-base:
 # Utils
 ##
 health-thirdparty-simulators:
-	curl -s ${BASE_URL}/pineapple/app/health | jq
-	curl -s ${BASE_URL}/pineapple/mojaloop/health | jq
+	curl -s ${BASE_URL}/pineapplepay/app/health | jq
+	curl -s ${BASE_URL}/pineapplepay/mojaloop/health | jq
 	# no health check here, but we can just check the list of parties registered
 	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
+	# no health check here, but at least we should be able to reach the server
 	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/health | jq
 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq

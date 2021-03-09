@@ -175,35 +175,12 @@
       parties: [
       ]
     },
+    // pineapplepay is the pisp-demo-server
     {
-      id: 'ppmm',
-      type: 'DFSP',
-      // TODO: this is a hack for now, but we actually need to query the admin-api
-      // to get this value before setting it :(
-      settlementAccountId: '48',
-      simulatorAdminUrl: 'http://ppmm-backend.beta.moja-lab.live',
-      fspiopCallbackUrl: 'http://ppmm-ttk-backend-fspiop.beta.moja-lab.live',
-      thirdpartyCallbackUrl: 'n/a',
-      parties: [
-        {
-          displayName: "Edwin E",
-          firstName: "Edwin",
-          middleName: "E",
-          lastName: "Enoki",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "555111222"
-        },
-        {
-          displayName: "Eric Elmo",
-          firstName: "Eric",
-          middleName: "E",
-          lastName: "Elmo",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "55512345"
-        },
-      ]
+      id: 'pineapplepay',
+      type: 'PISP',
+      fspiopCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
+      thirdpartyCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
     },
   ]
 }

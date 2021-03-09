@@ -43,7 +43,7 @@ spec:
             - name: IP_ADDRESS
               value: "0.0.0.0"
             - name: MOJALOOP_PARTICIPANT_ID
-              value: "pineapple"
+              value: "pineapplepay"
             - name: EXPERIMENTAL_MODE
               value: "on"
             # The testing Toolkit for thirdparty API demos
@@ -86,7 +86,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /pineapple/(.*)
+          - path: /pineapplepay/(.*)
             backend:
               serviceName: pisp-demo-server
               servicePort: 8080
