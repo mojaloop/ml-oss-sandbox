@@ -9,10 +9,10 @@ DIR = $(shell pwd)
 ##
 # Runners
 ##
-install-switch:
+install-switch: .install-base
 	helm upgrade --install --namespace ml-app mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
 
-install-switch-local:
+install-switch-local: .install-base
 	# package local charts
 	cd ../helm; ./package.sh
 	# helm upgrade --install --namespace ml-app mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
@@ -114,6 +114,13 @@ health-thirdparty-simulators:
 	helm repo add public https://charts.helm.sh/incubator
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 	@touch .add-repos
+
+# Installs base prerequisites: kafka and mysql
+.install-base:
+	kubectl apply -f ./charts/base/ss_mysql.yaml
+	helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
+	@touch .install-base
+
 
 # .install-base:
 # 	kubectl apply -f ./charts-base/deployment_setup.yaml
