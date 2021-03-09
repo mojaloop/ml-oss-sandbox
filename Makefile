@@ -12,6 +12,8 @@ DIR = $(shell pwd)
 install-switch: .install-base
 	helm upgrade --install --namespace ml-app mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
 
+# alternative to the above - in case you want to use the locally checked out mojaloop charts
+# for development
 install-switch-local: .install-base
 	# package local charts
 	# cd ../helm; ./package.sh
@@ -28,6 +30,8 @@ install-ingress:
 install-dev-portal:
 	kubectl apply -f ./config/dev_portal.yaml
 
+# Vanilla Simulators using standalone simulator chart
+# for simulators including PISP support - refer to `install-thirdparty-simulators`
 install-simulators:
 	helm upgrade --install --namespace ml-app simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
 	kubectl apply -f ./charts/ingress_simulators.yaml
@@ -46,8 +50,8 @@ install-thirdparty:
 install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# pisp-demo-server, required for pineapple pay/demo app flutter
 	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
-	# pispa, dfspa, dfspb
-	helm upgrade --install --namespace ml-app thirdparty-simulators ./charts/thirdparty-simulators
+	# Applebank
+	helm upgrade --install --namespace ml-app thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
 
 run-ml-bootstrap:
 	ELB_URL=beta.moja-lab.live/api/admin
@@ -90,27 +94,6 @@ health-thirdparty-simulators:
 	curl -s beta.moja-lab.live/pineapple/app/health | jq
 	curl -s beta.moja-lab.live/pineapple/mojaloop/health | jq
 
-
-
-# install: .add-repos .install-base install-switch install-participants
-
-# install-switch:
-# 	helm upgrade --install pisp-poc-switch ./charts-switch
-
-# install-participants:
-# 	helm upgrade --install pisp-poc-dfspa ./charts-participant -f ./charts-participant/values_dfspa.yml
-# 	helm upgrade --install pisp-poc-dfspb ./charts-participant -f ./charts-participant/values_dfspb.yml
-# 	helm upgrade --install pisp-poc-pispa ./charts-participant -f ./charts-participant/values_pispa.yml
-
-# uninstall-switch: mysql-drop-database
-# 	@helm del pisp-poc-switch || echo 'pisp-poc-switch not found'
-
-# uninstall-participants:
-# 	helm del pisp-poc-dfspa
-# 	helm del pisp-poc-dfspb
-# 	helm del pisp-poc-pispa
-
-# uninstall-all: uninstall-switch clean-install-base clean-add-repos
 
 ##
 # Stateful make commands

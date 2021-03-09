@@ -34,7 +34,7 @@ spec:
             port: 4003
         env:
           - name: ES_SWITCH_ENDPOINT
-            value: http://endpoint-registry:3001
+            value: http://mojaloop-centralledger-service:80
 
 ---
 apiVersion: v1

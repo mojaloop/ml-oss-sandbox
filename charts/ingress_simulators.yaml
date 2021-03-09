@@ -21,6 +21,27 @@ metadata:
     konghq.com/plugins: simulators-rewrite
 spec:
   rules:
+    - http:
+        paths:
+          - path: /dfspa/simulator/(.*)
+            backend:
+              serviceName: simulators-sim-applebank-backend
+              servicePort: 3003
+          - path: /dfspa/sdk-scheme-adapter/(.*)
+            backend:
+              serviceName: simulators-sim-applebank-scheme-adapter
+              servicePort: 4000
+          - path: /dfspa/thirdparty-scheme-adapter/inbound/(.*)
+            backend:
+              serviceName: dfspa-thirdparty-scheme-adapter
+              servicePort: 4005
+          - path: /dfspa/thirdparty-scheme-adapter/outbound/(.*)
+            backend:
+              serviceName: dfspa-thirdparty-scheme-adapter
+              servicePort: 4006
+
+
+    # Legacy ingress - replaced by the above
     - host: payeefsp-backend.beta.moja-lab.live
       http:
         paths:
