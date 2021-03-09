@@ -26,7 +26,7 @@ spec:
       #       secretName: {{ $participantId }}-jws-private-key
       containers:
         - name: mojaloop-simulator
-          image: mojaloop/mojaloop-simulator:v9.4.1.7-pisp
+          image: mojaloop/mojaloop-simulator:v11.3.0.0-pisp
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:

@@ -113,6 +113,22 @@ uninstall-base:
 ##
 # Utils
 ##
+health-check-switch:
+	@echo 'Checking health of switch services'
+	curl -s ${BASE_URL}/api/admin/central-ledger/health | jq
+	curl -s ${BASE_URL}/api/admin/ml-api-adapter/health | jq
+	curl -s ${BASE_URL}/api/admin/account-lookup-service/health | jq
+	curl -s ${BASE_URL}/api/admin/account-lookup-service-admin/health | jq
+	curl -s ${BASE_URL}/api/admin/oracle-simulator/health | jq
+	
+	# TODO: reenable these...
+	# curl -s ${BASE_URL}/api/admin/quoting-service/health | jq
+	# curl -s ${BASE_URL}/api/admin/als-consent-oracle/health | jq
+	# curl -s $(ELB_URL)/auth-service/health | jq
+
+health-simulators:	
+	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
+
 health-thirdparty-simulators:
 	curl -s ${BASE_URL}/pineapplepay/app/health | jq
 	curl -s ${BASE_URL}/pineapplepay/mojaloop/health | jq
@@ -135,9 +151,11 @@ health-thirdparty-simulators:
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 	@touch .add-repos
 
-# Installs base prerequisites: kafka and mysql
+# Installs base prerequisites mysql
 .install-base:
 	kubectl apply -f ./charts/base/ss_mysql.yaml
+	# TODO: enable kafka at some stage
+	# I don't think it's too pressing, since centralledger still deploys kafka
 	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
 	@touch .install-base
 
@@ -200,16 +218,7 @@ health-thirdparty-simulators:
 
 # health-check: health-check-switch health-check-participants
 
-# health-check-switch:
-# 	@echo 'Checking health of switch services'
-# 	curl -s $(ELB_URL)/central-ledger/health | jq
-# 	# curl -s $(ELB_URL)/auth-service/health | jq
-# 	curl -s $(ELB_URL)/quoting-service/health | jq
-# 	curl -s $(ELB_URL)/ml-api-adapter/health | jq
-# 	curl -s $(ELB_URL)/account-lookup-service/health | jq
-# 	curl -s $(ELB_URL)/account-lookup-service-admin/health | jq
-# 	curl -s $(ELB_URL)/oracle-simulator/health | jq
-# 	curl -s $(ELB_URL)/als-consent-oracle/health | jq
+
 
 # health-check-participants:
 # 	@echo 'Checking health of all participants'
