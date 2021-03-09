@@ -55,7 +55,10 @@ run-ml-bootstrap:
 	echo ${ELB_URL}
 	# TODO: change to the proper location!
 	# TODO: config file!
-	cd ../ml-bootstrap && npm run reseed:docker-live
+	# TODO: run ml-bootstrap inline with npx
+	cd ../ml-bootstrap && npm run ml-bootstrap -- hub -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+	cd ../ml-bootstrap && npm run ml-bootstrap -- participants -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+	cd ../ml-bootstrap && npm run ml-bootstrap -- parties -c ../ml-oss-sandbox/config/ml-bootstrap.json5
 
 uninstall-switch:
 	helm delete mojaloop
