@@ -26,11 +26,7 @@
     "COLOR": true
   },
   "SHARED": {
-    "PEER_ENDPOINT": "transaction-requests-service:4003",
-    "ALS_ENDPOINT": "account-lookup-service:4001",
-    "QUOTES_ENDPOINT": "quoting-service:3002",
-    "TRANSFERS_ENDPOINT": "ml-api-adapter:3000",
-    "BULK_TRANSFERS_ENDPOINT": "",
+    "PEER_ENDPOINT": "beta.moja-lab.live/api/thirdparty",
     "DFSP_ID": "{{ $participantId }}",
     "DFSP_BACKEND_URI": "{{ $participantId }}-mojaloop-simulator:3000",
     "DFSP_BACKEND_HTTP_SCHEME": "http",
