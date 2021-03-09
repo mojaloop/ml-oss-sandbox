@@ -56,6 +56,20 @@ central:
     kafka:
       enabled: true
 
+  centralsettlement:
+    centralsettlement-service:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+    centralsettlement-handler-settlementwindow:
+      config:
+        db_host: mysql-cl
+        db_port: 3306
+        db_password: password
+
+
 ml-api-adapter:
   # setting to false seems to have no effect
   enabled: true
@@ -85,6 +99,11 @@ quoting-service:
       # kubernetes.io/tls-acme: "true"
     tls: []
 
+  config:
+    db_host: mysql-cl
+    db_port: 3306
+    db_password: password
+  
 
 transaction-requests-service:
   ingress:
