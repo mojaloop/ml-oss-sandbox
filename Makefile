@@ -127,7 +127,8 @@ health-check-switch:
 	# curl -s $(ELB_URL)/auth-service/health | jq
 
 health-simulators:	
-	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
+	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/health | jq
+	curl -s ${BASE_URL}/bananabank/simulator/repository/parties | jq
 
 health-thirdparty-simulators:
 	curl -s ${BASE_URL}/pineapplepay/app/health | jq
@@ -138,6 +139,15 @@ health-thirdparty-simulators:
 	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/health | jq
 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
+
+
+list-dfsp-accounts:
+	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/applebank | jq
+	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/bananabank | jq
+	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/carrotmm| jq
+	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/duriantech | jq
+	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/eggmm | jq
+	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/figmm | jq
 
 
 ##

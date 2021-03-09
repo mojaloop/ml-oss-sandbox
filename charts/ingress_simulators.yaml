@@ -23,6 +23,9 @@ spec:
   rules:
     - http:
         paths:
+          ##
+          # applebank
+          ##
           - path: /applebank/simulator/(.*)
             backend:
               serviceName: applebank-mojaloop-simulator
@@ -39,7 +42,18 @@ spec:
             backend:
               serviceName: applebank-thirdparty-scheme-adapter
               servicePort: 4006
-
+          
+          ##
+          # bananabank
+          ##
+          - path: /bananabank/simulator/(.*)
+            backend:
+              serviceName: simulators-sim-bananabank-backend
+              servicePort: 3003
+          - path: /bananabank/sdk-scheme-adapter/(.*)
+            backend:
+              serviceName: simulators-sim-bananabank-scheme-adapter
+              servicePort: 4000
 
     # Legacy ingress - replaced by the above
     - host: payeefsp-backend.beta.moja-lab.live
