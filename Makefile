@@ -6,6 +6,11 @@ SHELL := /bin/bash
 PROJECT = "ml-oss-sandbox"
 DIR = $(shell pwd)
 
+
+# custom config:
+NAMESPACE = ml-app
+BASE_URL = beta.moja-lab.live
+
 ##
 # Runners
 ##
@@ -49,7 +54,7 @@ install-thirdparty:
 
 install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# pisp-demo-server, required for pineapple pay/demo app flutter
-	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
+	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
 	# Applebank
 	helm upgrade --install --namespace ml-app thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
 
@@ -78,7 +83,7 @@ uninstall-thirdparty:
 	@echo "todo!"
 
 uninstall-thirdparty-simulators:
-	kubectl apply -f ./pisp-demo/pisp-demo-server.yaml
+	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
 	helm delete thirdparty-simulators
 
 uninstall-base:
@@ -91,8 +96,13 @@ uninstall-base:
 # Utils
 ##
 health-thirdparty-simulators:
-	curl -s beta.moja-lab.live/pineapple/app/health | jq
-	curl -s beta.moja-lab.live/pineapple/mojaloop/health | jq
+	curl -s ${BASE_URL}/pineapple/app/health | jq
+	curl -s ${BASE_URL}/pineapple/mojaloop/health | jq
+	# no health check here, but we can just check the list of parties registered
+	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
+	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/health | jq
+	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
+	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
 
 
 ##

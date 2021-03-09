@@ -5,8 +5,7 @@ metadata:
   labels:
     app: pisp-demo-server
 spec:
-  # Disabled for now - we are running locally
-  replicas: 0
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:

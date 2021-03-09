@@ -23,21 +23,21 @@ spec:
   rules:
     - http:
         paths:
-          - path: /dfspa/simulator/(.*)
+          - path: /applebank/simulator/(.*)
             backend:
-              serviceName: simulators-sim-applebank-backend
+              serviceName: applebank-mojaloop-simulator
               servicePort: 3003
-          - path: /dfspa/sdk-scheme-adapter/(.*)
+          - path: /applebank/sdk-scheme-adapter/(.*)
             backend:
-              serviceName: simulators-sim-applebank-scheme-adapter
+              serviceName: applebank-sdk-scheme-adapter
               servicePort: 4000
-          - path: /dfspa/thirdparty-scheme-adapter/inbound/(.*)
+          - path: /applebank/thirdparty-scheme-adapter/inbound/(.*)
             backend:
-              serviceName: dfspa-thirdparty-scheme-adapter
+              serviceName: applebank-thirdparty-scheme-adapter
               servicePort: 4005
-          - path: /dfspa/thirdparty-scheme-adapter/outbound/(.*)
+          - path: /applebank/thirdparty-scheme-adapter/outbound/(.*)
             backend:
-              serviceName: dfspa-thirdparty-scheme-adapter
+              serviceName: applebank-thirdparty-scheme-adapter
               servicePort: 4006
 
 
