@@ -12,6 +12,11 @@ DIR = $(shell pwd)
 install-switch:
 	helm upgrade --install --namespace ml-app mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
 
+install-switch-local:
+	# package local charts
+	cd ../helm; ./package.sh
+	# helm upgrade --install --namespace ml-app mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
+
 install-ingress:
 	helm upgrade --install --namespace ml-app kong kong/kong -f ./config/kong_values.yaml
 	# TODO: figure out a better way to apply multi files
