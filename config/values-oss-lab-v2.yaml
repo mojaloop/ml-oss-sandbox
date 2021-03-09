@@ -69,7 +69,6 @@ central:
         db_port: 3306
         db_password: password
 
-
 ml-api-adapter:
   # setting to false seems to have no effect
   enabled: true
@@ -78,8 +77,21 @@ emailnotifier:
   enabled: false
 
 account-lookup-service:
-  # setting to false seems to have no effect
-  enabled: true
+  account-lookup-service:
+    config:
+      db_host: mysql-als
+      db_port: 3306
+      db_password: password
+  
+  account-lookup-service-admin:
+    config:
+      db_host: mysql-als
+      db_port: 3306
+      db_password: password
+  
+
+  mysql:
+    enabled: false
 
 quoting-service:
   # setting to false seems to have no effect
