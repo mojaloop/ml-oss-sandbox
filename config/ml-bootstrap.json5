@@ -80,7 +80,16 @@
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
           idValue: "292455793"
-        }
+        },
+        {
+          displayName: "Billy Bagshot",
+          firstName: "Billy",
+          middleName: "B",
+          lastName: "Bagshot",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "255255255255"
+        },
       ]
     },
     {
@@ -168,8 +177,15 @@
     {
       id: 'pineapplepaylocal',
       type: 'PISP',
-      fspiopCallbackUrl: 'https://hard-otter-38.loca.lt/mojaloop',
-      thirdpartyCallbackUrl: 'https://hard-otter-38.loca.lt/mojaloop',
+      fspiopCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
+      thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
+    },
+    // dummy example, since the sdk-scheme-adapter hardcodes the pisp id of pisp
+    {
+      id: 'pisp',
+      type: 'PISP',
+      fspiopCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
+      thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
     },
   ]
 }
