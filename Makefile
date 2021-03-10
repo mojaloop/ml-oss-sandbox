@@ -132,6 +132,7 @@ health-check-switch:
 health-check-thirdparty:
 	@echo 'Checking health of thirdparty services'
 	curl -s ${BASE_URL}/api/admin/thirdparty-api-adapter/health | jq
+	curl -s ${BASE_URL}/api/admin/thirdparty-tx-requests-service/health | jq
 
 health-simulators:	
 	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/health | jq

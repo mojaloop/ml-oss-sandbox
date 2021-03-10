@@ -38,7 +38,7 @@ spec:
             backend:
               serviceName: applebank-sdk-scheme-adapter
               servicePort: 4001
-          - path: /applebank/sdk-scheme-adapter/inbound/(.*)
+          - path: /applebank/thirdparty-scheme-adapter/inbound/(.*)
             backend:
               serviceName: applebank-thirdparty-scheme-adapter
               servicePort: 4005

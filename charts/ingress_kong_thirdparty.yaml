@@ -30,32 +30,10 @@ spec:
             backend:
               serviceName: thirdparty-api-adapter
               servicePort: 3008
-          # - path: /api/fspiop/(parties.*)
-          #   backend:
-          #     serviceName: mojaloop-account-lookup-service
-          #     servicePort: 80
-          # - path: /api/fspiop/(transactionRequests.*)
-          #   backend:
-          #     serviceName: mojaloop-transaction-requests-service
-          #     servicePort: 80
-          # - path: /api/fspiop/(authorizations.*)
-          #   backend:
-          #     serviceName: mojaloop-transaction-requests-service
-          #     servicePort: 80
-          # - path: /api/fspiop/(quotes.*)
-          #   backend:
-          #     serviceName: mojaloop-quoting-service
-          #     servicePort: 80
-          # - path: /api/fspiop/(transfers.*)
-          #   backend:
-          #     serviceName: mojaloop-ml-api-adapter-service
-          #     servicePort: 80
-          # # Example - for testing out rewrite rules
-          # # - path: /api/bar/(participants.*)
-          # - path: /api/bar
-          #   backend:
-          #     serviceName: echo
-          #     servicePort: 80
+          - path: /api/thirdparty/(authorizations.*)
+            backend:
+              serviceName: thirdparty-tx-requests-service
+              servicePort: 4003
 ---
 # expose health checks for each endpoint
 # note: I'm aware that there are duplicates here, but that's ok
@@ -86,3 +64,7 @@ spec:
             backend:
               serviceName: thirdparty-api-adapter
               servicePort: 3008
+          - path: /api/admin/thirdparty-tx-requests-service/health
+            backend:
+              serviceName: thirdparty-tx-requests-service
+              servicePort: 4003

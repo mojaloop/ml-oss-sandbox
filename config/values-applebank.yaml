@@ -46,11 +46,8 @@ sdk_scheme_adapter:
     # will each be printed on a single line.
     LOG_INDENT: "0"
 
-    # TODO: these values only work for the sdk-scheme-adapter running inside the same
-    # cluster as the switch
-    #
-    # ideally we would deploy this with proper dns, and be able to
-    # give these better values
+    # for PISP demo, need the POST /authorizations onn the thirdparty API 
+    TRANSACTION_REQUESTS_ENDPOINT: beta.moja-lab.live/api/thirdparty
     PEER_ENDPOINT: beta.moja-lab.live/api/fspiop
     # TODO: thirdparty endpoint!
 

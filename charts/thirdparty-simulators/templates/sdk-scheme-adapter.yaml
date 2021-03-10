@@ -41,6 +41,8 @@ spec:
             value: {{ $participantId }}-mojaloop-simulator:3000
           - name: DFSP_ID
             value: {{ $participantId | quote }}
+          - name: ENABLE_PISP_MODE
+            value: "true"
           {{- range $k, $v := .Values.sdk_scheme_adapter.env }}
           - name: {{ $k }}
             value: {{ $v | quote }}
