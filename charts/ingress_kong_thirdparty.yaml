@@ -1,0 +1,88 @@
+---
+# Ingresses and request mappings for Kong API Gateway to talk to the FSPIOP API
+
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: thirdparty-rewrite
+config:
+  replace:
+    uri: "/$(uri_captures[1])"
+plugin: request-transformer
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: thirdparty-main
+  annotations:
+    kubernetes.io/ingress.class: kong
+    # This is required to rewrite paths to services that contain multiple endpoints, 
+    # e.g. /participants and /parties are both on the account-lookup-service
+    konghq.com/plugins: thirdparty-rewrite
+    # enable basic auth for these routes
+    # konghq.com/plugins: basic-auth-example
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/thirdparty/(thirdpartyRequests.*)
+            backend:
+              serviceName: thirdparty-api-adapter
+              servicePort: 3008
+          # - path: /api/fspiop/(parties.*)
+          #   backend:
+          #     serviceName: mojaloop-account-lookup-service
+          #     servicePort: 80
+          # - path: /api/fspiop/(transactionRequests.*)
+          #   backend:
+          #     serviceName: mojaloop-transaction-requests-service
+          #     servicePort: 80
+          # - path: /api/fspiop/(authorizations.*)
+          #   backend:
+          #     serviceName: mojaloop-transaction-requests-service
+          #     servicePort: 80
+          # - path: /api/fspiop/(quotes.*)
+          #   backend:
+          #     serviceName: mojaloop-quoting-service
+          #     servicePort: 80
+          # - path: /api/fspiop/(transfers.*)
+          #   backend:
+          #     serviceName: mojaloop-ml-api-adapter-service
+          #     servicePort: 80
+          # # Example - for testing out rewrite rules
+          # # - path: /api/bar/(participants.*)
+          # - path: /api/bar
+          #   backend:
+          #     serviceName: echo
+          #     servicePort: 80
+---
+# expose health checks for each endpoint
+# note: I'm aware that there are duplicates here, but that's ok
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: thirdparty-rewrite-health
+config:
+  add:
+    headers:
+      - x-new-header:newvalue
+  replace:
+    uri: "/health"
+plugin: request-transformer
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: thirdparty-health
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: thirdparty-rewrite-health
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/admin/thirdparty-api-adapter/health
+            backend:
+              serviceName: thirdparty-api-adapter
+              servicePort: 3008

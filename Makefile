@@ -31,6 +31,7 @@ install-ingress:
 	kubectl apply -f ./charts/ingress_kong_fspiop.yaml
 	kubectl apply -f ./charts/ingress_simulators.yaml
 	kubectl apply -f ./charts/ingress_ttk.yaml
+	kubectl apply -f ./charts/ingress_kong_thirdparty.yaml
 
 install-dev-portal:
 	kubectl apply -f ./config/dev_portal.yaml
@@ -96,6 +97,7 @@ uninstall-ingress:
 	kubectl delete -f ./charts/ingress_kong_fspiop.yaml
 	kubectl delete -f ./charts/ingress_simulators.yaml
 	kubectl delete -f ./charts/ingress_ttk.yaml
+	kubectl delete -f ./charts/ingress_kong_thirdparty.yaml
 
 uninstall-thirdparty:
 	@echo "todo!"
@@ -121,10 +123,15 @@ health-check-switch:
 	curl -s ${BASE_URL}/api/admin/account-lookup-service-admin/health | jq
 	curl -s ${BASE_URL}/api/admin/oracle-simulator/health | jq
 	
+
 	# TODO: reenable these...
 	# curl -s ${BASE_URL}/api/admin/quoting-service/health | jq
 	# curl -s ${BASE_URL}/api/admin/als-consent-oracle/health | jq
 	# curl -s $(ELB_URL)/auth-service/health | jq
+
+health-check-thirdparty:
+	@echo 'Checking health of thirdparty services'
+	curl -s ${BASE_URL}/api/admin/thirdparty-api-adapter/health | jq
 
 health-simulators:	
 	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/health | jq

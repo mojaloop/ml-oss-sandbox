@@ -164,5 +164,12 @@
       fspiopCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
       thirdpartyCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
     },
+    // local running pisp-demo-server, for testing purposes
+    {
+      id: 'pineapplepaylocal',
+      type: 'PISP',
+      fspiopCallbackUrl: 'https://hard-otter-38.loca.lt/mojaloop',
+      thirdpartyCallbackUrl: 'https://hard-otter-38.loca.lt/mojaloop',
+    },
   ]
 }
