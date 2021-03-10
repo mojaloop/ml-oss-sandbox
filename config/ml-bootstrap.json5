@@ -17,9 +17,6 @@
      {
       id: 'applebank',
       type: 'DFSP_SUPPORTING_PISP',
-      // TODO: this is a hack for now, but we actually need to query the admin-api
-      // to get this value before setting it :(
-      settlementAccountId: '10',
       // 3p-scheme-adapters + simulators have slightly different ingress
       // since they were not deployed by helm
       simulatorAdminUrl: 'http://beta.moja-lab.live/applebank/simulator',
@@ -61,9 +58,6 @@
     {
       id: 'bananabank',
       type: 'DFSP',
-      // TODO: this is a hack for now, but we actually need to query the admin-api
-      // to get this value before setting it :(
-      settlementAccountId: '12',
       // For our demo, Participants are on the same deployment as switch
       simulatorAdminUrl: 'http://beta.moja-lab.live/bananabank/simulator',
       fspiopCallbackUrl: 'http://beta.moja-lab.live/bananabank/sdk-scheme-adapter',
@@ -92,9 +86,6 @@
     {
       id: 'carrotmm',
       type: 'DFSP',
-      // TODO: this is a hack for now, but we actually need to query the admin-api
-      // to get this value before setting it :(
-      settlementAccountId: '14',
       // For our demo, Participants are on the same deployment as switch
       simulatorAdminUrl: 'http://carrotmm-backend.beta.moja-lab.live',
       fspiopCallbackUrl: 'http://mojaloop-sim-carrotmm-scheme-adapter:4000',
@@ -123,9 +114,6 @@
     {
       id: 'duriantech',
       type: 'DFSP',
-      // TODO: this is a hack for now, but we actually need to query the admin-api
-      // to get this value before setting it :(
-      settlementAccountId: '16',
       // For our demo, Participants are on the same deployment as switch
       simulatorAdminUrl: 'http://duriantech-backend.beta.moja-lab.live',
       fspiopCallbackUrl: 'http://mojaloop-sim-duriantech-scheme-adapter:4000',
@@ -154,9 +142,6 @@
     {
       id: 'eggmm',
       type: 'DFSP',
-      // TODO: this is a hack for now, but we actually need to query the admin-api
-      // to get this value before setting it :(
-      settlementAccountId: '8',
       simulatorAdminUrl: 'http://eggmm-backend.beta.moja-lab.live',
       fspiopCallbackUrl: 'http://eggmm-ttk-backend-fspiop.beta.moja-lab.live',
       thirdpartyCallbackUrl: 'n/a',
@@ -166,9 +151,6 @@
     {
       id: 'figmm',
       type: 'DFSP',
-      // TODO: this is a hack for now, but we actually need to query the admin-api
-      // to get this value before setting it :(
-      settlementAccountId: '4',
       simulatorAdminUrl: 'http://figmm-backend.beta.moja-lab.live',
       fspiopCallbackUrl: 'http://figmm-ttk-backend-fspiop.beta.moja-lab.live',
       thirdpartyCallbackUrl: 'n/a',
