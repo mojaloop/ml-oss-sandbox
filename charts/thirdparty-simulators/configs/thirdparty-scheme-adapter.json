@@ -30,6 +30,8 @@
     "DFSP_ID": "{{ $participantId }}",
     "DFSP_BACKEND_URI": "{{ $participantId }}-mojaloop-simulator:3000",
     "DFSP_BACKEND_HTTP_SCHEME": "http",
+    "SDK_REQUEST_TO_PAY_TRANSFER_URI": "beta.moja-lab.live/applebank/sdk-scheme-adapter/outbound/requestToPayTransfer",
+    "SDK_PARTIES_INFORMATION_URI": "0.0.0.0:7002/parties/{Type}/{ID}/{SubId}",
     "JWS_SIGN": false,
     "JWS_SIGNING_KEY": "./secrets/jwsSigningKey.key",
     "TLS": {

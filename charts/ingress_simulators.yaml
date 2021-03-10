@@ -30,11 +30,15 @@ spec:
             backend:
               serviceName: applebank-mojaloop-simulator
               servicePort: 3003
-          - path: /applebank/sdk-scheme-adapter/(.*)
+          - path: /applebank/sdk-scheme-adapter/inbound/(.*)
             backend:
               serviceName: applebank-sdk-scheme-adapter
               servicePort: 4000
-          - path: /applebank/thirdparty-scheme-adapter/inbound/(.*)
+          - path: /applebank/sdk-scheme-adapter/outbound/(.*)
+            backend:
+              serviceName: applebank-sdk-scheme-adapter
+              servicePort: 4001
+          - path: /applebank/sdk-scheme-adapter/inbound/(.*)
             backend:
               serviceName: applebank-thirdparty-scheme-adapter
               servicePort: 4005

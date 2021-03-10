@@ -143,7 +143,8 @@ health-thirdparty-simulators:
 	# no health check here, but we can just check the list of parties registered
 	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
 	# no health check here, but at least we should be able to reach the server
-	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/health | jq
+	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/inbound/health | jq
+	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/outbound/health | jq
 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
 

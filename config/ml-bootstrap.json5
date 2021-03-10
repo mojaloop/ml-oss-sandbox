@@ -20,7 +20,7 @@
       // 3p-scheme-adapters + simulators have slightly different ingress
       // since they were not deployed by helm
       simulatorAdminUrl: 'http://beta.moja-lab.live/applebank/simulator',
-      fspiopCallbackUrl: 'http://beta.moja-lab.live/applebank/sdk-scheme-adapter',
+      fspiopCallbackUrl: 'http://beta.moja-lab.live/applebank/sdk-scheme-adapter/inbound',
       thirdpartyCallbackUrl: 'http://beta.moja-lab.live/applebank/thirdparty-scheme-adapter/inbound',
       parties: [
         {
