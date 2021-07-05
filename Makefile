@@ -54,10 +54,18 @@ install-thirdparty:
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty ./charts/thirdparty
 
 install-thirdparty-simulators: .thirdparty-demo-server-secret
-	# pisp-demo-server, required for pineapple pay/demo app flutter
-	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
 	# Applebank
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
+	
+	# Pineapplepay - pisp-demo-server, required for pineapple pay/demo app flutter
+	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
+
+	# OTP/Auth Code Simulator (currently just the TTK)
+	helm upgrade --install --namespace ${NAMESPACE} otpsim mojaloop/ml-testing-toolkit --values ./config/values-ttk-otpsim.yaml
+
+
+
+
 
 ##
 # application tools
