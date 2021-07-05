@@ -34,7 +34,7 @@ install-ingress:
 	kubectl apply -f ./charts/ingress_kong_thirdparty.yaml
 
 install-dev-portal:
-	kubectl apply -f ./config/dev_portal.yaml
+	kubectl apply -f ./charts/dev_portal.yaml
 
 # Vanilla Simulators using standalone simulator chart
 # for simulators including PISP support - refer to `install-thirdparty-simulators`
@@ -64,7 +64,10 @@ install-thirdparty-simulators: .thirdparty-demo-server-secret
 	helm upgrade --install --namespace ${NAMESPACE} otpsim mojaloop/ml-testing-toolkit --values ./config/values-ttk-otpsim.yaml
 
 
-
+# Experimental chart - ml-operator can be used to auto-upgrade stuff
+install-ml-operator:
+	# helm upgrade --install --namespace ${NAMESPACE} ml-operator ../ml-operator/charts
+	helm upgrade --install --namespace ${NAMESPACE} ml-operator ../helm/ml-operator --values ./config/values-ml-operator.yaml
 
 
 ##
@@ -119,6 +122,8 @@ uninstall-base:
 	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
 	rm -rf .install-base
 
+uninstall-ml-operator:
+	helm delete ml-operator
 
 ##
 # Utils

@@ -9,6 +9,7 @@ metadata:
   name: dev-portal
   labels:
     app: dev-portal
+    app.kubernetes.io/name: dev-portal
 spec:
   replicas: 2
   strategy:
@@ -25,7 +26,7 @@ spec:
     spec:
       containers:
         - name: dev-portal
-          image: ldaly/dev-portal:latest
+          image: ldaly/dev-portal:v0.1.3
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:

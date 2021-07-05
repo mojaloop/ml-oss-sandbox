@@ -1,0 +1,91 @@
+
+nodeSelector: {}
+affinity: {}
+tolerations: {}
+
+ml-operator:
+  enabled: true
+  image: mojaloop/ml-operator:v1.1.0-alpha.438
+  env:
+    NODE_ENV:
+      name: NODE_ENV
+      value: production
+    LOG_LEVEL:
+      name: LOG_LEVEL
+      value: debug
+  
+  config:
+    production.json: {
+       "SERVICES": [
+          # List the services you want to watch
+          "dev-portal"
+        ],
+        "UPGRADE_STRATEGY": "BUGFIX",
+        "CHECK_FOR_UPDATE_CRON": "0/5 * * * *",
+        "SLACK_WEBHOOK_URL": "__PRIVATE__",
+        "IMAGE_WATCHER_CLIENT_URL": "http://localhost:4006",
+        "SHOULD_USE_DEFAULT_K8S": false,
+        "NOTIFY_KUBECTL_PATCH_INSTRUCTIONS": false,
+        "EXPERIMENTAL_AUTO_UPGRADE_DEPLOYMENTS": true
+      }
+
+image-watcher:
+  enabled: true
+  image: mojaloop/image-watcher:v0.1.3
+  livenessProbe:
+    enabled: true
+    httpGet:
+      path: /health
+      port: 4006
+  readinessProbe:
+    enabled: true
+    httpGet:
+      path: /health
+      port: 4006
+  env:
+    NODE_ENV:
+      name: NODE_ENV
+      value: production
+  service:
+    port: 4006
+
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+      nginx.ingress.kubernetes.io/use-regex: "true"
+    path: /image-watcher(/|$)(.*)
+    port: 4006
+
+  config:
+    production.json: {
+      "PORT": 4006,
+      "HOST": "0.0.0.0",
+      "REDIS": {
+        "PORT": 6379,
+        "HOST": "localhost",
+        "TIMEOUT": 100
+      },
+      "INSPECT": {
+        "DEPTH": 4,
+        "SHOW_HIDDEN": false,
+        "COLOR": true
+      },
+      "IMAGES": [
+        "mojaloop/account-lookup-service",
+        "mojaloop/central-ledger",
+        "mojaloop/ml-api-adapter",
+        "mojaloop/auth-service",
+        "mojaloop/transaction-requests-service",
+        "mojaloop/quoting-service",
+        "mojaloop/thirdparty-api-adapter",
+        "mojaloop/ml-operator",
+        "ldaly/dev-portal"
+      ],
+      "SCRAPE_TIME_MS": 30000
+    }
+
+redis:
+  enabled: true
+  image: redis:5.0.4-alpine
+  env: {}
