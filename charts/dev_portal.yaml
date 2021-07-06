@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: dev-portal
-          image: ldaly/dev-portal:v0.1.3
+          image: mojaloop/contrib-dev-portal:v0.1.8
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:

@@ -80,7 +80,7 @@ image-watcher:
         "mojaloop/quoting-service",
         "mojaloop/thirdparty-api-adapter",
         "mojaloop/ml-operator",
-        "ldaly/dev-portal"
+        "mojaloop/contrib-dev-portal"
       ],
       "SCRAPE_TIME_MS": 30000
     }
