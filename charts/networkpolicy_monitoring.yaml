@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hn-nodes-custom
+  namespace: ml-app
+spec:
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.42.3.0/24
+  podSelector: {}
+  policyTypes:
+  - Ingress

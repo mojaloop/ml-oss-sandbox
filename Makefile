@@ -70,6 +70,19 @@ install-ml-operator:
 	helm upgrade --install --namespace ${NAMESPACE} ml-operator ../helm/ml-operator --values ./config/values-ml-operator.yaml
 
 
+# wip - adding monitoring stuff
+install-monitoring:
+	# helm upgrade --install --namespace ${NAMESPACE} promfana mojaloop/promfana
+	# kubectl apply -f ./charts/networkpolicy_monitoring.yaml
+	kubectl apply -f ./charts/ingress_monitoring.yaml
+
+	@echo -e 'Use these details to login to Grafana:\nUsername:'
+	@kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-user"}}' | base64 -d
+	@echo -e '\npassword:'
+	@kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-password"}}' | base64 -d
+
+	# TODO: for now, use lens to do magic port forwarding, but we need to expose the ingress better
+
 ##
 # application tools
 ##
@@ -124,6 +137,11 @@ uninstall-base:
 
 uninstall-ml-operator:
 	helm delete ml-operator
+
+
+uninstall-monitoring:
+	helm delete promfana
+
 
 ##
 # Utils

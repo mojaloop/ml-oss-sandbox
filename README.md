@@ -98,3 +98,11 @@ http://beta.moja-lab.live/api/admin/account-lookup-service-admin
 - [ ] fix broken guide #2 transfers
 - [ ] turn on auto-accept quotes, so that simulator-ui works again
 - [ ] double check other guides - Simulator, TTK P2P
+
+
+
+
+
+Port forward command:
+
+kubectl port-forward -n ml-app service/promfana-grafana 35395:80
