@@ -106,3 +106,46 @@ http://beta.moja-lab.live/api/admin/account-lookup-service-admin
 Port forward command:
 
 kubectl port-forward -n ml-app service/promfana-grafana 35395:80
+
+
+## Debugging Elasticsearch stuff
+
+_reference_: https://github.com/mojaloop/event-stream-processor#1111-create
+
+
+```bash
+curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?pretty" \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "policy": {
+    "phases": {
+      "hot": {
+        "actions": {
+          "rollover": {
+            "max_age": "30d",
+            "max_size": "20GB"
+          },
+          "set_priority": {
+            "priority": 100
+          }
+        },
+        "min_age": "0ms"
+      },
+      "delete": {
+        "min_age": "30d",
+        "actions": {
+          "delete": {}
+        }
+      }
+    }
+  }
+}'
+
+curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?"
+
+curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template?pretty" \
+  -H 'Content-Type: application/json' \
+  -d @template-mojaloop.json
+
+curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template"
+```

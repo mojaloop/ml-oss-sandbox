@@ -18,13 +18,8 @@ metadata:
   name: monitoring
   annotations:
     kubernetes.io/ingress.class: kong
-    konghq.com/strip-path: "true"
-    # This is required to rewrite paths to services that contain multiple endpoints, 
-    # e.g. /participants and /parties are both on the account-lookup-service
-    # enable basic auth for these routes
-    # konghq.com/plugins: monitoring-rewrite
-    # note: temporarily disabling for easy access
-    # konghq.com/plugins: admin-rewrite, basic-auth-example
+    # konghq.com/strip-path: "true"
+    konghq.com/plugins: monitoring-rewrite
 spec:
   rules:
     - http:
@@ -37,6 +32,11 @@ spec:
             backend:
               serviceName: elasticsearch-master
               servicePort: 9200
+          # Example - for testing out rewrite rules
+          # - path: /monitoring/elasticsearch/(.*)
+          #   backend:
+          #     serviceName: echo
+          #     servicePort: 80
           # - path: /api/admin/account-lookup-service/(.*)
           #   backend:
           #     serviceName: mojaloop-account-lookup-service
@@ -53,10 +53,3 @@ spec:
           #   backend:
           #     serviceName: mojaloop-simulator
           #     servicePort: 80
-          # # todo: this isn't currently working
-          # # - path: /api/admin/dashboard/(.*)
-          # - path: /admin/dashboard
-          #   backend:
-          #     serviceName: kubernetes-dashboard
-          #     servicePort: 443
-         

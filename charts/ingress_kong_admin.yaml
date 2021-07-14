@@ -75,10 +75,4 @@ spec:
             backend:
               serviceName: mojaloop-simulator
               servicePort: 80
-          # todo: this isn't currently working
-          # - path: /api/admin/dashboard/(.*)
-          - path: /admin/dashboard
-            backend:
-              serviceName: kubernetes-dashboard
-              servicePort: 443
          
