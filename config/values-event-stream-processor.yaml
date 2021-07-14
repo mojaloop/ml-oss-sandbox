@@ -111,10 +111,10 @@ config:
   kafka_host: kafka
   kafka_port: 9092
   # fluentd_host: '$release_name-fluentd-elasticsearch-tcp-ingest'
-  fluentd_host: efk-fluentd-elasticsearch-tcp-ingest.logging
+  fluentd_host: efk-fluentd-elasticsearch-tcp-ingest
   fluentd_port: 24224
   fluentd_namespace: logstash
-  efk_host: elasticsearch-master.logging:9200
+  efk_host: elasticsearch-master:9200
   efk_log: error
   efk_compression: gzip
   efk_index_name: mojaloop

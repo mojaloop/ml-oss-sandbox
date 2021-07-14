@@ -32,24 +32,19 @@ spec:
             backend:
               serviceName: elasticsearch-master
               servicePort: 9200
-          # Example - for testing out rewrite rules
-          # - path: /monitoring/elasticsearch/(.*)
-          #   backend:
-          #     serviceName: echo
-          #     servicePort: 80
-          # - path: /api/admin/account-lookup-service/(.*)
-          #   backend:
-          #     serviceName: mojaloop-account-lookup-service
-          #     servicePort: 80
-          # - path: /api/admin/account-lookup-service-admin/(.*)
-          #   backend:
-          #     serviceName: mojaloop-account-lookup-service-admin
-          #     servicePort: 80
-          # - path: /api/admin/ml-api-adapter/(.*)
-          #   backend:
-          #     serviceName: mojaloop-ml-api-adapter-service
-          #     servicePort: 80
-          # - path: /api/admin/oracle-simulator/(.*)
-          #   backend:
-          #     serviceName: mojaloop-simulator
-          #     servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana
+  annotations:
+    kubernetes.io/ingress.class: kong
+spec:
+  rules:
+    - host: kibana.beta.moja-lab.live
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: efk-kibana
+              servicePort: 5601

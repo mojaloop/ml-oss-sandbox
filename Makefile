@@ -72,12 +72,14 @@ install-ml-operator:
 
 # wip - adding monitoring stuff
 install-monitoring:
-	#helm upgrade --install --namespace ${NAMESPACE} efk mojaloop/efk --values ./config/values-efk.yaml
 	# helm upgrade --install --namespace ${NAMESPACE} promfana mojaloop/promfana
-	#kubectl apply -f ./charts/ingress_monitoring.yaml
 	# kubectl apply -f ./charts/networkpolicy_monitoring.yaml
 
-	# TODO: add elastic indexes etc
+	helm upgrade --install --namespace ${NAMESPACE} efk mojaloop/efk --values ./config/values-efk.yaml
+	kubectl apply -f ./charts/ingress_monitoring.yaml
+
+	@# add elastic indexes etc
+	make _add_elastic_indexes
 
 	@#install the event stream processor
 	helm upgrade --install --namespace ${NAMESPACE} event-stream-processor mojaloop/eventstreamprocessor --values ./config/values-event-stream-processor.yaml
@@ -88,6 +90,8 @@ install-monitoring:
 	# @kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-password"}}' | base64 -d
 
 	# TODO: for now, use lens to do magic port forwarding, but we need to expose the ingress better
+	@echo -e 'Log in to kibana here:\n\thttp://kibana.beta.moja-lab.live/app/home'
+
 
 ##
 # application tools
@@ -147,7 +151,8 @@ uninstall-ml-operator:
 
 uninstall-monitoring:
 	helm delete event-stream-processor
-	helm delete promfana
+	helm delete efk
+	# helm delete promfana
 	kubectl delete -f ./charts/ingress_monitoring.yaml
 
 
@@ -198,6 +203,18 @@ list-dfsp-accounts:
 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/eggmm | jq
 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/figmm | jq
 
+
+_add_elastic_indexes:
+	curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?pretty" \
+		-H 'Content-Type: application/json' \
+		-d @policy-rollover-mojaloop.json
+
+	curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template?pretty" \
+		-H 'Content-Type: application/json' \
+		-d @template-mojaloop.json
+
+	curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?" | jq
+	curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template" | jq
 
 ##
 # Stateful make commands
