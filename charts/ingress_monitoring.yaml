@@ -33,6 +33,10 @@ spec:
             backend:
               serviceName: promfana-grafana
               servicePort: 80
+          - path: /monitoring/elasticsearch/(.*)
+            backend:
+              serviceName: elasticsearch-master
+              servicePort: 9200
           # - path: /api/admin/account-lookup-service/(.*)
           #   backend:
           #     serviceName: mojaloop-account-lookup-service
