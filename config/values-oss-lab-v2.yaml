@@ -52,7 +52,6 @@ central:
     mysql:
       enabled: false
 
-    # TODO: disable kafka
     kafka:
       enabled: true
 
