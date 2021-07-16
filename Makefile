@@ -52,7 +52,7 @@ install-thirdparty:
 	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
 	# install the chart
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty ./charts/thirdparty
-
+# 
 install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# Applebank
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
@@ -78,11 +78,12 @@ install-monitoring:
 	helm upgrade --install --namespace ${NAMESPACE} efk mojaloop/efk --values ./config/values-efk.yaml
 	kubectl apply -f ./charts/ingress_monitoring.yaml
 
-	@# add elastic indexes etc
-	make _add_elastic_indexes
-
 	@#install the event stream processor
 	helm upgrade --install --namespace ${NAMESPACE} event-stream-processor mojaloop/eventstreamprocessor --values ./config/values-event-stream-processor.yaml
+
+	# Note: potential race condition here...
+	@# add elastic indexes etc
+	make _add_elastic_indexes
 
 	# @echo -e 'Use these details to login to Grafana:\nUsername:'
 	# @kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-user"}}' | base64 -d
@@ -96,7 +97,6 @@ install-monitoring:
 ##
 # application tools
 ##
-
 run-ml-bootstrap: run-ml-bootstrap-hub run-ml-bootstrap-participants run-ml-bootstrap-parties
 
 run-ml-bootstrap-hub:

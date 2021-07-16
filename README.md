@@ -125,3 +125,16 @@ curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_t
 curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?"
 curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template"
 ```
+
+
+
+### Running Kafkacat and tailing kafka
+
+```bash
+helm install -n ml-app kafkacat cord/kafkacat    
+kubectl get po | grep kafkaca
+kubectl exec -it kafkacat-d6457c947-cdf8j sh         
+
+#then, inside the pod:
+kafkacat -b mojaloop-kafka:9092 -t topic-event | jq
+```

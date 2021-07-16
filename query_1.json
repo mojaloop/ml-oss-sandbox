@@ -1,0 +1,34 @@
+{
+  "body": {
+    "query" : {
+      "bool": {
+        "must": [],
+        "filter": [
+          {
+            "bool": {
+              "should": [
+                {
+                  "exists": {
+                    "field": "ctx.body.amount.amount"
+                  }
+                }
+              ],
+              "minimum_should_match": 1
+            }
+          },
+          {
+            "range": {
+              "@timestamp": {
+                "gte": "2021-07-14T05:30:00.000Z",
+                "lte": "2021-07-14T07:12:59.599Z",
+                "format": "strict_date_optional_time"
+              }
+            }
+          }
+        ],
+        "should": [],
+        "must_not": []
+      }
+    }
+  }
+}
