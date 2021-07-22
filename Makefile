@@ -43,8 +43,13 @@ install-simulators:
 	kubectl apply -f ./charts/ingress_simulators.yaml
 
 install-ttk:
+# dfsp simulating ttks
 	helm upgrade --install --namespace ${NAMESPACE} figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
 	helm upgrade --install --namespace ${NAMESPACE} eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
+
+# support for ttk that mimics the switch for easy testing
+	helm upgrade --install --namespace ${NAMESPACE} ttk-switch mojaloop/ml-testing-toolkit --values ./config/values-ttk-switch.yaml
+
 
 # Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
 install-thirdparty:
@@ -155,6 +160,10 @@ uninstall-monitoring:
 	# helm delete promfana
 	kubectl delete -f ./charts/ingress_monitoring.yaml
 
+uninstall-ttk:
+	helm del ttk-switch 
+	helm del figmm-ttk
+	helm del eggmm-ttk
 
 
 ##
