@@ -1,0 +1,17 @@
+{
+  "/health/": {
+    "get": {
+      "response": {}
+    }
+  },
+  "/linking/providers": {
+    "get": {
+      "response": {}
+    }
+  },
+  "/linking/accounts/{fspId}/{userId}": {
+    "get": {
+      "response": {}
+    }
+  }
+}

@@ -117,3 +117,27 @@ spec:
             backend:
               serviceName: ppmm-ttk-ml-testing-toolkit-backend
               servicePort: 5000
+
+    - host: switch-ttk.beta.moja-lab.live
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: ttk-switch-ml-testing-toolkit-backend
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: ttk-switch-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: ttk-switch-ml-testing-toolkit-backend
+              servicePort: 5050
+
+    - host: switch-ttk-backend-fspiop.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: ttk-switch-ml-testing-toolkit-backend
+              servicePort: 5000

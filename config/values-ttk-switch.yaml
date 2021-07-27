@@ -425,20 +425,34 @@ ml-testing-toolkit-backend:
   extraEnvironments: {}
   global: {}
   image:
-    command: '["sh", "-c", "cd /opt/mojaloop-testing-toolkit; if [ -f /opt/default_config/user_config.json
-      ]; then cp /opt/default_config/user_config.json spec_files; fi; if [ -f /opt/default_config/system_config.json
-      ]; then cp /opt/default_config/system_config.json spec_files; fi; npm run start;"]'
-    commandPersistence: '["sh", "-c", "cd /opt/mojaloop-testing-toolkit; if [ -d /opt/ttk-data
-      ]; then if [ ! -d /opt/ttk-data/spec_files ]; then if [ -f /opt/default_config/user_config.json
-      ]; then cp /opt/default_config/user_config.json spec_files; fi; if [ -f /opt/default_config/system_config.json
-      ]; then cp /opt/default_config/system_config.json spec_files; fi; cp -pR spec_files
-      /opt/ttk-data/spec_files; fi; mv spec_files spec_files_default; ln -s /opt/ttk-data/spec_files
-      spec_files; else if [ -f /opt/default_config/user_config.json ]; then cp /opt/default_config/user_config.json
-      spec_files; fi; if [ -f /opt/default_config/system_config.json ]; then cp /opt/default_config/system_config.json
-      spec_files; fi; fi; npm run start;"]'
+    # TODO: update branch name and repo url to upstream master.
+    command: >
+      ["sh", "-c", 
+        "BRANCH_NAME=feat/3p-scheme-adapter-outbound-ttk;
+        REPO_URL=https://github.com/lewisdaly/pisp/archive/${BRANCH_NAME}.zip;
+        SRC_CONFIG_PATH=/tmp/pisp/pisp-feat-3p-scheme-adapter-outbound-ttk/docker-contract/ml-testing-toolkit/spec_files;
+        DEST_CONFIG_PATH=/opt/mojaloop-testing-toolkit/spec_files;
+        mkdir -p /tmp/pisp;
+        wget ${REPO_URL} -O /tmp/pisp.zip;
+        unzip /tmp/pisp.zip -d /tmp/pisp;
+        ls ${SRC_CONFIG_PATH};
+        rm -rf ${DEST_CONFIG_PATH};
+        cp -R ${SRC_CONFIG_PATH} ${DEST_CONFIG_PATH};
+        npm run start;
+        "
+      ]
+    # command: '["sh", "-c", "cd /opt/mojaloop-testing-toolkit; if [ -f /opt/default_config/user_config.json
+    #   ]; then cp /opt/default_config/user_config.json spec_files; fi; if [ -f /opt/default_config/system_config.json
+    #   ]; then cp /opt/default_config/system_config.json spec_files; fi; npm run start;"]'
+    # commandPersistence: '["sh", "-c", "cd /opt/mojaloop-testing-toolkit; if [ -d /opt/ttk-data
+    #   ]; then if [ ! -d /opt/ttk-data/spec_files ]; then if [ -f /opt/default_config/user_config.json
+    #   ]; then cp /opt/default_config/user_config.json spec_files; fi; if [ -f /opt/default_config/system_config.json
+    #   ]; then cp /opt/deffault_config/system_config.json spec_files; fi; cp -pR spec_files
+    #   /opt/ttk-data/spec_files; fi; mv spec_files spec_files_default; ln -s /opt/ttk-data/spec_files
+    #   spec_files; else if [ -f /opt/default_config/user_config.json ]; then cp /opt/default_config/user_config.json
+    #   spec_files; fi; if [ -f /opt/default_config/system_config.json ]; then cp /opt/default_config/system_config.json
+    #   spec_files; fi; fi; npm run start;"]'
     pullPolicy: Always
-    repository: mojaloop/ml-testing-toolkit
-    tag: v11.5.0
   ingress:
     annotations: {}
     enabled: false
@@ -494,8 +508,6 @@ ml-testing-toolkit-frontend:
   image:
     command: '["sh", "/usr/share/nginx/start.sh"]'
     pullPolicy: Always
-    repository: mojaloop/ml-testing-toolkit-ui
-    tag: v11.5.0
   ingress:
     annotations: {}
     enabled: false
