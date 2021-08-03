@@ -44,9 +44,8 @@ install-simulators:
 
 install-ttk:
 # dfsp simulating ttks
-	# TODO: add back...
-	# helm upgrade --install --namespace ${NAMESPACE} figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
-	# helm upgrade --install --namespace ${NAMESPACE} eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
+	helm upgrade --install --namespace ${NAMESPACE} figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
+	helm upgrade --install --namespace ${NAMESPACE} eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
 
 # support for ttk that mimics the switch for easy testing
 	helm upgrade --install --namespace ${NAMESPACE} ttk-switch mojaloop/ml-testing-toolkit --values ./config/values-ttk-switch.yaml
