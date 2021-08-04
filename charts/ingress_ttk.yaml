@@ -15,10 +15,7 @@ metadata:
   name: ttk
   annotations:
     kubernetes.io/ingress.class: kong
-    # konghq.com/strip-path: "true"
-    # This is required to rewrite paths to services that contain multiple endpoints, 
-    # e.g. /participants and /parties are both on the account-lookup-service
-    # konghq.com/plugins: ttk-rewrite
+    konghq.com/plugins: ttk-rewrite
 spec:
   rules:
   # default install... no longer valid but a good ref
@@ -138,6 +135,15 @@ spec:
       http:
         paths:
           - path: /(.*)
+            backend:
+              serviceName: ttk-switch-ml-testing-toolkit-backend
+              servicePort: 5000
+
+    # Also expose the switch ttk backend so that we can
+    # call it from the browser without CORS issues
+    - http:
+        paths:
+          - path: /switch-ttk-backend/(.*)
             backend:
               serviceName: ttk-switch-ml-testing-toolkit-backend
               servicePort: 5000
