@@ -12,10 +12,9 @@ plugin: request-transformer
 apiVersion: extensions/v1beta1 
 kind: Ingress
 metadata:
-  name: ttk
+  name: ttk-host
   annotations:
     kubernetes.io/ingress.class: kong
-    konghq.com/plugins: ttk-rewrite
 spec:
   rules:
   # default install... no longer valid but a good ref
@@ -138,7 +137,16 @@ spec:
             backend:
               serviceName: ttk-switch-ml-testing-toolkit-backend
               servicePort: 5000
-
+---
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ttk-path
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: ttk-rewrite
+spec:
+  rules:
     # Also expose the switch ttk backend so that we can
     # call it from the browser without CORS issues
     - http:
