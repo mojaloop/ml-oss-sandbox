@@ -21,6 +21,7 @@ metadata:
     konghq.com/plugins: simulators-rewrite
 spec:
   rules:
+    # TODO: fix path based!!!
     - http:
         paths:
           ##
@@ -59,7 +60,8 @@ spec:
               serviceName: simulators-sim-bananabank-scheme-adapter
               servicePort: 4000
 
-    # Legacy ingress - replaced by the above
+      
+    # Legacy ingress - will be replaced by the above once we fix it...
     - host: payeefsp-backend.beta.moja-lab.live
       http:
         paths:
@@ -279,4 +281,4 @@ spec:
           - path: /(.*)
             backend:
               serviceName: simulators-sim-duriantech-scheme-adapter
-              servicePort: 4001
+              servicePort: 4000

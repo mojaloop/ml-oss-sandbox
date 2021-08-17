@@ -39,9 +39,8 @@ install-dev-portal:
 # DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs
 # for simulators including PISP support - refer to `install-thirdparty-simulators`
 install-simulators: .contrib-firebase-simulator-secret
-# TODO: uncomment
-	# helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
-	# kubectl apply -f ./charts/ingress_simulators.yaml
+	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
+	kubectl apply -f ./charts/ingress_simulators.yaml
 
 # TODO: deploy everything under ./charts/bankone eventually... for now, let's get going with the contrib-firebase-simulator
 	kubectl apply -f ./charts/bankone/contrib-firebase-simulator.yaml
@@ -62,7 +61,8 @@ install-thirdparty:
 	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
 	# install the chart
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty ./charts/thirdparty
-# 
+
+# TODO: amalgamate or better separate between this and the install-simulators command
 install-thirdparty-simulators: .thirdparty-demo-server-secret
 	# Applebank
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
@@ -317,11 +317,12 @@ _add_elastic_indexes:
 
 
 
-# health-check-participants:
-# 	@echo 'Checking health of all participants'
-# # note: not all health checks contain a response body
-# # so they are commented out - comments are left for completeness
-# # dfspa
+health-check-participants:
+	@echo 'Checking health of all participants'
+# note: not all health checks contain a response body
+# so they are commented out - comments are left for completeness
+# dfspa
+
 # # No health check on /inbound
 # # curl -s $(ELB_URL)/dfspa/sdk-scheme-adapter/inbound | jq
 # 	curl -s $(ELB_URL)/dfspa/sdk-scheme-adapter/outbound | jq
@@ -343,13 +344,17 @@ _add_elastic_indexes:
 # # curl -s $(ELB_URL)/dfspb/mojaloop-simulator/report | jq
 # # curl -s $(ELB_URL)/dfspb/mojaloop-simulator/test | jq
 
-# #pispa
-# 	curl -s $(ELB_URL)/pispa/thirdparty-scheme-adapter/inbound/health | jq
-# 	curl -s $(ELB_URL)/pispa/thirdparty-scheme-adapter/outbound/health | jq
-# 	curl -s $(ELB_URL)/pispa/mojaloop-simulator/simulator | jq
-# #@ No health check on /report or /test
-# #@ curl -s $(ELB_URL)/pispa/mojaloop-simulator/report | jq
-# #@ curl -s $(ELB_URL)/pispa/mojaloop-simulator/test | jq
+#	applebank is a PISP-supporting-DFSP
+	curl -s $(BASE_URL)/applebank/thirdparty-scheme-adapter/inbound/health | jq
+	curl -s $(BASE_URL)/applebank/thirdparty-scheme-adapter/outbound/health | jq
+	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/inbound/ | jq
+	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/outbound/
+
+# TODO fix mojaloop-simulator for applebank
+# curl -s $(BASE_URL)/applebank/mojaloop-simulator/simulator | jq
+#@ No health check on /report or /test
+#@ curl -s $(ELB_URL)/applebank/mojaloop-simulator/report | jq
+#@ curl -s $(ELB_URL)/applebank/mojaloop-simulator/test | jq
 
 
 # transfer-p2p:
