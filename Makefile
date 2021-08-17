@@ -261,7 +261,7 @@ _add_elastic_indexes:
 
 .contrib-firebase-simulator-secret:
 	kubectl create secret generic contrib-firebase-simulator --from-file=../contrib-firebase-simulator/config/serviceAccountKey.json
-	@touch .thirdparty-demo-server-secret
+	@touch .contrib-firebase-simulator-secret
 
 
 .thirdparty-demo-server-secret:
