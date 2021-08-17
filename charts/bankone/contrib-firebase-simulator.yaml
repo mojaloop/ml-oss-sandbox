@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pisp-demo-server
+  name: contrib-firebase-simulator
   labels:
-    app: pisp-demo-server
+    app: contrib-firebase-simulator
 spec:
-  replicas: 0
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1 # exeed the replicas by 1 pod
   selector:
     matchLabels:
-      app: pisp-demo-server
+      app: contrib-firebase-simulator
   template:
     metadata:
       labels:
-        app: pisp-demo-server
+        app: contrib-firebase-simulator
     spec:
       volumes:
         - name: firebase-secret-volume
           secret:
             secretName: firebase-secret
       containers:
-        - name: pisp-demo-server
-          image: mojaloop/pisp-demo-server:v0.1.7
+        - name: contrib-firebase-simulator
+          image: mojaloop/contrib-firebase-simulator:v0.1.7
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10
@@ -43,37 +43,30 @@ spec:
             - name: IP_ADDRESS
               value: "0.0.0.0"
             - name: MOJALOOP_PARTICIPANT_ID
-              value: "pineapplepay"
-            - name: EXPERIMENTAL_MODE
-              value: "on"
-            # The testing Toolkit for thirdparty API demos
-            - name: THIRDPARTY_API_URL
-              # value: "tp-ttk-backend-1.beta.moja-lab.live"
-              # temp - localtunnel for demo
-              value: "good-starfish-24.loca.lt"
+              value: "bankone"
           volumeMounts:
             - name: firebase-secret-volume
-              mountPath: "/opt/pisp-demo-server/secret/serviceAccountKey.json"
+              mountPath: "/opt/contrib-firebase-simulator/secret/serviceAccountKey.json"
               subPath: serviceAccountKey.json
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: pisp-demo-server
+  name: contrib-firebase-simulator
 spec:
   ports:
     # TODO:
     - port: 8080
       name: ui
   selector:
-    app: pisp-demo-server
+    app: contrib-firebase-simulator
   clusterIP: None
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: pisp-demo-server
+  name: contrib-firebase-simulator
   annotations:
     kubernetes.io/ingress.class: kong
     # This is required to rewrite paths to services that contain multiple endpoints, 
@@ -84,7 +77,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /pineapplepay/(.*)
+          - path: /bankone/(.*)
             backend:
-              serviceName: pisp-demo-server
+              serviceName: contrib-firebase-simulator
               servicePort: 8080

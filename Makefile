@@ -36,11 +36,15 @@ install-ingress:
 install-dev-portal:
 	kubectl apply -f ./charts/dev_portal.yaml
 
-# Vanilla Simulators using standalone simulator chart
+# DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs
 # for simulators including PISP support - refer to `install-thirdparty-simulators`
 install-simulators:
 	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
 	kubectl apply -f ./charts/ingress_simulators.yaml
+
+# TODO: deploy everything under ./charts/bankone eventually... for now, let's get going with the contrib-firebase-simulator
+	kubectl apply -f ./charts/bankone/contrib-firebase-simulator.yaml
+
 
 install-ttk:
 # dfsp simulating ttks
@@ -164,6 +168,10 @@ uninstall-ttk:
 	helm del ttk-switch 
 	helm del figmm-ttk
 	helm del eggmm-ttk
+
+
+uninstall-simulators:
+	kubectl delete -f ./charts/bankone/contrib-firebase-simulator.yaml
 
 
 ##
