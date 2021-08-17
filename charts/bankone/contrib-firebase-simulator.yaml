@@ -4,6 +4,7 @@ metadata:
   name: contrib-firebase-simulator
   labels:
     app: contrib-firebase-simulator
+    app.kubernetes.io/name: contrib-firebase-simulator
 spec:
   replicas: 1
   strategy:
