@@ -199,5 +199,6 @@
       fspiopCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
       thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
     },
+    // TODO: pispa
   ]
 }
