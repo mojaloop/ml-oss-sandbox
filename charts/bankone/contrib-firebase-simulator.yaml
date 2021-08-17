@@ -21,7 +21,7 @@ spec:
       volumes:
         - name: firebase-secret-volume
           secret:
-            secretName: firebase-secret
+            secretName: contrib-firebase-simulator-secret
       containers:
         - name: contrib-firebase-simulator
           image: mojaloop/contrib-firebase-simulator:v0.1.7

@@ -38,7 +38,7 @@ install-dev-portal:
 
 # DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs
 # for simulators including PISP support - refer to `install-thirdparty-simulators`
-install-simulators:
+install-simulators: .contrib-firebase-simulator-secret
 	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
 	kubectl apply -f ./charts/ingress_simulators.yaml
 
@@ -258,6 +258,11 @@ _add_elastic_indexes:
 # 	helm install kafka public/kafka --values ./charts-base/kafka_values.yaml
 # 	helm install nginx ingress-nginx/ingress-nginx --version 2.16.0
 # 	@touch .install-base
+
+.contrib-firebase-simulator-secret:
+	kubectl create secret generic contrib-firebase-simulator --from-file=../contrib-firebase-simulator/config/serviceAccountKey.json
+	@touch .thirdparty-demo-server-secret
+
 
 .thirdparty-demo-server-secret:
 	kubectl create secret generic firebase-secret --from-file=../pisp-demo-server/secret/serviceAccountKey.json
