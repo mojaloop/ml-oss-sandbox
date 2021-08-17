@@ -18,7 +18,8 @@ ml-operator:
     production.json: {
        "SERVICES": [
           # List the services you want to watch
-          "dev-portal"
+          "dev-portal",
+          "contrib-firebase-simulator",
         ],
         "UPGRADE_STRATEGY": "MINOR",
         "CHECK_FOR_UPDATE_CRON": "0/5 * * * *",
@@ -80,7 +81,8 @@ image-watcher:
         "mojaloop/quoting-service",
         "mojaloop/thirdparty-api-adapter",
         "mojaloop/ml-operator",
-        "mojaloop/contrib-dev-portal"
+        "mojaloop/contrib-dev-portal",
+        "mojaloop/contrib-firebase-simulator"
       ],
       "SCRAPE_TIME_MS": 30000
     }

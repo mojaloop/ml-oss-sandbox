@@ -21,10 +21,10 @@ spec:
       volumes:
         - name: firebase-secret-volume
           secret:
-            secretName: contrib-firebase-simulator-secret
+            secretName: contrib-firebase-simulator
       containers:
         - name: contrib-firebase-simulator
-          image: mojaloop/contrib-firebase-simulator:v0.1.7
+          image: mojaloop/contrib-firebase-simulator:v0.1.0
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10
@@ -46,7 +46,7 @@ spec:
               value: "bankone"
           volumeMounts:
             - name: firebase-secret-volume
-              mountPath: "/opt/contrib-firebase-simulator/secret/serviceAccountKey.json"
+              mountPath: "/opt/contrib-firebase-simulator/config/serviceAccountKey.json"
               subPath: serviceAccountKey.json
 
 ---

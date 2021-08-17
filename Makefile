@@ -39,8 +39,9 @@ install-dev-portal:
 # DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs
 # for simulators including PISP support - refer to `install-thirdparty-simulators`
 install-simulators: .contrib-firebase-simulator-secret
-	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
-	kubectl apply -f ./charts/ingress_simulators.yaml
+# TODO: uncomment
+	# helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
+	# kubectl apply -f ./charts/ingress_simulators.yaml
 
 # TODO: deploy everything under ./charts/bankone eventually... for now, let's get going with the contrib-firebase-simulator
 	kubectl apply -f ./charts/bankone/contrib-firebase-simulator.yaml
@@ -75,9 +76,7 @@ install-thirdparty-simulators: .thirdparty-demo-server-secret
 
 # Experimental chart - ml-operator can be used to auto-upgrade stuff
 install-ml-operator:
-	# helm upgrade --install --namespace ${NAMESPACE} ml-operator ../ml-operator/charts
 	helm upgrade --install --namespace ${NAMESPACE} ml-operator ../helm/ml-operator --values ./config/values-ml-operator.yaml
-
 
 # wip - adding monitoring stuff
 install-monitoring:

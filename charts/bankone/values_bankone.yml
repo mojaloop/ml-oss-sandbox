@@ -1,6 +1,6 @@
 
-participantName: 'A Bank'
-participantId: 'dfspa'
+participantName: 'BankOne'
+participantId: 'bankone'
 
 # Set both to true if DFSP, set only `thirdpartyApiSupport` to true if PISP
 thirdpartyApiSupport: true
@@ -69,7 +69,7 @@ sdk_scheme_adapter:
     # value. This config item has been copied from the service repo for consistency with that,
     # so that if you come here and find this variable, with this comment, it's less confusing
     # than if you come here and it's missing entirely.
-    # BACKEND_ENDPOINT: "localhost:3000"
+    BACKEND_ENDPOINT: "contrib-firebase-simulator"
 
     # FSPID of this DFSP
     # Commented by default- you're likely to break the chart if you configure this value.

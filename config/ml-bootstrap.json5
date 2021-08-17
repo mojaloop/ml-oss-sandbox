@@ -55,6 +55,18 @@
         },
       ]
     },
+     {
+      id: 'bankone',
+      type: 'DFSP_SUPPORTING_PISP',
+      // 3p-scheme-adapters + simulators have slightly different ingress
+      // since they were not deployed by helm
+      simulatorAdminUrl: 'http://beta.moja-lab.live/bankone/simulator',
+      fspiopCallbackUrl: 'http://beta.moja-lab.live/bankone/sdk-scheme-adapter/inbound',
+      thirdpartyCallbackUrl: 'http://beta.moja-lab.live/bankone/thirdparty-scheme-adapter/inbound',
+      parties: [
+
+      ]
+    },
     {
       id: 'bananabank',
       type: 'DFSP',
