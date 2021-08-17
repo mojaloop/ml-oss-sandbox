@@ -20,12 +20,12 @@ spec:
         app: contrib-firebase-simulator
     spec:
       volumes:
-        - name: firebase-secret-volume
+        - name: contrib-firebase-simulator-volume
           secret:
             secretName: contrib-firebase-simulator
       containers:
         - name: contrib-firebase-simulator
-          image: mojaloop/contrib-firebase-simulator:v0.1.0
+          image: mojaloop/contrib-firebase-simulator:v0.2.3
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10
@@ -46,7 +46,7 @@ spec:
             - name: MOJALOOP_PARTICIPANT_ID
               value: "bankone"
           volumeMounts:
-            - name: firebase-secret-volume
+            - name: contrib-firebase-simulator-volume
               mountPath: "/opt/contrib-firebase-simulator/config/serviceAccountKey.json"
               subPath: serviceAccountKey.json
 
@@ -67,7 +67,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: contrib-firebase-simulator
+  name: contrib-firebase-simulator-ingress-svc
   annotations:
     kubernetes.io/ingress.class: kong
     # This is required to rewrite paths to services that contain multiple endpoints, 
@@ -78,6 +78,25 @@ spec:
   rules:
     - http:
         paths:
+          - path: /bankone/app/(.*)
+            backend:
+              serviceName: contrib-firebase-simulator
+              servicePort: 8080
+--- 
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: contrib-firebase-simulator-ingress-ui
+  annotations:
+    kubernetes.io/ingress.class: kong
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /bankone
+            backend:
+              serviceName: contrib-firebase-simulator
+              servicePort: 8080
           - path: /bankone/(.*)
             backend:
               serviceName: contrib-firebase-simulator

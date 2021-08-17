@@ -9,7 +9,7 @@ DIR = $(shell pwd)
 
 # custom config:
 NAMESPACE = ml-app
-BASE_URL = beta.moja-lab.live
+BASE_URL = sandbox.mojaloop.io
 
 ##
 # installation
@@ -17,12 +17,12 @@ BASE_URL = beta.moja-lab.live
 install-switch: .install-base
 	helm upgrade --install --namespace ${NAMESPACE} mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
 
-# alternative to the above - in case you want to use the locally checked out mojaloop charts
-# for development
-install-switch-local: .install-base
-	# package local charts
-	# cd ../helm; ./package.sh
-	helm upgrade --install --namespace ${NAMESPACE} mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
+# Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
+install-thirdparty:
+	# install the databases separately
+	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
+	# install the chart
+	helm upgrade --install --namespace ${NAMESPACE} thirdparty ./charts/thirdparty
 
 install-ingress:
 	helm upgrade --install --namespace ${NAMESPACE} kong kong/kong -f ./config/kong_values.yaml
@@ -36,70 +36,50 @@ install-ingress:
 install-dev-portal:
 	kubectl apply -f ./charts/dev_portal.yaml
 
-# DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs
-# for simulators including PISP support - refer to `install-thirdparty-simulators`
-install-simulators: .contrib-firebase-simulator-secret
-	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
-	kubectl apply -f ./charts/ingress_simulators.yaml
-
-# TODO: deploy everything under ./charts/bankone eventually... for now, let's get going with the contrib-firebase-simulator
-	kubectl apply -f ./charts/bankone/contrib-firebase-simulator.yaml
-
-
 install-ttk:
-# dfsp simulating ttks
-	helm upgrade --install --namespace ${NAMESPACE} figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
-	helm upgrade --install --namespace ${NAMESPACE} eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
-
 # support for ttk that mimics the switch for easy testing
 	helm upgrade --install --namespace ${NAMESPACE} ttk-switch mojaloop/ml-testing-toolkit --values ./config/values-ttk-switch.yaml
 
+install-simulators: install-simulators-dfsp install-simulators-pisp install-simulators-dfsp-supporting-pisp install-simulators-other
 
-# Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
-install-thirdparty:
-	# install the databases separately
-	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
-	# install the chart
-	helm upgrade --install --namespace ${NAMESPACE} thirdparty ./charts/thirdparty
+# DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs
+# for simulators including PISP support - refer to `install-thirdparty-simulators`
+install-simulators-dfsp: .contrib-firebase-simulator-secret
+# bananabank, carrotmm, duriantech
+	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
+	kubectl apply -f ./charts/ingress_simulators.yaml
 
-# TODO: amalgamate or better separate between this and the install-simulators command
-install-thirdparty-simulators: .thirdparty-demo-server-secret
-	# Applebank
-	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
-	
-	# Pineapplepay - pisp-demo-server, required for pineapple pay/demo app flutter
+# dfsp simulating ttks - figmm, eggmm
+	helm upgrade --install --namespace ${NAMESPACE} figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
+	helm upgrade --install --namespace ${NAMESPACE} eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
+
+
+install-simulators-pisp: .thirdparty-demo-server-secret
+# pineapplepay - pisp-demo-server, required for pineapple pay/demo app flutter
 	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
 
-	# OTP/Auth Code Simulator (currently just the TTK)
+# pispa - a plain old pisp
+	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-pispa.yaml
+
+
+
+install-simulators-dfsp-supporting-pisp:
+# Applebank
+	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
+
+# bankone
+	kubectl apply -f ./charts/bankone/contrib-firebase-simulator.yaml
+	helm upgrade --install --namespace ${NAMESPACE} bankone ./charts/bankone --values ./charts/bankone/values_bankone.yml
+
+
+install-simulators-other:
+# OTP/Auth Code Simulator (currently just the TTK)
 	helm upgrade --install --namespace ${NAMESPACE} otpsim mojaloop/ml-testing-toolkit --values ./config/values-ttk-otpsim.yaml
 
 
-# Experimental chart - ml-operator can be used to auto-upgrade stuff
+# ml-operator is used to auto-upgrade deployments
 install-ml-operator:
 	helm upgrade --install --namespace ${NAMESPACE} ml-operator ../helm/ml-operator --values ./config/values-ml-operator.yaml
-
-# wip - adding monitoring stuff
-install-monitoring:
-	# helm upgrade --install --namespace ${NAMESPACE} promfana mojaloop/promfana
-	# kubectl apply -f ./charts/networkpolicy_monitoring.yaml
-
-	helm upgrade --install --namespace ${NAMESPACE} efk mojaloop/efk --values ./config/values-efk.yaml
-	kubectl apply -f ./charts/ingress_monitoring.yaml
-
-	@#install the event stream processor
-	helm upgrade --install --namespace ${NAMESPACE} event-stream-processor mojaloop/eventstreamprocessor --values ./config/values-event-stream-processor.yaml
-
-	# Note: potential race condition here...
-	@# add elastic indexes etc
-	make _add_elastic_indexes
-
-	# @echo -e 'Use these details to login to Grafana:\nUsername:'
-	# @kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-user"}}' | base64 -d
-	# @echo -e '\npassword:'
-	# @kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-password"}}' | base64 -d
-
-	# TODO: for now, use lens to do magic port forwarding, but we need to expose the ingress better
-	@echo -e 'Log in to kibana here:\n\thttp://kibana.beta.moja-lab.live/app/home'
 
 
 ##
@@ -110,26 +90,22 @@ run-ml-bootstrap: run-ml-bootstrap-hub run-ml-bootstrap-participants run-ml-boot
 run-ml-bootstrap-hub:
 	ELB_URL=${BASE_URL}/api/admin
 	FSPIOP_URL=${BASE_URL}/api/fspiop  
-	# TODO: run ml-bootstrap inline with npx
-	cd ../ml-bootstrap && npm run ml-bootstrap -- hub -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+	npx ml-bootstrap -c ./config/ml-bootstrap.json5
 
 run-ml-bootstrap-participants:
 	ELB_URL=${BASE_URL}/api/admin
 	FSPIOP_URL=${BASE_URL}/api/fspiop  
-	# TODO: run ml-bootstrap inline with npx
-	cd ../ml-bootstrap && npm run ml-bootstrap -- participants -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+	npx ml-bootstrap -c ./config/ml-bootstrap.json5
 
 run-ml-bootstrap-parties:
 	ELB_URL=${BASE_URL}/api/admin
 	FSPIOP_URL=${BASE_URL}/api/fspiop  
-	# TODO: run ml-bootstrap inline with npx
-	cd ../ml-bootstrap && npm run ml-bootstrap -- parties -c ../ml-oss-sandbox/config/ml-bootstrap.json5
+	npx ml-bootstrap -c ./config/ml-bootstrap.json5
 
 
 ##
 # uninstallation
 ##
-
 uninstall-switch:
 	helm delete mojaloop
 
@@ -142,11 +118,8 @@ uninstall-ingress:
 	kubectl delete -f ./charts/ingress_kong_thirdparty.yaml
 
 uninstall-thirdparty:
-	@echo "todo!"
-
-uninstall-thirdparty-simulators:
-	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
-	helm delete thirdparty-simulators
+	kubectl delete -f ./charts/thirdparty/thirdparty_deployment_base.yaml
+	helm del thirdparty
 
 uninstall-base:
 	kubectl delete -f ./charts/base/ss_mysql.yaml
@@ -155,7 +128,6 @@ uninstall-base:
 
 uninstall-ml-operator:
 	helm delete ml-operator
-
 
 uninstall-monitoring:
 	helm delete event-stream-processor
@@ -168,8 +140,11 @@ uninstall-ttk:
 	helm del figmm-ttk
 	helm del eggmm-ttk
 
+uninstall-simulators-thirdparty:
+	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
+	helm delete thirdparty-simulators
 
-uninstall-simulators:
+uninstall-simulators-dfsp:
 	kubectl delete -f ./charts/bankone/contrib-firebase-simulator.yaml
 
 
@@ -219,18 +194,6 @@ list-dfsp-accounts:
 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/eggmm | jq
 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/figmm | jq
 
-
-_add_elastic_indexes:
-	curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?pretty" \
-		-H 'Content-Type: application/json' \
-		-d @policy-rollover-mojaloop.json
-
-	curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template?pretty" \
-		-H 'Content-Type: application/json' \
-		-d @template-mojaloop.json
-
-	curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?" | jq
-	curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template" | jq
 
 ##
 # Stateful make commands
@@ -293,9 +256,10 @@ _add_elastic_indexes:
 # 	rm -rf $(REPO_DIR)
 
 
-# ##
-# # Monitoring Tools
-# ##
+##
+# Monitoring Tools
+##
+
 # kafka-list:
 # 	kubectl exec testclient -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
 
@@ -350,6 +314,11 @@ health-check-participants:
 	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/inbound/ | jq
 	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/outbound/
 
+
+# bankone is a PISP-supporting-DFSP, which uses the contrib-firebase-simulator instead of the mojaloop-simulator
+	curl -s $(BASE_URL)/bankone/app/health | jq
+
+
 # TODO fix mojaloop-simulator for applebank
 # curl -s $(BASE_URL)/applebank/mojaloop-simulator/simulator | jq
 #@ No health check on /report or /test
@@ -374,3 +343,54 @@ switch-kube:
 	kubectx oss-lab-beta
 	kubens ${NAMESPACE}
 	helm list
+
+# alternative to the above - in case you want to use the locally checked out mojaloop charts
+# for development
+install-switch-local: .install-base
+	# package local charts
+	# cd ../helm; ./package.sh
+	helm upgrade --install --namespace ${NAMESPACE} mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
+
+
+
+
+##
+# WIP - sections still a work in progress
+## 
+
+_add_elastic_indexes:
+	curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?pretty" \
+		-H 'Content-Type: application/json' \
+		-d @policy-rollover-mojaloop.json
+
+	curl -X PUT "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template?pretty" \
+		-H 'Content-Type: application/json' \
+		-d @template-mojaloop.json
+
+	curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_ilm/policy/mojaloop_rollover_policy?" | jq
+	curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template" | jq
+
+
+
+# wip - adding monitoring stuff
+install-monitoring:
+	# helm upgrade --install --namespace ${NAMESPACE} promfana mojaloop/promfana
+	# kubectl apply -f ./charts/networkpolicy_monitoring.yaml
+
+	helm upgrade --install --namespace ${NAMESPACE} efk mojaloop/efk --values ./config/values-efk.yaml
+	kubectl apply -f ./charts/ingress_monitoring.yaml
+
+	@#install the event stream processor
+	helm upgrade --install --namespace ${NAMESPACE} event-stream-processor mojaloop/eventstreamprocessor --values ./config/values-event-stream-processor.yaml
+
+	# Note: potential race condition here...
+	@# add elastic indexes etc
+	make _add_elastic_indexes
+
+	# @echo -e 'Use these details to login to Grafana:\nUsername:'
+	# @kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-user"}}' | base64 -d
+	# @echo -e '\npassword:'
+	# @kubectl get secrets/promfana-grafana -o 'go-template={{index .data "admin-password"}}' | base64 -d
+
+	# TODO: for now, use lens to do magic port forwarding, but we need to expose the ingress better
+	@echo -e 'Log in to kibana here:\n\thttp://kibana.beta.moja-lab.live/app/home'
