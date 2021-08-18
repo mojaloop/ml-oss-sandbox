@@ -60,6 +60,10 @@ spec:
   rules:
     - http:
         paths:
+          - path: /api/admin/oracle-consent/health
+            backend:
+              serviceName: oracle-consent
+              servicePort: 3000
           - path: /api/admin/thirdparty-api-adapter/health
             backend:
               serviceName: thirdparty-api-adapter
@@ -68,3 +72,7 @@ spec:
             backend:
               serviceName: thirdparty-tx-requests-service
               servicePort: 4003
+          - path: /api/admin/auth-service/health
+            backend:
+              serviceName: auth-service
+              servicePort: 4004
