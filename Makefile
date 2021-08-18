@@ -44,17 +44,17 @@ run-ml-bootstrap: run-ml-bootstrap-hub run-ml-bootstrap-participants run-ml-boot
 run-ml-bootstrap-hub:
 	ELB_URL=${BASE_URL}/api/admin
 	FSPIOP_URL=${BASE_URL}/api/fspiop  
-	npx ml-bootstrap -c ./config/ml-bootstrap.json5
+	npx ml-bootstrap hub -c ./config/ml-bootstrap.json5
 
 run-ml-bootstrap-participants:
 	ELB_URL=${BASE_URL}/api/admin
 	FSPIOP_URL=${BASE_URL}/api/fspiop  
-	npx ml-bootstrap -c ./config/ml-bootstrap.json5
+	npx ml-bootstrap partcipants -c ./config/ml-bootstrap.json5
 
 run-ml-bootstrap-parties:
 	ELB_URL=${BASE_URL}/api/admin
 	FSPIOP_URL=${BASE_URL}/api/fspiop  
-	npx ml-bootstrap -c ./config/ml-bootstrap.json5
+	npx ml-bootstrap parties -c ./config/ml-bootstrap.json5
 
 
 ##

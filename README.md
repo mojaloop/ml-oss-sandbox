@@ -6,8 +6,6 @@ __See the sandbox here: http://sandbox.mojaloop.io__
 
 ## Quick Start
 
-<!-- TODO: double check these commands and update!  -->
-
 ```bash
 # switch, ingress, 3rd party API support and infra
 make install-switch
@@ -18,12 +16,14 @@ make install-participants
 # tooling, dev portal, etc.
 make install-tools
 
-
-# TODO: health checks
-
+# check the health of all exposed services
+make health-check
 
 # seed the environment
 make run-ml-bootstrap
+
+# run the regression tests
+make test:regression
 ```
 
 ## Tools

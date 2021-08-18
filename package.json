@@ -1,0 +1,88 @@
+{
+  "name": "@mojaloop/ml-oss-sandbox",
+  "version": "0.1.0",
+  "description": "Sandbox environment behind sandbox.mojaloop.io",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "audit:resolve": "SHELL=sh resolve-audit --production",
+    "audit:check": "SHELL=sh check-audit --production",
+    "build": "tsc -p ./tsconfig.build.json",
+    "build:openapi": "npm run build:openapi:app && npm run build:openapi:mojaloop",
+    "build:openapi:app": "openapi bundle --output ./src/interface/app.yaml --ext yaml ./src/interface/api_template/app-template.yaml",
+    "build:openapi:mojaloop": "openapi bundle --output ./src/interface/mojaloop.yaml --ext yaml ./src/interface/api_template/mojaloop-template.yaml",
+    "build:dto:mojaloop": "openapi-typescript ./src/interface/mojaloop.yaml --output ./src/interface/api_interfaces/openapi.d.ts",
+    "validate:api": "swagger-cli validate ./src/interface/app.yaml && swagger-cli validate ./src/interface/mojaloop.yaml",
+    "dev": "ts-node-dev --no-notify -r tsconfig-paths/register -P ./tsconfig.json ./src/cli.ts",
+    "lint": "eslint ./src/**/*.ts *.js",
+    "lint:fix": "eslint --fix ./src/**/*.ts *.js",
+    "prebuild": "npm run build:openapi && npm run build:dto:mojaloop",
+    "prestart": "npm run build:openapi",
+    "pretest": "npm run build:openapi",
+    "release": "standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]'",
+    "start": "ts-node -r tsconfig-paths/register -P ./tsconfig.json ./src/cli.ts",
+    "test": "npm run test:unit",
+    "test:coverage": "jest --coverage --coverageThreshold='{}'",
+    "test:coverage-check": "jest --coverage",
+    "test:integration": "echo \"test:integration - TODO...\"",
+    "test:junit": "jest --reporters=default --reporters=jest-junit",
+    "test:unit": "jest --testMatch '**/test/unit/**/*.(test|spec).ts'",
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vessels-tech/ml-oss-sandbox.git"
+  },
+  "keywords": [
+    "sandbox",
+    "mojaloop"
+  ],
+  "author": "lewisdaly",
+  "contributors": [
+    "Lewis Daly <lewisd@crosslaketech.com>"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mojaloop/project/issues"
+  },
+  "homepage": "https://github.com/vessels-tech/ml-oss-sandbox.git",
+  "devDependencies": {
+    "@mojaloop/api-snippets": "12.4.4",
+    "@types/convict": "^5.2.1",
+    "@types/faker": "^4.1.12",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^14.0.14",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^3.5.0",
+    "axios": "^0.21.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-cucumber": "^1.4.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.5.3",
+    "jest-junit": "^10.0.0",
+    "lint-staged": "^10.2.3",
+    "npm-audit-resolver": "^2.2.0",
+    "npm-check-updates": "^6.0.1",
+    "openapi-typescript": "^4.0.0",
+    "prettier": "^2.0.5",
+    "source-map-support": "^0.5.19",
+    "standard-version": "^9.0.0",
+    "swagger-cli": "^4.0.3",
+    "ts-jest": "^26.1.1",
+    "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {}
+}
