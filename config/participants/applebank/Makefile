@@ -12,7 +12,8 @@ down:
 	helm del applebank
 
 health:
-	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/outbound/health | jq
-	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
+	curl -s applebank-backend.${BASE_URL} | jq
+	curl -s applebank-sdk-scheme-adapter-inbound.${BASE_URL} | jq
+	curl -s applebank-sdk-scheme-adapter-outbound.${BASE_URL}/health | jq
+	curl -s applebank-thirdparty-scheme-adapter-inbound.${BASE_URL}/health | jq
+	curl -s applebank-thirdparty-scheme-adapter-outbound.${BASE_URL}/health | jq

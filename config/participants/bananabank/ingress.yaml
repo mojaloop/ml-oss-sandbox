@@ -8,16 +8,24 @@ metadata:
     konghq.com/plugins: default-rewrite
 spec:
   rules:
-    - http:
+    - host: bananabank-backend.sandbox.mojaloop.io
+      http:
         paths:
-          # TODO: double check these!!!
-          - path: /bananabank/simulator/(.*)
+          - path: /(.*)
             backend:
-              serviceName: simulators-sim-bananabank-backend
+              serviceName: bananabank-sim-bananabank-backend
               servicePort: 3003
-          - path: /bananabank/sdk-scheme-adapter/(.*)
+    - host: bananabank-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
-              serviceName: simulators-sim-bananabank-scheme-adapter
+              serviceName: bananabank-sim-bananabank-scheme-adapter
               servicePort: 4000
-
-  
+    - host: bananabank-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: bananabank-sim-bananabank-scheme-adapter
+              servicePort: 4001

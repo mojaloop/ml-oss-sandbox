@@ -85,9 +85,12 @@ uninstall-tools:
 ##
 # Utils
 ##
+health-check: health-switch health-participants health-tools
+
+
 health-switch:
 	@echo 'Checking health of switch services'
-	# fix me!
+	# TODO: fix me!
 	curl -s ${BASE_URL}/api/admin/central-ledger/health | jq
 
 	curl -s ${BASE_URL}/api/admin/ml-api-adapter/health | jq
@@ -95,8 +98,7 @@ health-switch:
 	curl -s ${BASE_URL}/api/admin/account-lookup-service-admin/health | jq
 	curl -s ${BASE_URL}/api/admin/oracle-simulator/health | jq
 	
-
-	
+	# TODO: fix me!
 	# curl -s ${BASE_URL}/api/admin/quoting-service/health | jq
 	# curl -s ${BASE_URL}/api/admin/als-consent-oracle/health | jq
 	# curl -s $(ELB_URL)/auth-service/health | jq
@@ -118,21 +120,11 @@ health-participants:
 	cd ./config/participants/pispa/ && make health
 
 
-# health-partcipants:	
-# 	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/health | jq
-# 	curl -s ${BASE_URL}/bananabank/simulator/repository/parties | jq
-
-# health-thirdparty-simulators:
-# 	curl -s ${BASE_URL}/pineapplepay/app/health | jq
-# 	curl -s ${BASE_URL}/pineapplepay/mojaloop/health | jq
-# 	# no health check here, but we can just check the list of parties registered
-# 	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
-# 	# no health check here, but at least we should be able to reach the server
-# 	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/inbound/health | jq
-# 	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/outbound/health | jq
-# 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
-# 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
-
+health-tools:
+	cd ./config/tools/dev-portal/ && make health
+	cd ./config/tools/ml-operator/ && make health
+	cd ./config/tools/ttk-otpsim/ && make health
+	cd ./config/tools/ttk-switch/ && make health
 
 # list-dfsp-accounts:
 # 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/applebank | jq
@@ -144,64 +136,25 @@ health-participants:
 
 
 ##
-# Stateful make commands
-#
-# These create respective `.command-name` files to stop make from
-# running the same command multiple times
-##
-# .add-repos:
-# 	helm repo add public https://charts.helm.sh/incubator
-# 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-# 	@touch .add-repos
-
-
-# clean-add-repos:
-# 	@rm -rf .add-repos
-
-# clean-install-base:
-# 	@helm del nginx || echo 'helm del nginx failed - continuing anyway'
-# 	@helm del kafka || echo 'helm del kafka failed - continuing anyway'
-# 	@kubectl delete -f ./charts-base/deployment_setup.yaml || echo 'kubectl del deployment_setup failed - continuing anyway'
-# 	@rm -rf .install-base
-
-
-# ##
-# # Repo Tools
-# ##
-# .PHONY: clean-repo get-elb
-
-
-# # Get the url of the loadbalancer created by nginx for us
-# get-elb:
-# 	$(eval ELB=$(shell kubectl get service/nginx-ingress-nginx-controller -o json | jq -r .status.loadBalancer.ingress[0].hostname))
-# 	@echo -e "Run:\n\n    export ELB_URL=$(ELB)\n\nto configure the load balancer url in your local environment"
-
-# clean-repo:
-# 	rm -rf $(REPO_DIR)
-
-
-##
 # Monitoring Tools
 ##
 
-# kafka-list:
-# 	kubectl exec testclient -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
+kafka-list:
+	kubectl exec testclient -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
 
-# mysql-show-tables:
-# 	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword central_ledger -e "show tables"
+mysql-show-tables:
+	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword central_ledger -e "show tables"
 
-# mysql-describe-transfer:
-# 	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword central_ledger -e "describe transfer"
+mysql-describe-transfer:
+	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword central_ledger -e "describe transfer"
 
-# mysql-login:
-# 	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword central_ledger
+mysql-login:
+	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword central_ledger
 
-# mysql-drop-database:
-# 	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword -e "drop database central_ledger; create database central_ledger"
-# 	kubectl exec -it pod/mysql-als-0 -- mysql -u root -ppassword -e "drop database account_lookup; create database account_lookup"
-# 	kubectl exec -it pod/als-consent-oracle-mysql-0 -- mysql -u root -ppassword -e "drop database als-consent-oracle; create database als-consent-oracle"
-
-# health-check: health-check-switch health-check-participants
+mysql-drop-database:
+	kubectl exec -it pod/mysql-cl-0 -- mysql -u root -ppassword -e "drop database central_ledger; create database central_ledger"
+	kubectl exec -it pod/mysql-als-0 -- mysql -u root -ppassword -e "drop database account_lookup; create database account_lookup"
+	kubectl exec -it pod/als-consent-oracle-mysql-0 -- mysql -u root -ppassword -e "drop database als-consent-oracle; create database als-consent-oracle"
 
 
 

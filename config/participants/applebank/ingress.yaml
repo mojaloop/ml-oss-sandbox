@@ -7,25 +7,61 @@ metadata:
     konghq.com/plugins: default-rewrite
 spec:
   rules:
-    - http:
+    # TODO: figure out how to use path based routing for these services 
+    # - http:
+    #     paths:
+    #       - path: /applebank/simulator/(.*)
+    #         backend:
+    #           serviceName: applebank-mojaloop-simulator
+    #           servicePort: 3003
+    #       - path: /applebank/sdk-scheme-adapter/inbound/(.*)
+    #         backend:
+    #           serviceName: applebank-sdk-scheme-adapter
+    #           servicePort: 4000
+    #       - path: /applebank/sdk-scheme-adapter/outbound/(.*)
+    #         backend:
+    #           serviceName: applebank-sdk-scheme-adapter
+    #           servicePort: 4001
+    #       - path: /applebank/thirdparty-scheme-adapter/inbound/(.*)
+    #         backend:
+    #           serviceName: applebank-thirdparty-scheme-adapter
+    #           servicePort: 4005
+    #       - path: /applebank/thirdparty-scheme-adapter/outbound/(.*)
+    #         backend:
+    #           serviceName: applebank-thirdparty-scheme-adapter
+    #           servicePort: 4006
+    - host: applebank-backend.sandbox.mojaloop.io
+      http:
         paths:
-          - path: /applebank/simulator/(.*)
+          - path: /(.*)
             backend:
               serviceName: applebank-mojaloop-simulator
               servicePort: 3003
-          - path: /applebank/sdk-scheme-adapter/inbound/(.*)
+    - host: applebank-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
               serviceName: applebank-sdk-scheme-adapter
               servicePort: 4000
-          - path: /applebank/sdk-scheme-adapter/outbound/(.*)
+    - host: applebank-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
               serviceName: applebank-sdk-scheme-adapter
               servicePort: 4001
-          - path: /applebank/thirdparty-scheme-adapter/inbound/(.*)
+    - host: applebank-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
               serviceName: applebank-thirdparty-scheme-adapter
               servicePort: 4005
-          - path: /applebank/thirdparty-scheme-adapter/outbound/(.*)
+    - host: applebank-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
               serviceName: applebank-thirdparty-scheme-adapter
               servicePort: 4006

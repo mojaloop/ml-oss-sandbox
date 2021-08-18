@@ -11,7 +11,6 @@ down:
 	helm del bananabank
 
 health:
-	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/outbound/health | jq
-	curl -s ${BASE_URL}/bananabank/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/bananabank/thirdparty-scheme-adapter/outbound/health | jq
+	curl -s bananabank-backend.${BASE_URL} | jq
+	curl -s bananabank-sdk-scheme-adapter-inbound.${BASE_URL} | jq
+	curl -s bananabank-sdk-scheme-adapter-outbound.${BASE_URL}/health | jq
