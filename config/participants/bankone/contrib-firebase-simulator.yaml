@@ -1,3 +1,5 @@
+# TODO: templatize this chart!
+# for now, this is deployable as bankone only
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,25 +81,6 @@ spec:
     - http:
         paths:
           - path: /bankone/app/(.*)
-            backend:
-              serviceName: contrib-firebase-simulator
-              servicePort: 8080
---- 
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: contrib-firebase-simulator-ingress-ui
-  annotations:
-    kubernetes.io/ingress.class: kong
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /bankone
-            backend:
-              serviceName: contrib-firebase-simulator
-              servicePort: 8080
-          - path: /bankone/(.*)
             backend:
               serviceName: contrib-firebase-simulator
               servicePort: 8080
