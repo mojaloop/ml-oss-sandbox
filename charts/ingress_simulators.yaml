@@ -3,7 +3,7 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: simulators-rewrite
+  name: default-rewrite
 config:
   replace:
     uri: "/$(uri_captures[1])"

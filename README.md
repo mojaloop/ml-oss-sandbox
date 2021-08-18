@@ -13,6 +13,8 @@ __See the sandbox here: http://sandbox.mojaloop.io__
 make install-switch
 make install-ingress
 make install-dev-portal
+# add 3PPI services for 3PPI support 
+make install-thirdparty
 
 # simulators and testing toolkits
 make install-simulators
@@ -20,8 +22,7 @@ make install-ttk
 
 # TODO: health checks
 
-# PISP features and simulators
-make install-thirdparty
+
 make install-thirdparty-simulators
 
 # health check demo-server

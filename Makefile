@@ -40,6 +40,10 @@ install-ttk:
 # support for ttk that mimics the switch for easy testing
 	helm upgrade --install --namespace ${NAMESPACE} ttk-switch mojaloop/ml-testing-toolkit --values ./config/values-ttk-switch.yaml
 
+
+install-simulators-new:
+	cd ./config/participants/applebank/ && make up
+
 install-simulators: install-simulators-dfsp install-simulators-pisp install-simulators-dfsp-supporting-pisp install-simulators-other
 
 # DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs

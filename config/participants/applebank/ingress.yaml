@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: simulators
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /applebank/simulator/(.*)
+            backend:
+              serviceName: applebank-mojaloop-simulator
+              servicePort: 3003
+          - path: /applebank/sdk-scheme-adapter/inbound/(.*)
+            backend:
+              serviceName: applebank-sdk-scheme-adapter
+              servicePort: 4000
+          - path: /applebank/sdk-scheme-adapter/outbound/(.*)
+            backend:
+              serviceName: applebank-sdk-scheme-adapter
+              servicePort: 4001
+          - path: /applebank/thirdparty-scheme-adapter/inbound/(.*)
+            backend:
+              serviceName: applebank-thirdparty-scheme-adapter
+              servicePort: 4005
+          - path: /applebank/thirdparty-scheme-adapter/outbound/(.*)
+            backend:
+              serviceName: applebank-thirdparty-scheme-adapter
+              servicePort: 4006

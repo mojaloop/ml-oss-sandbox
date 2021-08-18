@@ -1,0 +1,10 @@
+---
+# Ingresses for Kong API Gateway to talk to the Admin APIs
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: default-rewrite
+config:
+  replace:
+    uri: "/$(uri_captures[1])"
+plugin: request-transformer
