@@ -61,6 +61,8 @@ install-simulators-pisp: .thirdparty-demo-server-secret
 # pispa - a plain old pisp
 	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values_pispa.yaml
 
+# ingress of the above
+	kubectl apply -f ./charts/ingress_simulators_pisp.yaml
 
 
 install-simulators-dfsp-supporting-pisp:
@@ -214,13 +216,6 @@ list-dfsp-accounts:
 	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
 	@touch .install-base
 
-
-# .install-base:
-# 	kubectl apply -f ./charts-base/deployment_setup.yaml
-# 	helm install kafka public/kafka --values ./charts-base/kafka_values.yaml
-# 	helm install nginx ingress-nginx/ingress-nginx --version 2.16.0
-# 	@touch .install-base
-
 .contrib-firebase-simulator-secret:
 	kubectl create secret generic contrib-firebase-simulator --from-file=../contrib-firebase-simulator/config/serviceAccountKey.json
 	@touch .contrib-firebase-simulator-secret
@@ -314,10 +309,12 @@ health-check-participants:
 	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/inbound/ | jq
 	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/outbound/
 
-
 # bankone is a PISP-supporting-DFSP, which uses the contrib-firebase-simulator instead of the mojaloop-simulator
 	curl -s $(BASE_URL)/bankone/app/health | jq
 
+# pispa is a PISP simulator that exposes a sync api
+	curl -s $(BASE_URL)/pispa/thirdparty-scheme-adapter/inbound/health | jq
+	curl -s $(BASE_URL)/pispa/thirdparty-scheme-adapter/outbound/health | jq
 
 # TODO fix mojaloop-simulator for applebank
 # curl -s $(BASE_URL)/applebank/mojaloop-simulator/simulator | jq

@@ -18,21 +18,23 @@ metadata:
     konghq.com/plugins: rewrite-simulators-pisp
 spec:
   rules:
-    # TODO: fix path based!!!
     - http:
         paths:
           ##
           # pispa
           ##
-
           - path: /pispa/thirdparty-scheme-adapter/inbound/(.*)
             backend: 
-              serviceName: 'todo'
-              sevicePort: 4005
+              serviceName: pispa-thirdparty-scheme-adapter
+              servicePort: 4005
+
           - path: /pispa/thirdparty-scheme-adapter/outbound/(.*)
             backend: 
-              serviceName: 'todo'
-              sevicePort: 4006
+              serviceName: pispa-thirdparty-scheme-adapter
+              servicePort: 4006
+          
+          # TODO: should there be a mojaloop-simulator for pispa?
+          
 
           # ##
           # # applebank

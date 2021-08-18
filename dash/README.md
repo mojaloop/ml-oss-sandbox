@@ -6,6 +6,9 @@ It's not intended for a production system, but is more suitable to a user who wa
 to learn more about running Mojaloop.
 
 
+For now, this is a collection of curl examples that demonstrate which API calls to make
+to get to important information on the Hub.
+
 ### Hub Operator:
 
 - list hub accounts
