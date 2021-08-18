@@ -59,7 +59,7 @@ install-simulators-pisp: .thirdparty-demo-server-secret
 	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
 
 # pispa - a plain old pisp
-	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-pispa.yaml
+	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values_pispa.yaml
 
 
 
