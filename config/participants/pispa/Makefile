@@ -12,5 +12,6 @@ down:
 	helm del ${RELEASE_NAME}
 
 health:
-	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
+	curl -s pispa-backend.${BASE_URL} | jq
+	curl -s pispa-thirdparty-scheme-adapter-inbound.${BASE_URL}/health | jq
+	curl -s pispa-thirdparty-scheme-adapter-outbound.${BASE_URL}/health | jq

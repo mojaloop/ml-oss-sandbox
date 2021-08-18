@@ -7,17 +7,24 @@ metadata:
     konghq.com/plugins: default-rewrite
 spec:
   rules:
-    - http:
+    - host: pispa-backend.sandbox.mojaloop.io
+      http:
         paths:
-          - path: /pispa/simulator/(.*)
+          - path: /(.*)
             backend:
               serviceName: pispa-mojaloop-simulator
               servicePort: 3003
-          - path: /pispa/thirdparty-scheme-adapter/inbound/(.*)
+    - host: pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
               serviceName: pispa-thirdparty-scheme-adapter
               servicePort: 4005
-          - path: /pispa/thirdparty-scheme-adapter/outbound/(.*)
+    - host: pispa-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
               serviceName: pispa-thirdparty-scheme-adapter
               servicePort: 4006
