@@ -15,7 +15,7 @@ BASE_URL = sandbox.mojaloop.io
 # installation
 ##
 install-switch: .install-base
-	helm upgrade --install --namespace ${NAMESPACE} mojaloop mojaloop/mojaloop -f ./config/values-oss-lab-v2.yaml
+	helm upgrade --install --namespace ${NAMESPACE} mojaloop mojaloop/mojaloop -f ./config/values-oss-lab.yaml
 
 # Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
 install-thirdparty:
