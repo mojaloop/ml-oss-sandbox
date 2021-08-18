@@ -1,10 +1,12 @@
-# OSS-Sandbox
+# ml-oss-sandbox
 
 This directory contains common setup notes, configs and scripts for the Mojaloop OSS-Sandbox.
 
-__See the sandbox here: http://beta.moja-lab.live__
+__See the sandbox here: http://sandbox.mojaloop.io__
 
 ## Quick Start
+
+<!-- TODO: double check these commands and update!  -->
 
 ```bash
 # base switch and infra
