@@ -82,6 +82,13 @@ uninstall-tools:
 	cd ./config/tools/ttk-otpsim/ && make down
 	cd ./config/tools/ttk-switch/ && make down
 
+
+##
+# Tests
+##
+test-regression:
+	./node_modules/.bin/jest ./test/regression/**
+
 ##
 # Utils
 ##

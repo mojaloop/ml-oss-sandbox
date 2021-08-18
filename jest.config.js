@@ -7,18 +7,8 @@ module.exports = {
   verbose: true,
   preset: 'ts-jest',
   testEnvironment: 'node',
-  collectCoverage: true,
-  collectCoverageFrom: ['./src/**/*.ts'],
-  coverageReporters: ['json', 'lcov', 'text'],
+  collectCoverage: false,
   clearMocks: false,
-  coverageThreshold: {
-    global: {
-      statements: 50,
-      functions: 50,
-      branches: 50,
-      lines: 50,
-    },
-  },
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
