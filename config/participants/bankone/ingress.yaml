@@ -1,3 +1,24 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-bankone-svc
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /bankone-backend/(app.*)
+            backend:
+              serviceName: bankone-contrib-firebase-simulator
+              servicePort: 8080
+            # backend:
+            #   serviceName: echo
+            #   servicePort: 80
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -16,24 +37,48 @@ spec:
             backend:
               serviceName: bankone-contrib-firebase-simulator
               servicePort: 8080
-
 ---
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1beta1 
 kind: Ingress
 metadata:
-  name: ingress-bankone-svc
+  name: ingress-bankone-scheme-adapter
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/plugins: default-rewrite
-
 spec:
   rules:
-    - http:
+    - host: bankone-backend.sandbox.mojaloop.io
+      http:
         paths:
-          - path: /bankone/(app.*)
+          - path: /(.*)
             backend:
-              serviceName: bankone-contrib-firebase-simulator
-              servicePort: 8080
-            # backend:
-            #   serviceName: echo
-            #   servicePort: 80
+              serviceName: bankone-mojaloop-simulator
+              servicePort: 3003
+    - host: bankone-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: bankone-sdk-scheme-adapter
+              servicePort: 4000
+    - host: bankone-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: bankone-sdk-scheme-adapter
+              servicePort: 4001
+    - host: bankone-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: bankone-thirdparty-scheme-adapter
+              servicePort: 4005
+    - host: bankone-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: bankone-thirdparty-scheme-adapter
+              servicePort: 4006

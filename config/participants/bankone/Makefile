@@ -19,9 +19,16 @@ down:
 	@touch .contrib-firebase-simulator-secret
 
 health:
-	curl -s $(BASE_URL)/bankone/app/health | jq
+	curl -s $(BASE_URL)/bankone-backend/app/health | jq
 # website... will print a lot of stuff
 	curl -s $(BASE_URL)/bankone | wc -l 
 # make sure nested paths work
 	curl -s $(BASE_URL)/bankone/style.css
+
+# scheme adapters
+	curl -s bankone-sdk-scheme-adapter-inbound.${BASE_URL}/health | jq
+	curl -s bankone-sdk-scheme-adapter-outbound.${BASE_URL}/health | jq
+	curl -s bankone-thirdparty-scheme-adapter-inbound.${BASE_URL}/health | jq
+	curl -s bankone-thirdparty-scheme-adapter-outbound.${BASE_URL}/health | jq
+
 	

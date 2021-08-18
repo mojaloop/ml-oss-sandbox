@@ -22,6 +22,20 @@ describe('pisp sync API', () => {
 
     it.only('gets a list of accounts for linking from bankone', async () => {
       // Arrange
+      const uri = `${pispaSyncAPI}/linking/accounts/bankone/61414414414`
+      console.log('GET', uri)
+      const expected = {}
+
+      // Act
+      const response = await axios.get(uri, {})
+
+
+      // Assert
+      expect(response).toStrictEqual(expected)
+    })
+
+    it.skip('returns an appropriate error when the accounts cannot be found', async () => {
+      // Arrange
       const uri = `${pispaSyncAPI}/linking/accounts/bankone/username1234`
       console.log('GET', uri)
       const expected = {}
