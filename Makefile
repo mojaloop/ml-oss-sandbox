@@ -36,9 +36,10 @@ install-ingress:
 install-dev-portal:
 	kubectl apply -f ./charts/dev_portal.yaml
 
-install-ttk:
-# support for ttk that mimics the switch for easy testing
-	helm upgrade --install --namespace ${NAMESPACE} ttk-switch mojaloop/ml-testing-toolkit --values ./config/values-ttk-switch.yaml
+install-tools:
+	cd ./config/tools/ml-operator/ && make up
+	cd ./config/tools/ttk-otpsim/ && make up
+	cd ./config/tools/ttk-switch/ && make up
 
 
 install-simulators-new:
@@ -81,10 +82,6 @@ install-simulators-dfsp-supporting-pisp:
 	kubectl apply -f ./charts/bankone/contrib-firebase-simulator.yaml
 	helm upgrade --install --namespace ${NAMESPACE} bankone ./charts/bankone --values ./charts/bankone/values_bankone.yml
 
-
-install-simulators-other:
-# OTP/Auth Code Simulator (currently just the TTK)
-	helm upgrade --install --namespace ${NAMESPACE} otpsim mojaloop/ml-testing-toolkit --values ./config/values-ttk-otpsim.yaml
 
 
 # ml-operator is used to auto-upgrade deployments

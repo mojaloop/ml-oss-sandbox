@@ -1,6 +1,6 @@
 NAMESPACE=ml-app
-CHART=../../../../helm/ml-operator
-RELEASE_NAME=ml-operator
+CHART=mojaloop/ml-testing-toolkit
+RELEASE_NAME=otpsim
 
 up:
 	helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART} --values ./values.yaml
