@@ -2,7 +2,7 @@
 
 This directory contains common setup notes, configs and scripts for the Mojaloop OSS-Sandbox.
 
-__See the sandbox here: http://sandbox.mojaloop.io__
+__See the sandbox live!: http://sandbox.mojaloop.io__
 
 ## Quick Start
 
