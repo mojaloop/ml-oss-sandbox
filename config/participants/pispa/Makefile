@@ -1,6 +1,6 @@
 NAMESPACE=ml-app
 CHART=../../../charts/thirdparty-simulators
-RELEASE_NAME=bankone
+RELEASE_NAME=pispa
 
 
 up:

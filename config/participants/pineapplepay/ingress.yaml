@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pisp-demo-server-ingress
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /pineapplepay/(.*)
+            backend:
+              serviceName: pisp-demo-server
+              servicePort: 8080

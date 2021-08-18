@@ -45,6 +45,8 @@ install-simulators-new:
 	cd ./config/participants/applebank/ && make up
 	cd ./config/participants/bananabank/ && make up
 	cd ./config/participants/bankone/ && make up
+	cd ./config/participants/carrotmm/ && make up
+	cd ./config/participants/duriantech/ && make up
 
 install-simulators: install-simulators-dfsp install-simulators-pisp install-simulators-dfsp-supporting-pisp install-simulators-other
 

@@ -1,0 +1,34 @@
+
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-eggmm
+  annotations:
+    kubernetes.io/ingress.class: kong
+spec:
+  rules:
+  # TODO: are these still valid?
+    - host: eggmm.beta.moja-lab.live
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: eggmm-ml-testing-toolkit-backend
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: eggmm-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: eggmm-ml-testing-toolkit-backend
+              servicePort: 5050
+
+    - host: eggmm-backend-fspiop.beta.moja-lab.live
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: eggmm-ml-testing-toolkit-backend
+              servicePort: 5000
+

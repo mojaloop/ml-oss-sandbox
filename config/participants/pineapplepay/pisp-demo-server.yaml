@@ -69,22 +69,3 @@ spec:
   selector:
     app: pisp-demo-server
   clusterIP: None
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: pisp-demo-server
-  annotations:
-    kubernetes.io/ingress.class: kong
-    # This is required to rewrite paths to services that contain multiple endpoints, 
-    # e.g. /participants and /parties are both on the account-lookup-service
-    konghq.com/plugins: fspiop-rewrite
-
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /pineapplepay/(.*)
-            backend:
-              serviceName: pisp-demo-server
-              servicePort: 8080
