@@ -89,10 +89,9 @@ health-check: health-switch health-participants health-tools
 
 
 health-switch:
-	@echo 'Checking health of switch services'
 	cd ./config/switch/core/ && make health
+	cd ./config/switch/thirdparty/ && make health
 	
-
 health-participants:
 	cd ./config/participants/applebank/ && make health
 	cd ./config/participants/bananabank/ && make health

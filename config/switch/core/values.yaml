@@ -3,10 +3,11 @@ central:
   enabled: true
   centralledger:
     centralledger-service:
-      containers:
-        api:
-          image:
-            tag: v13.1.1
+      # TODO: the newer charts break this older version
+      # containers:
+      #   api:
+      #     image:
+      #       tag: v13.1.1
       config:
         db_host: mysql-cl
         db_port: 3306

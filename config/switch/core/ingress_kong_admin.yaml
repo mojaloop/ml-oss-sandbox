@@ -71,4 +71,8 @@ spec:
             backend:
               serviceName: mojaloop-simulator
               servicePort: 80
+          - path: /api/admin/quoting-service/(.*)
+            backend:
+              serviceName: mojaloop-quoting-service
+              servicePort: 80
          
