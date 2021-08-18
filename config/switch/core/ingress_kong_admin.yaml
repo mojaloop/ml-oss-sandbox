@@ -44,12 +44,8 @@ metadata:
   name: admin
   annotations:
     kubernetes.io/ingress.class: kong
-    # konghq.com/strip-path: "true"
-    # This is required to rewrite paths to services that contain multiple endpoints, 
-    # e.g. /participants and /parties are both on the account-lookup-service
-    # enable basic auth for these routes
     konghq.com/plugins: admin-rewrite
-    # note: temporarily disabling for easy access
+    # TODO: if you want to implement auth tokens - start here!
     # konghq.com/plugins: admin-rewrite, basic-auth-example
 spec:
   rules:
