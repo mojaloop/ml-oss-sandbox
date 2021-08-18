@@ -43,6 +43,7 @@ install-ttk:
 
 install-simulators-new:
 	cd ./config/participants/applebank/ && make up
+	cd ./config/participants/bananabank/ && make up
 
 install-simulators: install-simulators-dfsp install-simulators-pisp install-simulators-dfsp-supporting-pisp install-simulators-other
 

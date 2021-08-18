@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1 
 kind: Ingress
 metadata:
-  name: simulators
+  name: ingress-applebank
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/plugins: default-rewrite

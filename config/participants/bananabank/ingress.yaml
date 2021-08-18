@@ -1,0 +1,22 @@
+
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-bananabank
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /bananabank/simulator/(.*)
+            backend:
+              serviceName: simulators-sim-bananabank-backend
+              servicePort: 3003
+          - path: /bananabank/sdk-scheme-adapter/(.*)
+            backend:
+              serviceName: simulators-sim-bananabank-scheme-adapter
+              servicePort: 4000
+
+  
