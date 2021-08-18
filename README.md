@@ -9,24 +9,18 @@ __See the sandbox here: http://sandbox.mojaloop.io__
 <!-- TODO: double check these commands and update!  -->
 
 ```bash
-# base switch and infra
+# switch, ingress, 3rd party API support and infra
 make install-switch
-make install-ingress
-make install-dev-portal
-# add 3PPI services for 3PPI support 
-make install-thirdparty
 
-# simulators and testing toolkits
-make install-simulators
-make install-ttk
+# simulators
+make install-participants
+
+# tooling, dev portal, etc.
+make install-tools
+
 
 # TODO: health checks
 
-
-make install-thirdparty-simulators
-
-# health check demo-server
-make health-thirdparty-simulators
 
 # seed the environment
 make run-ml-bootstrap

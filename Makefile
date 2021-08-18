@@ -85,16 +85,18 @@ uninstall-tools:
 ##
 # Utils
 ##
-health-check-switch:
+health-switch:
 	@echo 'Checking health of switch services'
+	# fix me!
 	curl -s ${BASE_URL}/api/admin/central-ledger/health | jq
+
 	curl -s ${BASE_URL}/api/admin/ml-api-adapter/health | jq
 	curl -s ${BASE_URL}/api/admin/account-lookup-service/health | jq
 	curl -s ${BASE_URL}/api/admin/account-lookup-service-admin/health | jq
 	curl -s ${BASE_URL}/api/admin/oracle-simulator/health | jq
 	
 
-	# TODO: reenable these...
+	
 	# curl -s ${BASE_URL}/api/admin/quoting-service/health | jq
 	# curl -s ${BASE_URL}/api/admin/als-consent-oracle/health | jq
 	# curl -s $(ELB_URL)/auth-service/health | jq
@@ -102,6 +104,18 @@ health-check-switch:
 	@echo 'Checking health of thirdparty services'
 	curl -s ${BASE_URL}/api/admin/thirdparty-api-adapter/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-tx-requests-service/health | jq
+
+
+health-participants:
+	cd ./config/participants/applebank/ && make health
+	cd ./config/participants/bananabank/ && make health
+	cd ./config/participants/bankone/ && make health
+	cd ./config/participants/carrotmm/ && make health
+	cd ./config/participants/duriantech/ && make health
+	cd ./config/participants/eggmm/ && make health
+	cd ./config/participants/figmm/ && make health
+	cd ./config/participants/pineapplepay/ && make health
+	cd ./config/participants/pispa/ && make health
 
 
 # health-partcipants:	

@@ -1,5 +1,6 @@
 NAMESPACE=ml-app
 CHART=../../../charts/thirdparty-simulators
+BASE_URL=sandbox.mojaloop.io
 RELEASE_NAME=bankone
 
 
@@ -16,3 +17,6 @@ down:
 .contrib-firebase-simulator-secret:
 	kubectl create secret generic contrib-firebase-simulator --from-file=../../../../contrib-firebase-simulator/config/serviceAccountKey.json
 	@touch .contrib-firebase-simulator-secret
+
+health:
+	curl -s $(BASE_URL)/bankone/app/health | jq
