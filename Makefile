@@ -14,16 +14,12 @@ BASE_URL = sandbox.mojaloop.io
 ##
 # installation
 ##
-install-switch: .install-base
-	helm upgrade --install --namespace ${NAMESPACE} mojaloop mojaloop/mojaloop -f ./config/values-oss-lab.yaml
+install-switch:
+	cd config/switch/base && make up
+	cd config/switch/core && make up
+	cd config/switch/thirdparty && make up
 
-# Installs mojaloop thirdparty charts alongside a vanilla Mojaloop install
-install-thirdparty:
-	# install the databases separately
-	kubectl apply -f ./charts/thirdparty/thirdparty_deployment_base.yaml
-	# install the chart
-	helm upgrade --install --namespace ${NAMESPACE} thirdparty ./charts/thirdparty
-
+# TODO: remove this in favour of each folder owning its own ingress
 install-ingress:
 	helm upgrade --install --namespace ${NAMESPACE} kong kong/kong -f ./config/kong_values.yaml
 	# TODO: figure out a better way to apply multi files
@@ -33,61 +29,19 @@ install-ingress:
 	kubectl apply -f ./charts/ingress_ttk.yaml
 	kubectl apply -f ./charts/ingress_kong_thirdparty.yaml
 
-install-dev-portal:
-	kubectl apply -f ./charts/dev_portal.yaml
 
-install-tools:
-	cd ./config/tools/ml-operator/ && make up
-	cd ./config/tools/ttk-otpsim/ && make up
-	cd ./config/tools/ttk-switch/ && make up
-
-
-install-simulators-new:
+install-simulators:
 	cd ./config/participants/applebank/ && make up
 	cd ./config/participants/bananabank/ && make up
 	cd ./config/participants/bankone/ && make up
 	cd ./config/participants/carrotmm/ && make up
 	cd ./config/participants/duriantech/ && make up
 
-install-simulators: install-simulators-dfsp install-simulators-pisp install-simulators-dfsp-supporting-pisp install-simulators-other
-
-# DFSP Simulators available in helm chart, along with the new contrib-firebase-simulator that supports PISPs
-# for simulators including PISP support - refer to `install-thirdparty-simulators`
-install-simulators-dfsp: .contrib-firebase-simulator-secret
-# bananabank, carrotmm, duriantech
-	helm upgrade --install --namespace ${NAMESPACE} simulators mojaloop/mojaloop-simulator --values ./config/values-oss-lab-simulators.yaml
-	kubectl apply -f ./charts/ingress_simulators.yaml
-
-# dfsp simulating ttks - figmm, eggmm
-	helm upgrade --install --namespace ${NAMESPACE} figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml
-	helm upgrade --install --namespace ${NAMESPACE} eggmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-eggmm.yaml
-
-
-install-simulators-pisp: .thirdparty-demo-server-secret
-# pineapplepay - pisp-demo-server, required for pineapple pay/demo app flutter
-	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
-
-# pispa - a plain old pisp
-	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values_pispa.yaml
-
-# ingress of the above
-	kubectl apply -f ./charts/ingress_simulators_pisp.yaml
-
-
-install-simulators-dfsp-supporting-pisp:
-# Applebank
-	helm upgrade --install --namespace ${NAMESPACE} thirdparty-simulators ./charts/thirdparty-simulators --values ./config/values-applebank.yaml
-
-# bankone
-	kubectl apply -f ./charts/bankone/contrib-firebase-simulator.yaml
-	helm upgrade --install --namespace ${NAMESPACE} bankone ./charts/bankone --values ./charts/bankone/values_bankone.yml
-
-
-
-# ml-operator is used to auto-upgrade deployments
-install-ml-operator:
-	helm upgrade --install --namespace ${NAMESPACE} ml-operator ../helm/ml-operator --values ./config/values-ml-operator.yaml
-
+install-tools:
+	cd ./config/tools/dev-portal/ && make up
+	cd ./config/tools/ml-operator/ && make up
+	cd ./config/tools/ttk-otpsim/ && make up
+	cd ./config/tools/ttk-switch/ && make up
 
 ##
 # application tools
@@ -133,27 +87,18 @@ uninstall-base:
 	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
 	rm -rf .install-base
 
-uninstall-ml-operator:
-	helm delete ml-operator
+uninstall-simulators:
+	cd ./config/participants/applebank/ && make down
+	cd ./config/participants/bananabank/ && make down
+	cd ./config/participants/bankone/ && make down
+	cd ./config/participants/carrotmm/ && make down
+	cd ./config/participants/duriantech/ && make down
 
-uninstall-monitoring:
-	helm delete event-stream-processor
-	helm delete efk
-	# helm delete promfana
-	kubectl delete -f ./charts/ingress_monitoring.yaml
-
-uninstall-ttk:
-	helm del ttk-switch 
-	helm del figmm-ttk
-	helm del eggmm-ttk
-
-uninstall-simulators-thirdparty:
-	kubectl apply -f ./charts/thirdparty-simulators/pisp-demo-server.yaml
-	helm delete thirdparty-simulators
-
-uninstall-simulators-dfsp:
-	kubectl delete -f ./charts/bankone/contrib-firebase-simulator.yaml
-
+uninstall-tools:
+	cd ./config/tools/dev-portal/ && make down
+	cd ./config/tools/ml-operator/ && make down
+	cd ./config/tools/ttk-otpsim/ && make down
+	cd ./config/tools/ttk-switch/ && make down
 
 ##
 # Utils
@@ -213,14 +158,8 @@ list-dfsp-accounts:
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 	@touch .add-repos
 
-# Installs base prerequisites mysql
-.install-base:
-	kubectl apply -f ./charts/base/ss_mysql.yaml
-	# TODO: enable kafka at some stage
-	# I don't think it's too pressing, since centralledger still deploys kafka
-	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
-	@touch .install-base
 
+# TODO: move these to their respective participants!
 .contrib-firebase-simulator-secret:
 	kubectl create secret generic contrib-firebase-simulator --from-file=../contrib-firebase-simulator/config/serviceAccountKey.json
 	@touch .contrib-firebase-simulator-secret
@@ -396,3 +335,11 @@ install-monitoring:
 
 	# TODO: for now, use lens to do magic port forwarding, but we need to expose the ingress better
 	@echo -e 'Log in to kibana here:\n\thttp://kibana.beta.moja-lab.live/app/home'
+
+
+
+uninstall-monitoring:
+	helm delete event-stream-processor
+	helm delete efk
+	# helm delete promfana
+	kubectl delete -f ./charts/ingress_monitoring.yaml
