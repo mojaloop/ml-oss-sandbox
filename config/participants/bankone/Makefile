@@ -1,5 +1,5 @@
 NAMESPACE=ml-app
-CHART=../../../thirdparty-simulators
+CHART=../../../charts/thirdparty-simulators
 
 up:
 	kubectl apply -f ./contrib-firebase-simulator.yaml

@@ -1,0 +1,23 @@
+
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-duriantech
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    - http:
+        paths:
+          # TODO: double check these!!!
+          - path: /duriantech/simulator/(.*)
+            backend:
+              serviceName: simulators-sim-duriantech-backend
+              servicePort: 3003
+          - path: /duriantech/sdk-scheme-adapter/(.*)
+            backend:
+              serviceName: simulators-sim-duriantech-scheme-adapter
+              servicePort: 4000
+
+  

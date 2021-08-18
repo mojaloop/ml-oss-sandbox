@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: contrib-firebase-simulator-ingress-ui
+  name: ingress-bankone
   annotations:
     kubernetes.io/ingress.class: kong
 spec:

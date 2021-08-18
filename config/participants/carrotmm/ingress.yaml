@@ -1,0 +1,23 @@
+
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-carrotmm
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    - http:
+        paths:
+          # TODO: double check these!!!
+          - path: /carrotmm/simulator/(.*)
+            backend:
+              serviceName: simulators-sim-carrotmm-backend
+              servicePort: 3003
+          - path: /carrotmm/sdk-scheme-adapter/(.*)
+            backend:
+              serviceName: simulators-sim-carrotmm-scheme-adapter
+              servicePort: 4000
+
+  
