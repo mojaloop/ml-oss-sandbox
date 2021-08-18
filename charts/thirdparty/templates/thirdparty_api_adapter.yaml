@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: thirdparty-api-adapter
-          image: mojaloop/thirdparty-api-adapter:v11.8.3
+          image: mojaloop/thirdparty-api-adapter:v11.19.1
           # command: [ "tail", "-f", "/dev/null" ]
           livenessProbe:
             initialDelaySeconds: 30

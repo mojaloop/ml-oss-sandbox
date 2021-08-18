@@ -200,5 +200,12 @@
       thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
     },
     // TODO: pispa
+    {
+      id: 'pispa',
+      type: 'PISP',
+      // TODO: what about PUT /parties? how does that work again?
+      fspiopCallbackUrl: 'pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+      thirdpartyCallbackUrl: 'pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+    },
   ]
 }

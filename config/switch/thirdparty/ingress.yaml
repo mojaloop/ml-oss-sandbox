@@ -30,6 +30,8 @@ spec:
             backend:
               serviceName: thirdparty-api-adapter
               servicePort: 3008
+              # serviceName: echo
+              # servicePort: 80
           - path: /api/thirdparty/(thirdpartyRequests.*)
             backend:
               serviceName: thirdparty-api-adapter
