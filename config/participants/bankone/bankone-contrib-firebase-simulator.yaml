@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: contrib-firebase-simulator
+  name: bankone-contrib-firebase-simulator
   labels:
     app: contrib-firebase-simulator
     app.kubernetes.io/name: contrib-firebase-simulator
@@ -56,31 +56,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: contrib-firebase-simulator
+  name: bankone-contrib-firebase-simulator
 spec:
   ports:
-    # TODO:
     - port: 8080
       name: ui
   selector:
     app: contrib-firebase-simulator
   clusterIP: None
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: contrib-firebase-simulator-ingress-svc
-  annotations:
-    kubernetes.io/ingress.class: kong
-    # This is required to rewrite paths to services that contain multiple endpoints, 
-    # e.g. /participants and /parties are both on the account-lookup-service
-    konghq.com/plugins: fspiop-rewrite
 
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /bankone/app/(.*)
-            backend:
-              serviceName: contrib-firebase-simulator
-              servicePort: 8080

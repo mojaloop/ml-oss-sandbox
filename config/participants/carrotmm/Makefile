@@ -11,7 +11,6 @@ down:
 	helm del carrotmm
 
 health:
-	curl -s ${BASE_URL}/carrotmm/sdk-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/carrotmm/sdk-scheme-adapter/outbound/health | jq
-	curl -s ${BASE_URL}/carrotmm/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/carrotmm/thirdparty-scheme-adapter/outbound/health | jq
+	curl -s carrotmm-backend.${BASE_URL} | jq
+	curl -s carrotmm-sdk-scheme-adapter-inbound.${BASE_URL} | jq
+	curl -s carrotmm-sdk-scheme-adapter-outbound.${BASE_URL}/health | jq

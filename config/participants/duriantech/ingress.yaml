@@ -8,16 +8,24 @@ metadata:
     konghq.com/plugins: default-rewrite
 spec:
   rules:
-    - http:
+    - host: duriantech-backend.sandbox.mojaloop.io
+      http:
         paths:
-          # TODO: double check these!!!
-          - path: /duriantech/simulator/(.*)
+          - path: /(.*)
             backend:
-              serviceName: simulators-sim-duriantech-backend
+              serviceName: duriantech-sim-duriantech-backend
               servicePort: 3003
-          - path: /duriantech/sdk-scheme-adapter/(.*)
+    - host: duriantech-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
-              serviceName: simulators-sim-duriantech-scheme-adapter
+              serviceName: duriantech-sim-duriantech-scheme-adapter
               servicePort: 4000
-
-  
+    - host: duriantech-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: duriantech-sim-duriantech-scheme-adapter
+              servicePort: 4001

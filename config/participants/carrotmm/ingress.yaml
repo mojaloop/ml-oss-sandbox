@@ -8,16 +8,24 @@ metadata:
     konghq.com/plugins: default-rewrite
 spec:
   rules:
-    - http:
+    - host: carrotmm-backend.sandbox.mojaloop.io
+      http:
         paths:
-          # TODO: double check these!!!
-          - path: /carrotmm/simulator/(.*)
+          - path: /(.*)
             backend:
-              serviceName: simulators-sim-carrotmm-backend
+              serviceName: carrotmm-sim-carrotmm-backend
               servicePort: 3003
-          - path: /carrotmm/sdk-scheme-adapter/(.*)
+    - host: carrotmm-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
             backend:
-              serviceName: simulators-sim-carrotmm-scheme-adapter
+              serviceName: carrotmm-sim-carrotmm-scheme-adapter
               servicePort: 4000
-
-  
+    - host: carrotmm-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: carrotmm-sim-carrotmm-scheme-adapter
+              servicePort: 4001

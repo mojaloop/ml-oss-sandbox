@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-bankone
+  name: ingress-bankone-ui
   annotations:
     kubernetes.io/ingress.class: kong
 spec:
@@ -10,11 +10,30 @@ spec:
         paths:
           - path: /bankone
             backend:
-              serviceName: contrib-firebase-simulator
+              serviceName: bankone-contrib-firebase-simulator
               servicePort: 8080
-          - path: /bankone/(.*)
+          - path: /bankone(/.*)
             backend:
-              serviceName: contrib-firebase-simulator
+              serviceName: bankone-contrib-firebase-simulator
               servicePort: 8080
 
-# TODO: other ingress for bankone!!!
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-bankone-svc
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /bankone/(app.*)
+            backend:
+              serviceName: bankone-contrib-firebase-simulator
+              servicePort: 8080
+            # backend:
+            #   serviceName: echo
+            #   servicePort: 80

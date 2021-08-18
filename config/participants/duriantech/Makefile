@@ -11,7 +11,6 @@ down:
 	helm del duriantech
 
 health:
-	curl -s ${BASE_URL}/duriantech/sdk-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/duriantech/sdk-scheme-adapter/outbound/health | jq
-	curl -s ${BASE_URL}/duriantech/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/duriantech/thirdparty-scheme-adapter/outbound/health | jq
+	curl -s duriantech-backend.${BASE_URL} | jq
+	curl -s duriantech-sdk-scheme-adapter-inbound.${BASE_URL} | jq
+	curl -s duriantech-sdk-scheme-adapter-outbound.${BASE_URL}/health | jq
