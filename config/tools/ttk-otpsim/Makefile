@@ -8,3 +8,5 @@ up:
 down:
 	helm del ${RELEASE_NAME}
 
+health:
+	@echo 'TODO! - this service doesnt expose any health checks'

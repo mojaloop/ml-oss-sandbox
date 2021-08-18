@@ -80,7 +80,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/strip-path: "true"
-    # konghq.com/protocols: "https"
     konghq.com/protocols: "http,https"
 spec:
   tls:

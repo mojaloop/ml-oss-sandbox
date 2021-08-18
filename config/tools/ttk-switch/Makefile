@@ -10,3 +10,5 @@ down:
 	kubectl delete -f ./ingress.yaml
 	helm del ${RELEASE_NAME}
 
+health:
+	@echo 'TODO! - this service doesnt expose any health checks'

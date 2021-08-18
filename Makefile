@@ -119,7 +119,6 @@ health-participants:
 	cd ./config/participants/pineapplepay/ && make health
 	cd ./config/participants/pispa/ && make health
 
-
 health-tools:
 	cd ./config/tools/dev-portal/ && make health
 	cd ./config/tools/ml-operator/ && make health
@@ -157,57 +156,6 @@ mysql-drop-database:
 	kubectl exec -it pod/als-consent-oracle-mysql-0 -- mysql -u root -ppassword -e "drop database als-consent-oracle; create database als-consent-oracle"
 
 
-
-health-check-participants:
-	@echo 'Checking health of all participants'
-# note: not all health checks contain a response body
-# so they are commented out - comments are left for completeness
-# dfspa
-
-# # No health check on /inbound
-# # curl -s $(ELB_URL)/dfspa/sdk-scheme-adapter/inbound | jq
-# 	curl -s $(ELB_URL)/dfspa/sdk-scheme-adapter/outbound | jq
-# 	curl -s $(ELB_URL)/dfspa/thirdparty-scheme-adapter/inbound/health | jq
-# 	curl -s $(ELB_URL)/dfspa/thirdparty-scheme-adapter/outbound/health | jq
-# 	curl -s $(ELB_URL)/dfspa/mojaloop-simulator/simulator | jq
-# # No health check on /report or /test
-# # curl -s $(ELB_URL)/dfspa/mojaloop-simulator/report/reports | jq
-# # curl -s $(ELB_URL)/dfspa/mojaloop-simulator/test | jq
-
-# # dfspb
-# # No health check on /inbound
-# # curl -s $(ELB_URL)/dfspb/sdk-scheme-adapter/inbound | jq
-# 	curl -s $(ELB_URL)/dfspb/sdk-scheme-adapter/outbound | jq
-# 	curl -s $(ELB_URL)/dfspb/thirdparty-scheme-adapter/inbound/health | jq
-# 	curl -s $(ELB_URL)/dfspb/thirdparty-scheme-adapter/outbound/health | jq
-# 	curl -s $(ELB_URL)/dfspb/mojaloop-simulator/simulator | jq
-# # No health check on /report or /test
-# # curl -s $(ELB_URL)/dfspb/mojaloop-simulator/report | jq
-# # curl -s $(ELB_URL)/dfspb/mojaloop-simulator/test | jq
-
-#	applebank is a PISP-supporting-DFSP
-	curl -s $(BASE_URL)/applebank/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s $(BASE_URL)/applebank/thirdparty-scheme-adapter/outbound/health | jq
-	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/inbound/ | jq
-	curl -s $(BASE_URL)/applebank/sdk-scheme-adapter/outbound/
-
-# bankone is a PISP-supporting-DFSP, which uses the contrib-firebase-simulator instead of the mojaloop-simulator
-	curl -s $(BASE_URL)/bankone/app/health | jq
-
-# pispa is a PISP simulator that exposes a sync api
-	curl -s $(BASE_URL)/pispa/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s $(BASE_URL)/pispa/thirdparty-scheme-adapter/outbound/health | jq
-
-# TODO fix mojaloop-simulator for applebank
-# curl -s $(BASE_URL)/applebank/mojaloop-simulator/simulator | jq
-#@ No health check on /report or /test
-#@ curl -s $(ELB_URL)/applebank/mojaloop-simulator/report | jq
-#@ curl -s $(ELB_URL)/applebank/mojaloop-simulator/test | jq
-
-
-# transfer-p2p:
-# 	./_test_transfer.sh
-
 ##
 # Kube Tools
 ##
@@ -230,9 +178,6 @@ install-switch-local: .install-base
 	# cd ../helm; ./package.sh
 	helm upgrade --install --namespace ${NAMESPACE} mojaloop ../helm/mojaloop -f ./config/values-oss-lab-v2.yaml
 
-
-
-
 ##
 # WIP - sections still a work in progress
 ## 
@@ -250,8 +195,6 @@ _add_elastic_indexes:
 	curl -X GET "http://beta.moja-lab.live/monitoring/elasticsearch/_template/moja_template" | jq
 
 
-
-# wip - adding monitoring stuff
 install-monitoring:
 	# helm upgrade --install --namespace ${NAMESPACE} promfana mojaloop/promfana
 	# kubectl apply -f ./charts/networkpolicy_monitoring.yaml
