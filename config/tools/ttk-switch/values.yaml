@@ -425,12 +425,11 @@ ml-testing-toolkit-backend:
   extraEnvironments: {}
   global: {}
   image:
-    # TODO: update branch name and repo url to upstream master.
     command: >
       ["sh", "-c", 
-        "BRANCH_NAME=feat/2365-3p-scheme-adapter-ttk;
-        REPO_URL=https://github.com/lewisdaly/pisp/archive/${BRANCH_NAME}.zip;
-        SRC_CONFIG_PATH=/tmp/pisp/pisp-feat-2365-3p-scheme-adapter-ttk/docker-contract/ml-testing-toolkit/spec_files;
+        "BRANCH_NAME=master;
+        REPO_URL=https://github.com/mojaloop/pisp-project/archive/master.zip;
+        SRC_CONFIG_PATH=/tmp/pisp/pisp-project-master/docker-contract/ml-testing-toolkit/spec_files;
         DEST_CONFIG_PATH=/opt/mojaloop-testing-toolkit/spec_files;
         mkdir -p /tmp/pisp;
         wget ${REPO_URL} -O /tmp/pisp.zip;
