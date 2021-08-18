@@ -19,17 +19,6 @@ install-switch:
 	cd config/switch/core && make up
 	cd config/switch/thirdparty && make up
 
-# TODO: remove this in favour of each folder owning its own ingress
-install-ingress:
-	helm upgrade --install --namespace ${NAMESPACE} kong kong/kong -f ./config/kong_values.yaml
-	# TODO: figure out a better way to apply multi files
-	kubectl apply -f ./charts/ingress_kong_admin.yaml
-	kubectl apply -f ./charts/ingress_kong_fspiop.yaml
-	kubectl apply -f ./charts/ingress_simulators.yaml
-	kubectl apply -f ./charts/ingress_ttk.yaml
-	kubectl apply -f ./charts/ingress_kong_thirdparty.yaml
-
-
 install-simulators:
 	cd ./config/participants/applebank/ && make up
 	cd ./config/participants/bananabank/ && make up
@@ -68,24 +57,9 @@ run-ml-bootstrap-parties:
 # uninstallation
 ##
 uninstall-switch:
-	helm delete mojaloop
-
-uninstall-ingress:
-	helm delete kong
-	kubectl delete -f ./charts/ingress_kong_admin.yaml
-	kubectl delete -f ./charts/ingress_kong_fspiop.yaml
-	kubectl delete -f ./charts/ingress_simulators.yaml
-	kubectl delete -f ./charts/ingress_ttk.yaml
-	kubectl delete -f ./charts/ingress_kong_thirdparty.yaml
-
-uninstall-thirdparty:
-	kubectl delete -f ./charts/thirdparty/thirdparty_deployment_base.yaml
-	helm del thirdparty
-
-uninstall-base:
-	kubectl delete -f ./charts/base/ss_mysql.yaml
-	# helm install kafka public/kafka --values ./charts/base/kafka_values.yaml
-	rm -rf .install-base
+	cd config/switch/core && make down
+	cd config/switch/thirdparty && make down
+	@echo 'Warning: not uninstalling base charts - do it yourself at config/switch/base && make down'
 
 uninstall-simulators:
 	cd ./config/participants/applebank/ && make down
@@ -117,34 +91,34 @@ health-check-switch:
 	# curl -s ${BASE_URL}/api/admin/als-consent-oracle/health | jq
 	# curl -s $(ELB_URL)/auth-service/health | jq
 
-health-check-thirdparty:
 	@echo 'Checking health of thirdparty services'
 	curl -s ${BASE_URL}/api/admin/thirdparty-api-adapter/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-tx-requests-service/health | jq
 
-health-simulators:	
-	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/health | jq
-	curl -s ${BASE_URL}/bananabank/simulator/repository/parties | jq
 
-health-thirdparty-simulators:
-	curl -s ${BASE_URL}/pineapplepay/app/health | jq
-	curl -s ${BASE_URL}/pineapplepay/mojaloop/health | jq
-	# no health check here, but we can just check the list of parties registered
-	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
-	# no health check here, but at least we should be able to reach the server
-	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/outbound/health | jq
-	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
-	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
+# health-partcipants:	
+# 	curl -s ${BASE_URL}/bananabank/sdk-scheme-adapter/health | jq
+# 	curl -s ${BASE_URL}/bananabank/simulator/repository/parties | jq
+
+# health-thirdparty-simulators:
+# 	curl -s ${BASE_URL}/pineapplepay/app/health | jq
+# 	curl -s ${BASE_URL}/pineapplepay/mojaloop/health | jq
+# 	# no health check here, but we can just check the list of parties registered
+# 	curl -s ${BASE_URL}/applebank/simulator/repository/parties | jq
+# 	# no health check here, but at least we should be able to reach the server
+# 	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/inbound/health | jq
+# 	curl -s ${BASE_URL}/applebank/sdk-scheme-adapter/outbound/health | jq
+# 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/inbound/health | jq
+# 	curl -s ${BASE_URL}/applebank/thirdparty-scheme-adapter/outbound/health | jq
 
 
-list-dfsp-accounts:
-	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/applebank | jq
-	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/bananabank | jq
-	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/carrotmm| jq
-	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/duriantech | jq
-	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/eggmm | jq
-	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/figmm | jq
+# list-dfsp-accounts:
+# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/applebank | jq
+# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/bananabank | jq
+# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/carrotmm| jq
+# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/duriantech | jq
+# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/eggmm | jq
+# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/figmm | jq
 
 
 ##
@@ -153,21 +127,10 @@ list-dfsp-accounts:
 # These create respective `.command-name` files to stop make from
 # running the same command multiple times
 ##
-.add-repos:
-	helm repo add public https://charts.helm.sh/incubator
-	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-	@touch .add-repos
-
-
-# TODO: move these to their respective participants!
-.contrib-firebase-simulator-secret:
-	kubectl create secret generic contrib-firebase-simulator --from-file=../contrib-firebase-simulator/config/serviceAccountKey.json
-	@touch .contrib-firebase-simulator-secret
-
-
-.thirdparty-demo-server-secret:
-	kubectl create secret generic firebase-secret --from-file=../pisp-demo-server/secret/serviceAccountKey.json
-	@touch .thirdparty-demo-server-secret
+# .add-repos:
+# 	helm repo add public https://charts.helm.sh/incubator
+# 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+# 	@touch .add-repos
 
 
 # clean-add-repos:
