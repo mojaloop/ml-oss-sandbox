@@ -19,12 +19,16 @@ install-switch:
 	cd config/switch/core && make up
 	cd config/switch/thirdparty && make up
 
-install-simulators:
+install-participants:
 	cd ./config/participants/applebank/ && make up
 	cd ./config/participants/bananabank/ && make up
 	cd ./config/participants/bankone/ && make up
 	cd ./config/participants/carrotmm/ && make up
 	cd ./config/participants/duriantech/ && make up
+	cd ./config/participants/eggmm/ && make up
+	cd ./config/participants/figmm/ && make up
+	cd ./config/participants/pineapplepay/ && make up
+	cd ./config/participants/pispa/ && make up
 
 install-tools:
 	cd ./config/tools/dev-portal/ && make up
@@ -59,14 +63,18 @@ run-ml-bootstrap-parties:
 uninstall-switch:
 	cd config/switch/core && make down
 	cd config/switch/thirdparty && make down
-	@echo 'Warning: not uninstalling base charts - do it yourself at config/switch/base && make down'
+	@echo 'Warning: not uninstalling base charts - do it yourself with `cd ./config/switch/base && make down`'
 
-uninstall-simulators:
+uninstall-participants:
 	cd ./config/participants/applebank/ && make down
 	cd ./config/participants/bananabank/ && make down
 	cd ./config/participants/bankone/ && make down
 	cd ./config/participants/carrotmm/ && make down
 	cd ./config/participants/duriantech/ && make down
+	cd ./config/participants/eggmm/ && make down
+	cd ./config/participants/figmm/ && make down
+	cd ./config/participants/pineapplepay/ && make down
+	cd ./config/participants/pispa/ && make down
 
 uninstall-tools:
 	cd ./config/tools/dev-portal/ && make down

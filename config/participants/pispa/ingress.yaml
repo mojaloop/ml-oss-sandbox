@@ -1,20 +1,23 @@
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1beta1 
 kind: Ingress
 metadata:
-  name: ingress-bankone
+  name: ingress-pispa
   annotations:
     kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
 spec:
   rules:
     - http:
         paths:
-          - path: /bankone
+          - path: /pispa/simulator/(.*)
             backend:
-              serviceName: contrib-firebase-simulator
-              servicePort: 8080
-          - path: /bankone/(.*)
+              serviceName: pispa-mojaloop-simulator
+              servicePort: 3003
+          - path: /pispa/thirdparty-scheme-adapter/inbound/(.*)
             backend:
-              serviceName: contrib-firebase-simulator
-              servicePort: 8080
-
-# TODO: other ingress for bankone!!!
+              serviceName: pispa-thirdparty-scheme-adapter
+              servicePort: 4005
+          - path: /pispa/thirdparty-scheme-adapter/outbound/(.*)
+            backend:
+              serviceName: pispa-thirdparty-scheme-adapter
+              servicePort: 4006

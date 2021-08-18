@@ -8,6 +8,7 @@ up:
 	kubectl apply -f ./ingress_kong_admin.yaml
 
 down:
-	kubectl delete -f ./ingress.yaml
+	kubectl delete -f ./ingress_kong_fspiop.yaml
+	kubectl delete -f ./ingress_kong_admin.yaml
 	helm del ${RELEASE_NAME}
 
