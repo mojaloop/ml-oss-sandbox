@@ -425,11 +425,12 @@ ml-testing-toolkit-backend:
   extraEnvironments: {}
   global: {}
   image:
+    # Load some config from pisp-project master branch
     command: >
       ["sh", "-c", 
         "BRANCH_NAME=master;
         REPO_URL=https://github.com/mojaloop/pisp-project/archive/master.zip;
-        SRC_CONFIG_PATH=/tmp/pisp/pisp-project-master/docker-contract/ml-testing-toolkit/spec_files;
+        SRC_CONFIG_PATH=/tmp/pisp/pisp-project-master/docker-local/participant-list-service/spec_files;
         DEST_CONFIG_PATH=/opt/mojaloop-testing-toolkit/spec_files;
         mkdir -p /tmp/pisp;
         wget ${REPO_URL} -O /tmp/pisp.zip;
@@ -489,7 +490,7 @@ ml-testing-toolkit-backend:
 ml-testing-toolkit-frontend:
   affinity: {}
   config:
-    API_BASE_URL: http://switch-ttk.beta.moja-lab.live
+    API_BASE_URL: http://services-sim.sandbox.mojaloop.io
     AUTH_ENABLED: "FALSE"
   enabled: true
   global: {}

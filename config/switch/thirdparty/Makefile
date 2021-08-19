@@ -6,16 +6,25 @@ BASE_URL=sandbox.mojaloop.io
 up:
 	kubectl apply -f ./thirdparty_deployment_base.yaml
 	helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART}
+	helm upgrade --install \
+		--namespace ${NAMESPACE} \
+		services-sim \
+		mojaloop/ml-testing-toolkit \
+		--values ./services-sim.yaml
 	kubectl apply -f ./ingress.yaml
 
 down:
 	kubectl delete -f ./ingress.yaml
 	helm del ${RELEASE_NAME}
+	helm del services-sim
 
 health:	
 	@echo 'Checking health of thirdparty services'
 	curl -s ${BASE_URL}/api/admin/oracle-consent/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-api-adapter/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-tx-requests-service/health | jq
-	curl -s $(BASE_URL)/api/admin/auth-service/health | jq
+	curl -s $(BASE_URL)/api/admin/auth-service/health | jq\
+
+# TODO: figure out services-sim path...
+	curl -s services-sim.$(BASE_URL)
 

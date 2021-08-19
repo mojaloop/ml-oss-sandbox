@@ -61,8 +61,8 @@
       // 3p-scheme-adapters + simulators have slightly different ingress
       // since they were not deployed by helm
       simulatorAdminUrl: 'http://beta.moja-lab.live/bankone/simulator',
-      fspiopCallbackUrl: 'http://beta.moja-lab.live/bankone/sdk-scheme-adapter/inbound',
-      thirdpartyCallbackUrl: 'http://beta.moja-lab.live/bankone/thirdparty-scheme-adapter/inbound',
+      fspiopCallbackUrl: 'http://bankone-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
+      thirdpartyCallbackUrl: 'http://bankone-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
       parties: [
 
       ]
@@ -204,8 +204,8 @@
       id: 'pispa',
       type: 'PISP',
       // TODO: what about PUT /parties? how does that work again?
-      fspiopCallbackUrl: 'pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
-      thirdpartyCallbackUrl: 'pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+      fspiopCallbackUrl: 'http://pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+      thirdpartyCallbackUrl: 'http://pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
     },
   ]
 }

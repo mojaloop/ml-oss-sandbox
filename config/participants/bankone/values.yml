@@ -1,6 +1,7 @@
 
 participantName: 'BankOne'
 participantId: 'bankone'
+DFSP_BACKEND_URI: sandbox.mojaloop.io/bankone-backend/app
 
 # Set both to true if DFSP, set only `thirdpartyApiSupport` to true if PISP
 thirdpartyApiSupport: true

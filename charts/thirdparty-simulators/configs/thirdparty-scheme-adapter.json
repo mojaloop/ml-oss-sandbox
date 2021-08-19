@@ -28,7 +28,7 @@
   "SHARED": {
     "PEER_ENDPOINT": "beta.moja-lab.live/api/thirdparty",
     "DFSP_ID": "{{ $participantId }}",
-    "DFSP_BACKEND_URI": "{{ $participantId }}-mojaloop-simulator:3000",
+    "DFSP_BACKEND_URI": "{{ .Values.DFSP_BACKEND_URI }}",
     "DFSP_BACKEND_HTTP_SCHEME": "http",
     "SDK_REQUEST_TO_PAY_TRANSFER_URI": "beta.moja-lab.live/applebank/sdk-scheme-adapter/outbound/requestToPayTransfer",
     "SDK_OUTGOING_URI": "sdk-scheme-adapter:7002",
