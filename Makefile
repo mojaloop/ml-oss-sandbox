@@ -87,7 +87,7 @@ uninstall-tools:
 # Tests
 ##
 test-regression:
-	./node_modules/.bin/jest ./test/regression/**
+	./node_modules/.bin/jest ./test/regression/** --runInBand
 
 ##
 # Utils
