@@ -11,6 +11,7 @@
     "generateTimeout": 30000
   },
   "ENDPOINT_SERVICE_URL": "http://mojaloop-centralledger-service:80",
+  "PARTICIPANT_LIST_SERVICE_URL": "http://tp-svc.sandbox.mojaloop.io",
   "ERROR_HANDLING": {
     "includeCauseExtension": true,
     "truncateExtensions": true

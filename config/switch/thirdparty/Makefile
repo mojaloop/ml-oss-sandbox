@@ -4,8 +4,8 @@ RELEASE_NAME=thirdparty
 BASE_URL=sandbox.mojaloop.io
 
 up:
-	# kubectl apply -f ./thirdparty_deployment_base.yaml
-	# helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART}
+	kubectl apply -f ./thirdparty_deployment_base.yaml
+	helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART}
 	helm upgrade --install \
 		--namespace ${NAMESPACE} \
 		tp-svc \

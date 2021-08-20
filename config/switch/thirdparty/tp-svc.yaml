@@ -429,8 +429,8 @@ ml-testing-toolkit-backend:
     command: >
       ["sh", "-c", 
         "BRANCH_NAME=master;
-        REPO_URL=https://github.com/mojaloop/pisp-project/archive/master.zip;
-        SRC_CONFIG_PATH=/tmp/pisp/pisp-project-master/docker-local/participant-list-service/spec_files;
+        REPO_URL=https://github.com/vessels-tech/ml-oss-sandbox/archive/master.zip;
+        SRC_CONFIG_PATH=/tmp/pisp/ml-oss-sandbox-master/config/switch/thirdparty/tp-svc/spec_files;
         DEST_CONFIG_PATH=/opt/mojaloop-testing-toolkit/spec_files;
         mkdir -p /tmp/pisp;
         wget ${REPO_URL} -O /tmp/pisp.zip;

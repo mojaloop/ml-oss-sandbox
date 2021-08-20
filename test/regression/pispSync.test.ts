@@ -10,10 +10,15 @@ describe('pisp sync API', () => {
       // Arrange
       const uri = `${pispaSyncAPI}/linking/providers`
       console.log('GET', uri)
-      const expected = {}
+      const expected = {
+        currentState: "providersLookupSuccess",
+        providers: [
+          "bankone",
+        ],
+      }
 
       // Act
-      const response = await axios.get(uri, {})
+      const response = (await axios.get(uri, {})).data
       
       
       // Assert

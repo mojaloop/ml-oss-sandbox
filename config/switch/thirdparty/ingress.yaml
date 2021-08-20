@@ -26,6 +26,10 @@ spec:
   rules:
     - http:
         paths:
+          - path: /api/thirdparty/(services.*)
+            backend:
+              serviceName: thirdparty-api-adapter
+              servicePort: 3008
           - path: /api/thirdparty/(accounts.*)
             backend:
               serviceName: thirdparty-api-adapter
