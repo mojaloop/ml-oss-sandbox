@@ -6,7 +6,7 @@ const pispaSyncAPI = `http://pispa-thirdparty-scheme-adapter-outbound.${baseUrl}
 
 describe('pisp sync API', () => {
   describe('pispa linking', () => {
-    it('gets a list of available providers', async () => {
+    it.only('gets a list of available providers', async () => {
       // Arrange
       const uri = `${pispaSyncAPI}/linking/providers`
       console.log('GET', uri)
@@ -44,7 +44,7 @@ describe('pisp sync API', () => {
     })
 
     // TODO: come back to this - waiting on a fix for the BankOne Simulator
-    it.only('returns an appropriate error when the accounts cannot be found', async () => {
+    it('returns an appropriate error when the accounts cannot be found', async () => {
       // Arrange
       const uri = `${pispaSyncAPI}/linking/accounts/bankone/blablabla`
       console.log('GET', uri)

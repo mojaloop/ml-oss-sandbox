@@ -23,8 +23,8 @@ health:
 	curl -s ${BASE_URL}/api/admin/oracle-consent/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-api-adapter/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-tx-requests-service/health | jq
-	curl -s $(BASE_URL)/api/admin/auth-service/health | jq\
-
-# TODO: figure out services-sim path...
-	curl -s tp-svc.$(BASE_URL)
+	curl -s $(BASE_URL)/api/admin/auth-service/health | jq
+	curl -s tp-svc.sandbox.mojaloop.io/services/THIRD_PARTY_DFSP \
+		-H "Date: hello"\
+		-H "FSPIOP-Source: pispa"
 

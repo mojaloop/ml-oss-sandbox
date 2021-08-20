@@ -92,26 +92,26 @@ metadata:
     kubernetes.io/ingress.class: kong
 spec:
   rules:
-    - host: services-sim.beta.moja-lab.live
+    - host: tp-svc.sandbox.mojaloop.io
       http:
         paths:
           - path: /api
             backend:
-              serviceName: services-sim-ml-testing-toolkit-backend
+              serviceName: tp-svc-ml-testing-toolkit-backend
               servicePort: 5050 
           - path: /
             backend:
-              serviceName: services-sim-ml-testing-toolkit-frontend
+              serviceName: tp-svc-ml-testing-toolkit-frontend
               servicePort: 6060
           - path: /socket.io/
             backend:
-              serviceName: services-sim-ml-testing-toolkit-backend
+              serviceName: tp-svc-ml-testing-toolkit-backend
               servicePort: 5050
 
-    - host: services-sim-fspiop.beta.moja-lab.live
+    - host: tp-svc.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: services-sim-ml-testing-toolkit-backend
+              serviceName: tp-svc-ml-testing-toolkit-backend
               servicePort: 5000
