@@ -4,19 +4,19 @@ RELEASE_NAME=thirdparty
 BASE_URL=sandbox.mojaloop.io
 
 up:
-	kubectl apply -f ./thirdparty_deployment_base.yaml
-	helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART}
+	# kubectl apply -f ./thirdparty_deployment_base.yaml
+	# helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART}
 	helm upgrade --install \
 		--namespace ${NAMESPACE} \
-		services-sim \
+		tp-svc \
 		mojaloop/ml-testing-toolkit \
-		--values ./services-sim.yaml
+		--values ./tp-svc.yaml
 	kubectl apply -f ./ingress.yaml
 
 down:
 	kubectl delete -f ./ingress.yaml
 	helm del ${RELEASE_NAME}
-	helm del services-sim
+	helm del tp-svc
 
 health:	
 	@echo 'Checking health of thirdparty services'
@@ -26,5 +26,5 @@ health:
 	curl -s $(BASE_URL)/api/admin/auth-service/health | jq\
 
 # TODO: figure out services-sim path...
-	curl -s services-sim.$(BASE_URL)
+	curl -s tp-svc.$(BASE_URL)
 

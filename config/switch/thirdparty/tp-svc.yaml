@@ -490,7 +490,7 @@ ml-testing-toolkit-backend:
 ml-testing-toolkit-frontend:
   affinity: {}
   config:
-    API_BASE_URL: http://services-sim.sandbox.mojaloop.io
+    API_BASE_URL: http://tp-svc.beta.moja-lab.live
     AUTH_ENABLED: "FALSE"
   enabled: true
   global: {}
