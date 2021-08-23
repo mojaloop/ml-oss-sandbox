@@ -1,0 +1,36 @@
+{{- if .Values.auth_service.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-redis
+  labels:
+    app: auth-service-redis
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: auth-service-redis
+  template:
+    metadata:
+      labels:
+        app: auth-service-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:5.0.4-alpine
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service-redis-service
+spec:
+  ports:
+    - port: 6379
+  selector:
+    app: auth-service-redis
+  clusterIP: None
+{{- end -}}

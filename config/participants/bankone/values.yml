@@ -10,6 +10,9 @@ mojaloopApiSupport: true
 mojaloop_simulator:
   jwsSigningKey: ''
 
+thirdparty_scheme_adapter:
+  AUTH_SERVICE_PARTICIPANT_ID: centralauth
+
 sdk_scheme_adapter:
   # Note: copied from `mojaloop/helm`
   env:

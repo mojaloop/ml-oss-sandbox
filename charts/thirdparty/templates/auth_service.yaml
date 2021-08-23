@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: auth-service
-        image: mojaloop/auth-service:v11.2.4
+        image: mojaloop/auth-service:v11.8.1
         livenessProbe:
           initialDelaySeconds: 30
           httpGet:
@@ -34,13 +34,28 @@ spec:
             port: 4004
         env:
           - name: PARTICIPANT_ID
-            value: central-auth
+            value: centralauth
+          - name: REDIS_HOST
+            value: auth-service-redis-service
+          - name: PEER_ENDPOINT
+            value: thirdparty-api-adapter:3008
           # TODO: add endpoint config - see https://github.com/mojaloop/auth-service/issues/51
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: auth-service
+spec:
+  ports:
+  - port: 4004
+  selector:
+    app: auth-service
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service-redis
 spec:
   ports:
   - port: 4004

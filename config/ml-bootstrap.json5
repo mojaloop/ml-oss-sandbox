@@ -14,198 +14,207 @@
     { oracleIdType: "MSISDN", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator"}
   ],
   participants: [
-     {
-      id: 'applebank',
-      type: 'DFSP_SUPPORTING_PISP',
-      // 3p-scheme-adapters + simulators have slightly different ingress
-      // since they were not deployed by helm
-      simulatorAdminUrl: 'http://beta.moja-lab.live/applebank/simulator',
-      fspiopCallbackUrl: 'http://beta.moja-lab.live/applebank/sdk-scheme-adapter/inbound',
-      thirdpartyCallbackUrl: 'http://beta.moja-lab.live/applebank/thirdparty-scheme-adapter/inbound',
-      parties: [
-        {
-          displayName: "Alice Alpaca",
-          firstName: "Alice",
-          middleName: "K",
-          lastName: "Alpaca",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "123456789",
-          accounts: [
-            {
-              currency: "USD",
-              description: "savings",
-              address: "moja.amber.53451233-b82a5456a-4fa9-838b-123456789"
-            },
-            {
-              currency: "USD",
-              description: "checkings",
-              address: "moja.amber.8f027046-b8236345a-4fa9-838b-123456789"
-            }
-          ]
-        },
-        {
-          displayName: "Alex Alligator",
-          firstName: "Alex",
-          middleName: "A",
-          lastName: "Alligator",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "11194979"
-        },
-      ]
-    },
-     {
-      id: 'bankone',
-      type: 'DFSP_SUPPORTING_PISP',
-      // 3p-scheme-adapters + simulators have slightly different ingress
-      // since they were not deployed by helm
-      simulatorAdminUrl: 'http://beta.moja-lab.live/bankone/simulator',
-      fspiopCallbackUrl: 'http://bankone-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
-      thirdpartyCallbackUrl: 'http://bankone-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
-      parties: [
+    //  {
+    //   id: 'applebank',
+    //   type: 'DFSP_SUPPORTING_PISP',
+    //   // 3p-scheme-adapters + simulators have slightly different ingress
+    //   // since they were not deployed by helm
+    //   simulatorAdminUrl: 'http://beta.moja-lab.live/applebank/simulator',
+    //   fspiopCallbackUrl: 'http://beta.moja-lab.live/applebank/sdk-scheme-adapter/inbound',
+    //   thirdpartyCallbackUrl: 'http://beta.moja-lab.live/applebank/thirdparty-scheme-adapter/inbound',
+    //   parties: [
+    //     {
+    //       displayName: "Alice Alpaca",
+    //       firstName: "Alice",
+    //       middleName: "K",
+    //       lastName: "Alpaca",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "123456789",
+    //       accounts: [
+    //         {
+    //           currency: "USD",
+    //           description: "savings",
+    //           address: "moja.amber.53451233-b82a5456a-4fa9-838b-123456789"
+    //         },
+    //         {
+    //           currency: "USD",
+    //           description: "checkings",
+    //           address: "moja.amber.8f027046-b8236345a-4fa9-838b-123456789"
+    //         }
+    //       ]
+    //     },
+    //     {
+    //       displayName: "Alex Alligator",
+    //       firstName: "Alex",
+    //       middleName: "A",
+    //       lastName: "Alligator",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "11194979"
+    //     },
+    //   ]
+    // },
+    //  {
+    //   id: 'bankone',
+    //   type: 'DFSP_SUPPORTING_PISP',
+    //   // 3p-scheme-adapters + simulators have slightly different ingress
+    //   // since they were not deployed by helm
+    //   simulatorAdminUrl: 'http://beta.moja-lab.live/bankone/simulator',
+    //   fspiopCallbackUrl: 'http://bankone-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
+    //   thirdpartyCallbackUrl: 'http://bankone-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+    //   parties: [
 
-      ]
-    },
+    //   ]
+    // },
+    // {
+    //   id: 'bananabank',
+    //   type: 'DFSP',
+    //   // For our demo, Participants are on the same deployment as switch
+    //   simulatorAdminUrl: 'http://beta.moja-lab.live/bananabank/simulator',
+    //   fspiopCallbackUrl: 'http://beta.moja-lab.live/bananabank/sdk-scheme-adapter',
+    //   thirdpartyCallbackUrl: 'n/a',
+    //   parties: [
+    //     {
+    //       displayName: "Bob Bobbish",
+    //       firstName: "Bob",
+    //       middleName: "B",
+    //       lastName: "Bobbish",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "218493479"
+    //     },
+    //     {
+    //       displayName: "Belinda Bells",
+    //       firstName: "Belinda",
+    //       middleName: "B",
+    //       lastName: "Bells",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "292455793"
+    //     },
+    //     {
+    //       displayName: "Billy Bagshot",
+    //       firstName: "Billy",
+    //       middleName: "B",
+    //       lastName: "Bagshot",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "255255255255"
+    //     },
+    //   ]
+    // },
+    // {
+    //   id: 'carrotmm',
+    //   type: 'DFSP',
+    //   // For our demo, Participants are on the same deployment as switch
+    //   simulatorAdminUrl: 'http://carrotmm-backend.beta.moja-lab.live',
+    //   fspiopCallbackUrl: 'http://mojaloop-sim-carrotmm-scheme-adapter:4000',
+    //   thirdpartyCallbackUrl: 'n/a',
+    //   parties: [
+    //     {
+    //       displayName: "Cathy C",
+    //       firstName: "Cathy",
+    //       middleName: "C",
+    //       lastName: "Camera",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "32929423"
+    //     },
+    //     {
+    //       displayName: "Colin Creevey",
+    //       firstName: "Colin",
+    //       middleName: "C",
+    //       lastName: "Camera",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "32929124"
+    //     }
+    //   ]
+    // },
+    // {
+    //   id: 'duriantech',
+    //   type: 'DFSP',
+    //   // For our demo, Participants are on the same deployment as switch
+    //   simulatorAdminUrl: 'http://duriantech-backend.beta.moja-lab.live',
+    //   fspiopCallbackUrl: 'http://mojaloop-sim-duriantech-scheme-adapter:4000',
+    //   thirdpartyCallbackUrl: 'n/a',
+    //   parties: [
+    //     {
+    //       displayName: "Dobby Elf",
+    //       firstName: "Dobby",
+    //       middleName: "E",
+    //       lastName: "Elf",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "410283497"
+    //     },
+    //     {
+    //       displayName: "Draco Dragon",
+    //       firstName: "Draco",
+    //       middleName: "D",
+    //       lastName: "Dragon",
+    //       dateOfBirth: "1970-01-01",
+    //       idType: "MSISDN",
+    //       idValue: "4448483173"
+    //     }
+    //   ]
+    // },
+    // {
+    //   id: 'eggmm',
+    //   type: 'DFSP',
+    //   simulatorAdminUrl: 'http://eggmm-backend.beta.moja-lab.live',
+    //   fspiopCallbackUrl: 'http://eggmm-ttk-backend-fspiop.beta.moja-lab.live',
+    //   thirdpartyCallbackUrl: 'n/a',
+    //   parties: [
+    //   ]
+    // },
+    // {
+    //   id: 'figmm',
+    //   type: 'DFSP',
+    //   simulatorAdminUrl: 'http://figmm-backend.beta.moja-lab.live',
+    //   fspiopCallbackUrl: 'http://figmm-ttk-backend-fspiop.beta.moja-lab.live',
+    //   thirdpartyCallbackUrl: 'n/a',
+    //   parties: [
+    //   ]
+    // },
+    // // pineapplepay is the pisp-demo-server
+    // {
+    //   id: 'pineapplepay',
+    //   type: 'PISP',
+    //   fspiopCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
+    //   thirdpartyCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
+    // },
+    // // local running pisp-demo-server, for testing purposes
+    // {
+    //   id: 'pineapplepaylocal',
+    //   type: 'PISP',
+    //   fspiopCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
+    //   thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
+    // },
+    // // dummy example, since the sdk-scheme-adapter hardcodes the pisp id of pisp
+    // {
+    //   id: 'pisp',
+    //   type: 'PISP',
+    //   fspiopCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
+    //   thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
+    // },
+    // // TODO: pispa
+    // {
+    //   id: 'pispa',
+    //   type: 'PISP',
+    //   // TODO: what about PUT /parties? how does that work again?
+    //   fspiopCallbackUrl: 'http://pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+    //   thirdpartyCallbackUrl: 'http://pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+    // },
     {
-      id: 'bananabank',
-      type: 'DFSP',
-      // For our demo, Participants are on the same deployment as switch
-      simulatorAdminUrl: 'http://beta.moja-lab.live/bananabank/simulator',
-      fspiopCallbackUrl: 'http://beta.moja-lab.live/bananabank/sdk-scheme-adapter',
-      thirdpartyCallbackUrl: 'n/a',
-      parties: [
-        {
-          displayName: "Bob Bobbish",
-          firstName: "Bob",
-          middleName: "B",
-          lastName: "Bobbish",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "218493479"
-        },
-        {
-          displayName: "Belinda Bells",
-          firstName: "Belinda",
-          middleName: "B",
-          lastName: "Bells",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "292455793"
-        },
-        {
-          displayName: "Billy Bagshot",
-          firstName: "Billy",
-          middleName: "B",
-          lastName: "Bagshot",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "255255255255"
-        },
-      ]
-    },
-    {
-      id: 'carrotmm',
-      type: 'DFSP',
-      // For our demo, Participants are on the same deployment as switch
-      simulatorAdminUrl: 'http://carrotmm-backend.beta.moja-lab.live',
-      fspiopCallbackUrl: 'http://mojaloop-sim-carrotmm-scheme-adapter:4000',
-      thirdpartyCallbackUrl: 'n/a',
-      parties: [
-        {
-          displayName: "Cathy C",
-          firstName: "Cathy",
-          middleName: "C",
-          lastName: "Camera",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "32929423"
-        },
-        {
-          displayName: "Colin Creevey",
-          firstName: "Colin",
-          middleName: "C",
-          lastName: "Camera",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "32929124"
-        }
-      ]
-    },
-    {
-      id: 'duriantech',
-      type: 'DFSP',
-      // For our demo, Participants are on the same deployment as switch
-      simulatorAdminUrl: 'http://duriantech-backend.beta.moja-lab.live',
-      fspiopCallbackUrl: 'http://mojaloop-sim-duriantech-scheme-adapter:4000',
-      thirdpartyCallbackUrl: 'n/a',
-      parties: [
-        {
-          displayName: "Dobby Elf",
-          firstName: "Dobby",
-          middleName: "E",
-          lastName: "Elf",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "410283497"
-        },
-        {
-          displayName: "Draco Dragon",
-          firstName: "Draco",
-          middleName: "D",
-          lastName: "Dragon",
-          dateOfBirth: "1970-01-01",
-          idType: "MSISDN",
-          idValue: "4448483173"
-        }
-      ]
-    },
-    {
-      id: 'eggmm',
-      type: 'DFSP',
-      simulatorAdminUrl: 'http://eggmm-backend.beta.moja-lab.live',
-      fspiopCallbackUrl: 'http://eggmm-ttk-backend-fspiop.beta.moja-lab.live',
-      thirdpartyCallbackUrl: 'n/a',
-      parties: [
-      ]
-    },
-    {
-      id: 'figmm',
-      type: 'DFSP',
-      simulatorAdminUrl: 'http://figmm-backend.beta.moja-lab.live',
-      fspiopCallbackUrl: 'http://figmm-ttk-backend-fspiop.beta.moja-lab.live',
-      thirdpartyCallbackUrl: 'n/a',
-      parties: [
-      ]
-    },
-    // pineapplepay is the pisp-demo-server
-    {
-      id: 'pineapplepay',
-      type: 'PISP',
-      fspiopCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
-      thirdpartyCallbackUrl: 'http://beta.moja-lab.live/pineapplepay/mojaloop',
-    },
-    // local running pisp-demo-server, for testing purposes
-    {
-      id: 'pineapplepaylocal',
-      type: 'PISP',
-      fspiopCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
-      thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
-    },
-    // dummy example, since the sdk-scheme-adapter hardcodes the pisp id of pisp
-    {
-      id: 'pisp',
-      type: 'PISP',
-      fspiopCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
-      thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
-    },
-    // TODO: pispa
-    {
-      id: 'pispa',
-      type: 'PISP',
-      // TODO: what about PUT /parties? how does that work again?
-      fspiopCallbackUrl: 'http://pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
-      thirdpartyCallbackUrl: 'http://pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+      id: 'centralauth',
+      // TODO: make another type for auth-service...
+      type: 'DFSP_SUPPORTING_PISP',
+      simulatorAdminUrl: 'n/a',
+      fspiopCallbackUrl: 'http://auth-service:4004',
+      thirdpartyCallbackUrl: 'http://auth-service:4004',
+      parties: []
     },
   ]
 }
