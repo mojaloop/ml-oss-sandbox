@@ -36,6 +36,10 @@ spec:
           volumeMounts:
             - name: thirdparty-api-adapter-config-volume
               mountPath: /opt/thirdparty-api-adapter/config
+          # TODO: remove me - for testing purposes only
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
       volumes:
         - name: thirdparty-api-adapter-config-volume
           configMap:

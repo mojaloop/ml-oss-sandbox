@@ -17,6 +17,7 @@ down:
 	kubectl delete -f ./ingress.yaml
 	helm del ${RELEASE_NAME}
 	helm del tp-svc
+	@echo 'warn - not deleting thirdparty_deployment_base.yaml' 
 
 health:	
 	@echo 'Checking health of thirdparty services'

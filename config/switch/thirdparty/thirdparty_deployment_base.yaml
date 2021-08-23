@@ -190,6 +190,70 @@ spec:
         persistentVolumeClaim:
           claimName: mysql-oracle-consent-pv-claim
 ---
+# mysql-auth-service
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-auth-service-pv-claim
+spec:
+  storageClassName: awsgp2
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-auth-service
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql-auth-service
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-auth-service
+spec:
+  selector:
+    matchLabels:
+      app: mysql-auth-service
+  serviceName: mysql-auth-service-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql-auth-service
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql-auth-service
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        - name: MYSQL_USER
+          value: auth-service
+        - name: MYSQL_PASSWORD
+          value: password
+        - name: MYSQL_DATABASE
+          value: auth-service
+        - name: NODE_ENV
+          value: development
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-auth-service-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-auth-service-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-auth-service-pv-claim
+---
 # Kafka util:
 apiVersion: v1
 kind: Pod

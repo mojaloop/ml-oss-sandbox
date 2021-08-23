@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: auth-service
-        image: mojaloop/auth-service:v11.8.1
+        image: mojaloop/auth-service:v11.8.2
         livenessProbe:
           initialDelaySeconds: 30
           httpGet:
@@ -32,14 +32,30 @@ spec:
           httpGet:
             path: /health
             port: 4004
-        env:
-          - name: PARTICIPANT_ID
-            value: centralauth
-          - name: REDIS_HOST
-            value: auth-service-redis-service
-          - name: PEER_ENDPOINT
-            value: thirdparty-api-adapter:3008
-          # TODO: add endpoint config - see https://github.com/mojaloop/auth-service/issues/51
+        volumeMounts:
+            - name: auth-service-config-volume
+              mountPath: /opt/auth-service/config/production.json
+              subPath: production.json
+        command:
+          - /bin/sh
+        args:
+          - -c 
+          - npm run migrate; npm run start
+
+      volumes:
+        - name: auth-service-config-volume
+          configMap:
+            name: auth-service-config
+            items:
+            - key: production.json
+              path: production.json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-service-config
+data:
+  production.json: {{ (.Files.Get "configs/auth-service.json") | quote }}
 ---
 apiVersion: v1
 kind: Service
