@@ -75,7 +75,7 @@ describe('pisp sync API', () => {
       }
     })
 
-    it.only('sends an OTP to my phone number when I start the consentRequest process', async () => {
+    it('sends an OTP to my phone number when I start the consentRequest process', async () => {
       // Arrange
 
       //temp debugging:
