@@ -52,6 +52,10 @@ spec:
             backend:
               serviceName: thirdparty-tx-requests-service
               servicePort: 4003
+          - path: /api/admin/oracle-consent/(.*)
+            backend:
+              serviceName: oracle-consent
+              servicePort: 3000
 ---
 # expose health checks for each endpoint
 # note: I'm aware that there are duplicates here, but that's ok

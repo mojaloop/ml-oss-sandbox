@@ -7,11 +7,10 @@
     alsAdmin: 'http://beta.moja-lab.live/api/admin/account-lookup-service-admin',
     centralLedgerAdmin: 'http://beta.moja-lab.live/api/admin/central-ledger',
   },
-  applicationUrls: {
-    oracle: 'http://beta.moja-lab.live/api/admin/oracle-simulator'
-  },
   oracles: [
-    { oracleIdType: "MSISDN", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator"}
+    { oracleIdType: "MSISDN", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator"},
+    { oracleIdType: "CONSENT", endpoint: "http://sandbox.mojaloop.io/api/admin/oracle-consent"}
+
   ],
   participants: [
     //  {

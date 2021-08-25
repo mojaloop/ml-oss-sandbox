@@ -27,7 +27,7 @@ spec:
             secretName: contrib-firebase-simulator
       containers:
         - name: contrib-firebase-simulator
-          image: mojaloop/contrib-firebase-simulator:v0.2.9
+          image: mojaloop/contrib-firebase-simulator:v0.2.12
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10
@@ -42,7 +42,7 @@ spec:
               path: /app/health
               port: 8080
           env:
-            # need to bind to 0.0.0.0 for kubernetes to be able to expose this.
+            # need to bind to 0.0.0.0 for kubernetes to be able to expose this service 
             - name: IP_ADDRESS
               value: "0.0.0.0"
             - name: MOJALOOP_PARTICIPANT_ID

@@ -9,7 +9,7 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe.only('pisp <---> bankone happy path linking', () => {
+  describe('pisp <---> bankone happy path linking', () => {
     const userId = `61414414414`
     const consentRequestId = v4()
     let accounts: Array<unknown>;
@@ -122,6 +122,7 @@ describe('pisp sync API', () => {
         expect(response).toStrictEqual(expected)
       })
     })
+
     describe('returns a Consent object when I send the correct OTP', () => {
       it('', async () => {
 
@@ -269,8 +270,107 @@ describe('pisp sync API', () => {
   });
 
   describe('pisp <---> bankone unhappy path linking - account selection errors', () => { 
-    it.todo('returns an error if I try to link an unknown account')
-    it.todo('returns an error if I try to link an account with a dfsp that is not bankone')
+    it('returns an error if I try to link an unknown account', async () => {
+      // Arrange
+      const userId = `61414414414`
+      const consentRequestId = v4()
+      const accounts = [{
+        accountNickname: 'Everyday Spend',
+        currency: 'USD',
+        id: 'some-random-string-bankone-wont-like'
+      }]
+
+      const uri = `${pispaSyncAPI}/linking/request-consent`
+      const data = {
+        consentRequestId,
+        toParticipantId: 'bankone',
+        accounts,
+        actions: [
+          'accounts.transfer'
+        ],
+        userId,
+        callbackUri: 'pisp-app://callback'
+      }
+      // callbackUri\':\'pisp-app://callback\'}'
+      const config: AxiosRequestConfig = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }
+      console.log('POST', uri)
+      console.log('data', data)
+      const expected = {
+        currentState: 'errored',
+        // TODO: change this to a better data!
+        errorInformation: {
+          errorCode: "7200",
+          errorDescription: "Generic Thirdparty account linking error",
+        },
+      }
+
+      // Act
+      try {
+        await axios.post(uri, data, config)
+        throw new Error('Should not be executed')
+      } catch(err) {
+        // Assert
+        expect(err.response.data).toStrictEqual(expected)
+        // TODO: change this to a status code of 400
+        expect(err.response.status).toStrictEqual(500)
+      }
+    })
+
+    /// Note: for now the 3p-scheme-adapter only handles this through a timeout
+    it('returns an error if I try to link an account with a dfsp that is not bankone', async () => {
+      // Arrange
+      jest.setTimeout(45 * 1000)
+
+      const userId = `61414414414`
+      const consentRequestId = v4()
+      const accounts = [{
+        accountNickname: 'Everyday Spend',
+        currency: 'USD',
+        id: 'some-random-string-bankone-wont-like'
+      }]
+
+      const uri = `${pispaSyncAPI}/linking/request-consent`
+      const data = {
+        consentRequestId,
+        toParticipantId: 'notbankone',
+        accounts,
+        actions: [
+          'accounts.transfer'
+        ],
+        userId,
+        callbackUri: 'pisp-app://callback'
+      }
+      // callbackUri\':\'pisp-app://callback\'}'
+      const config: AxiosRequestConfig = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }
+      console.log('POST', uri)
+      console.log('data', data)
+      const expected = {
+        errorInformation: {
+          errorCode: "2001",
+          errorDescription: "Internal server error - Timeout",
+        },
+      }
+
+      // Act
+      try {
+        await axios.post(uri, data, config)
+        throw new Error('Should not be executed')
+      } catch(err) {
+        // Assert
+        expect(err.response.data).toStrictEqual(expected)
+        expect(err.response.status).toStrictEqual(500)
+      }
+    })
   })
 
   describe('pisp <---> bankone unhappy path linking - invalid OTP', () => { 
@@ -365,9 +465,56 @@ describe('pisp sync API', () => {
       })
     })
 
+    // TODO: fix this - it appears to be a problem between the BankOne 3p-scheme-adapter and backend
+    describe.skip('returns an error when I send an incorrect OTP', () => {
+      it('', async () => {
 
-    describe('returns an error when I send an incorrect OTP', () => {
-      it.todo('...')
+        // Arrange
+        expect(accounts).toBeDefined()
+        expect(userId).toBeDefined()
+        expect(consentRequestId).toBeDefined()
+
+        const uri = `${pispaSyncAPI}/linking/request-consent/${consentRequestId}/authenticate`
+        const data = {
+          // This will not be correct
+          authToken: '000000'
+        }
+        const config: AxiosRequestConfig = {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }
+        }
+        console.log('PATCH', uri)
+        console.log('data', data)
+        const expected = {
+          challenge: expect.stringMatching('.*'),
+          consent: {
+            consentId: expect.stringMatching('.*'),
+            consentRequestId,
+            scopes: [
+              {
+                // @ts-ignore
+                'accountId': accounts[0].id,
+                'actions': [
+                  'accounts.transfer',
+                ],
+              },
+            ],
+          },
+          currentState: 'consentReceivedAwaitingCredential'
+        }
+
+        // Act
+        try {
+          await axios.patch(uri, data, config)
+          throw new Error('Should not be executed')
+        } catch (err) {
+          // Assert
+          expect(err.response.data).toStrictEqual(expected)
+          expect(err.response.status).toStrictEqual(401)
+        }
+      })
     })
   })
 

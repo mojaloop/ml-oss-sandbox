@@ -140,3 +140,21 @@ kubectl exec -it kafkacat-d6457c947-cdf8j sh
 #then, inside the pod:
 kafkacat -b mojaloop-kafka:9092 -t topic-event | jq
 ```
+
+
+
+## Copypastable curl commands
+
+{"url":"http://sandbox.mojaloop.io/api/admin/oracle-consent/participants/CONSENT/bb58efb7-e5d6-4ba4-aebb-f9d2e9fa88c0","method":"POST","headers":{"accept":"application/vnd.interoperability.participants+json;version=1.1","content-type":"application/vnd.interoperability.participants+json;version=1.1","fspiop-source":"centralauth","date":"Tue, 24 Aug 2021 06:06:14 GMT","user-agent":"axios/0.21.1","connection":"close","traceid":"f99c8aa9-222e-49a4-8c64-6397f841f005","fspiop-destination":"switch"},"data":{"fspId":"centralauth"},"responseType":"json"}
+
+
+
+```bash
+# register a consent with the oracle
+curl -X POST http://sandbox.mojaloop.io/api/admin/oracle-consent/participants/CONSENT/bb58efb7-e5d6-4ba4-aebb-f9d2e9fa88c0\
+  -H "Accept: application/vnd.interoperability.participants+json;version=1.1" \
+  -H "content-type: application/vnd.interoperability.participants+json;version=1.1" \
+  -H "fspiop-source: centralauth" \
+  -H "date":"Tue, 24 Aug 2021 06:06:14 GMT" \
+  -d '{"fspId":"centralauth"}'
+```

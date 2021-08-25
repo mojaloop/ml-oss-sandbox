@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: oracle-consent
-          image: mojaloop/als-consent-oracle:v0.0.3
+          image: mojaloop/als-consent-oracle:v0.0.6
           # command: [ "tail", "-f", "/dev/null" ]
           livenessProbe:
             initialDelaySeconds: 30
@@ -35,25 +35,30 @@ spec:
               port: 3000
           volumeMounts:
             - name: oracle-consent-config-volume
-              mountPath: /opt/oracle-consent/config/development_db.json
-              subPath: development_db.json
+              mountPath: /opt/als-consent-oracle/config/default.json
+              subPath: default.json
           env:
             - name: NODE_ENV
               value: development
+          command:
+            - /bin/sh
+          args:
+            - -c 
+            - npm run migrate; npm run start
       volumes:
         - name: oracle-consent-config-volume
           configMap:
             name: oracle-consent-config
             items:
-            - key: development_db.json
-              path: development_db.json
+            - key: default.json
+              path: default.json
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oracle-consent-config
 data:
-  development_db.json: {{ (.Files.Get "configs/consent-oracle-development_db.json") | quote }}
+  default.json: {{ (.Files.Get "configs/consent-oracle.json") | quote }}
 ---
 apiVersion: v1
 kind: Service
