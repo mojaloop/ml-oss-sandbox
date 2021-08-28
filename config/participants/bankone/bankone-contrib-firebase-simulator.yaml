@@ -27,7 +27,7 @@ spec:
             secretName: contrib-firebase-simulator
       containers:
         - name: contrib-firebase-simulator
-          image: mojaloop/contrib-firebase-simulator:v0.2.12
+          image: mojaloop/contrib-firebase-simulator:v0.2.13
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10
@@ -47,6 +47,13 @@ spec:
               value: "0.0.0.0"
             - name: MOJALOOP_PARTICIPANT_ID
               value: "bankone"
+            - name: SHOULD_SEND_LIVE_SMS
+              value: "true"
+            # TODO: create secrets for twilio and load them here!
+          envFrom:
+            - secretRef:
+                name: twilio-env
+
           volumeMounts:
             - name: contrib-firebase-simulator-volume
               mountPath: "/opt/contrib-firebase-simulator/config/serviceAccountKey.json"

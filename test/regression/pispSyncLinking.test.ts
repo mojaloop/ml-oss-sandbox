@@ -722,6 +722,57 @@ describe('pisp sync API', () => {
     })
   })
 
+  describe.only('pispa <---> bankone OTP to real number', () => {
+    it('performs a consentRequest and sends an OTP', async () => {
+      // Arrange
+      const liveTestNumber = '+61410237238'
+      expect(liveTestNumber.length).toBeGreaterThan(0)
+      const userId = liveTestNumber.replace('+', '')
+
+      // get the list of accounts
+      const uriAccounts = `http://${pispaSyncAPI}/app/accounts/${userId}`
+      const accountsResult = (await axios.get(uriAccounts)).data
+      console.log('accountsResult', accountsResult)
+
+      // create a consentRequest
+      const uriValidate = `http://${pispaSyncAPI}/app/validateConsentRequests`
+      const consentRequestId = v4()
+      const validateData = {
+        consentRequestId,
+        toParticipantId: 'bankone',
+        scopes: [{
+          accountId: accountsResult.accounts[0].id,
+          actions: ['accounts.getBalance', 'accounts.transfer']
+        }],
+        userId,
+        callbackUri: "pisp-app://callback",
+        authChannels: ['OTP', 'WEB']
+      }
+      const options = {
+        headers: {
+          'Date': (new Date()).toISOString(),
+        }
+      }
+
+      const uri = `http://${pispaSyncAPI}/app/sendOTP`
+      const sendOTPData = {
+        consentRequestId,
+        username: 'something',
+        message: 'something'
+      }
+      const expected = {
+        otpValue: expect.stringMatching('.*')
+      }
+
+      // Act
+      await axios.post(uriValidate, validateData, options)
+      const result = await axios.post(uri, sendOTPData, options)
+      // Assert
+      expect(result.data).toStrictEqual(expected)
+      expect(result.status).toBe(200)
+    })
+  })
+
   describe('pispa transfer', () => {
     it.todo('allows me to lookup a user based on a social security id alias')
     it.todo('returns an error when I lookup a party that does not exist')
