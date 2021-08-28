@@ -1,4 +1,3 @@
-
 import axios, { AxiosRequestConfig } from 'axios'
 import { v4 } from 'uuid'
 
@@ -9,7 +8,7 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe.only('pisp <---> bankone happy path linking', () => {
+  describe('pisp <---> bankone happy path linking', () => {
     const userId = `61414414414`
     const consentRequestId = v4()
     let accounts: Array<unknown>;
@@ -459,7 +458,6 @@ describe('pisp sync API', () => {
         // Act
         const response = (await axios.post(uri, data, config)).data
 
-
         // Assert
         expect(response).toStrictEqual(expected)
       })
@@ -730,7 +728,7 @@ describe('pisp sync API', () => {
       const userId = liveTestNumber.replace('+', '')
 
       // get the list of accounts
-      const uriAccounts =  `${pispaSyncAPI}/linking/accounts/bankone/${userId}`
+      const uriAccounts = `${pispaSyncAPI}/linking/accounts/bankone/${userId}`
       const accountsResult = (await axios.get(uriAccounts)).data
       console.log('accountsResult', accountsResult)
 
@@ -764,18 +762,79 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  // describe('pisp <---> bankone happy path linking', () => {
-  //   // const userId = `61414414414`
-  //   // const consentRequestId = v4()
-  //   // let accounts: Array<unknown>;
-  //   // let consentId: string;
+  describe.only('pisp <---> bankone happy path transfer', () => {
+    // const userId = `61414414414`
+    const transactionRequestId = v4()
+    // let accounts: Array<unknown>;
+    // let consentId: string;
 
-  //   // Hardcode a consentId/thirdparty account link
+    // Hardcode a consentId + thirdparty account link
+    // ideally, we would implement a GET somewhere so we dont
+    // need to hardcode
+    describe('looks up a destination party', () => {
+      it('', async () => {
+        
+        /*
+        curl -X POST "http://sandbox.mojaloop.io/switch-ttk-backend/thirdpartyTransaction/partyLookup" \
+          -H  "accept: application/json" \
+          -H  "Content-Type: application/json" \
+          -d '{
+            "transactionRequestId": "b51ec534-ee48-4575-b6a9-ead2955b8069",
+            "payee": {
+              "partyIdType": "MSISDN",
+              "partyIdentifier":"16135551212"
+            }
+          }'
+
+        */
+
+        // Arrange
+        const uri = `${pispaSyncAPI}/thirdpartyTransaction/partyLookup`
+        const data = {
+          transactionRequestId,
+          payee: {
+            partyIdType: "MSISDN",
+            partyIdentifier: "123456789"
+          }
+        }
+        const config: AxiosRequestConfig = {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }
+        }
+        const expected = {
+          "currentState": "partyLookupSuccess",
+          "party": {
+            "partyIdInfo": {
+              "partyIdType": "MSISDN",
+              "partyIdentifier": "16135551212",
+              "fspId": "dfspb"
+            },
+            "name": "Bob bobbington"
+          }
+        }
+
+        // Act
+        console.log('POST', uri)
+        console.log('data', data)
+
+        try {
+          const lookupResponse = (await axios.post(uri, data, config)).data
+          expect(lookupResponse).toStrictEqual(expected)
+        } catch(err) {
+          console.log(err.response.data)
+        }
+        
+        // Assert
+      })
+    })
 
 
 
 
-  // })
+
+  })
 
   describe('pispa transfer', () => {
     it.todo('allows me to lookup a user based on a social security id alias')

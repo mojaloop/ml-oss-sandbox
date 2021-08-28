@@ -4,7 +4,72 @@ participantId: 'pispa'
 
 # Set both to true if DFSP, set only `thirdpartyApiSupport` to true if PISP
 thirdpartyApiSupport: true
+# hmm actually we need this to do GET /parties...
 mojaloopApiSupport: true
+
+thirdparty_scheme_adapter:
+  config:
+    production.json {
+      "INBOUND": {
+        "PORT": 4005,
+        "HOST": "0.0.0.0",
+        "PISP_TRANSACTION_MODE": true
+      },
+      "OUTBOUND": {
+        "PORT": 4006,
+        "HOST": "0.0.0.0"
+      },
+      "REQUEST_PROCESSING_TIMEOUT_SECONDS": 30,
+      "WSO2_AUTH": {
+        "staticToken": "0706c62f-c022-3c42-8d14-8b5df128876d",
+        "tokenEndpoint": "",
+        "clientKey": "test-client-key",
+        "clientSecret": "test-client-secret",
+        "refreshSeconds": 3600
+      },
+      "REDIS": {
+        "PORT": 6379,
+        "HOST": "dfspa-redis",
+        "TIMEOUT": 100
+      },
+      "INSPECT": {
+        "DEPTH": 4,
+        "SHOW_HIDDEN": false,
+        "COLOR": true
+      },
+      "SHARED": {
+        # "ALS_ENDPOINT": "ml-testing-toolkit:5000",
+        # "QUOTES_ENDPOINT": "ml-testing-toolkit:5000",
+        # "TRANSFERS_ENDPOINT": "ml-testing-toolkit:5000",
+        "PEER_ENDPOINT": "beta.moja-lab.live/api/thirdparty",
+        "DFSP_ID": "pispa",
+        "DFSP_BACKEND_URI": "pisp-simulator:3000",
+        "DFSP_BACKEND_HTTP_SCHEME": "http",
+        "DFSP_BACKEND_VERIFY_AUTHORIZATION_PATH": "verify-authorization",
+        "DFSP_BACKEND_VERIFY_CONSENT_PATH": "verify-consent",
+        "PISP_BACKEND_URI": "pisp-simulator:3000",
+        "PISP_BACKEND_HTTP_SCHEME": "http",
+        "PISP_BACKEND_SIGN_AUTHORIZATION_PATH": "signchallenge",
+        # TODO: what is this for???
+        "SDK_REQUEST_TO_PAY_TRANSFER_URI": "beta.moja-lab.live/pispa/sdk-scheme-adapter/outbound/requestToPayTransfer",
+        "SDK_OUTGOING_URI": "pispa-sdk-scheme-adapter-outbound.sandbox.mojaloop.io",
+        "SDK_OUTGOING_HTTP_SCHEME": "http",
+        "SDK_OUTGOING_PARTIES_INFORMATION_PATH": "parties/{Type}/{ID}/{SubId}",
+        "SDK_NOTIFY_ABOUT_TRANSFER_URI": "beta.moja-lab.live/api/thirdparty/thirdpartyRequests/transctions/{ID}",
+        "JWS_SIGN": false,
+        "JWS_SIGNING_KEY": "./secrets/jwsSigningKey.key",
+        "TLS": {
+          "mutualTLS": {
+            "enabled": false
+          },
+          "creds": {
+            "ca": "./secrets/dfsp_a_client.crt",
+            "cert": "./secrets/dfsp_a_client.crt",
+            "key": "./secrets/dfsp_a_client.crt"
+          }
+        }
+      }
+    }
 
 mojaloop_simulator:
   jwsSigningKey: ''

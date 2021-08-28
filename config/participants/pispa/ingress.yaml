@@ -28,3 +28,17 @@ spec:
             backend:
               serviceName: pispa-thirdparty-scheme-adapter
               servicePort: 4006
+     - host: pispa-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: pispa-sdk-scheme-adapter
+              servicePort: 4000
+    - host: pispa-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: pispa-sdk-scheme-adapter
+              servicePort: 4001

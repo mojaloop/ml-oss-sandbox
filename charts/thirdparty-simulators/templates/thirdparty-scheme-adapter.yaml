@@ -75,8 +75,18 @@ spec:
           configMap:
             name: {{ $participantId }}-config-map
             items:
-            - key: production.json
-              path: production.json
+              {{- range $k, $v := index .Values "thirdparty_scheme_adapter" "config" }}
+              - key: {{ $k }}
+                path: {{ $k }}
+              {{- end }}
+      # Replace files and templated files with inline! in values.yaml
+      #   - name: {{ $participantId }}-config-volume
+      #     configMap:
+      #       name: {{ $participantId }}-config-map
+      #       items:
+      #       - key: production.json
+      #         path: production.json
+
 ---
 apiVersion: v1
 kind: ConfigMap
