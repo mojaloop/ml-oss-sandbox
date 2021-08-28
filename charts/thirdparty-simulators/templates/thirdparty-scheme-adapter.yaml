@@ -85,7 +85,15 @@ spec:
       #       items:
       #       - key: production.json
       #         path: production.json
-
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $participantId }}-config-map
+data:
+  {{- range $k, $v := index .Values "thirdparty_scheme_adapter" "config" }}
+    {{ $k }}: {{ ($v | toPrettyJson | squote ) }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: Service
