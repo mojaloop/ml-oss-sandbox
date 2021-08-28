@@ -9,7 +9,7 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe('pisp <---> bankone happy path linking', () => {
+  describe.only('pisp <---> bankone happy path linking', () => {
     const userId = `61414414414`
     const consentRequestId = v4()
     let accounts: Array<unknown>;
@@ -722,7 +722,7 @@ describe('pisp sync API', () => {
     })
   })
 
-  describe.only('pispa <---> bankone OTP to real number', () => {
+  describe('pispa <---> bankone OTP to real number', () => {
     it('performs a consentRequest and sends an OTP', async () => {
       // Arrange
       const liveTestNumber = '+61410237238'
@@ -730,48 +730,52 @@ describe('pisp sync API', () => {
       const userId = liveTestNumber.replace('+', '')
 
       // get the list of accounts
-      const uriAccounts = `http://${pispaSyncAPI}/app/accounts/${userId}`
+      const uriAccounts =  `${pispaSyncAPI}/linking/accounts/bankone/${userId}`
       const accountsResult = (await axios.get(uriAccounts)).data
       console.log('accountsResult', accountsResult)
 
-      // create a consentRequest
-      const uriValidate = `http://${pispaSyncAPI}/app/validateConsentRequests`
+      // request consent
       const consentRequestId = v4()
-      const validateData = {
+      const uriConsentRequest = `${pispaSyncAPI}/linking/request-consent`
+      const data = {
         consentRequestId,
         toParticipantId: 'bankone',
-        scopes: [{
-          accountId: accountsResult.accounts[0].id,
-          actions: ['accounts.getBalance', 'accounts.transfer']
-        }],
+        accounts: accountsResult.accounts,
+        actions: [
+          'accounts.transfer'
+        ],
         userId,
-        callbackUri: "pisp-app://callback",
-        authChannels: ['OTP', 'WEB']
+        callbackUri: 'pisp-app://callback'
       }
-      const options = {
+      const config: AxiosRequestConfig = {
         headers: {
-          'Date': (new Date()).toISOString(),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         }
       }
+      console.log('POST', uriConsentRequest)
+      console.log('data', data)
 
-      const uri = `http://${pispaSyncAPI}/app/sendOTP`
-      const sendOTPData = {
-        consentRequestId,
-        username: 'something',
-        message: 'something'
-      }
-      const expected = {
-        otpValue: expect.stringMatching('.*')
-      }
+      const requestConsentResponse = (await axios.post(uriConsentRequest, data, config)).data
 
-      // Act
-      await axios.post(uriValidate, validateData, options)
-      const result = await axios.post(uri, sendOTPData, options)
-      // Assert
-      expect(result.data).toStrictEqual(expected)
-      expect(result.status).toBe(200)
+      console.log('requestConsentResponse', requestConsentResponse)
     })
   })
+
+  // Shared state for these flow.
+  // Each has it's own describe block to ensure tests run in order
+  // describe('pisp <---> bankone happy path linking', () => {
+  //   // const userId = `61414414414`
+  //   // const consentRequestId = v4()
+  //   // let accounts: Array<unknown>;
+  //   // let consentId: string;
+
+  //   // Hardcode a consentId/thirdparty account link
+
+
+
+
+  // })
 
   describe('pispa transfer', () => {
     it.todo('allows me to lookup a user based on a social security id alias')

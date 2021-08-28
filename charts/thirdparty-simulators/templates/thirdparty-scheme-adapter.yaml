@@ -23,7 +23,7 @@ spec:
       containers:
         # Inbound Container
         - name: inbound
-          image: mojaloop/thirdparty-scheme-adapter:v11.43.0
+          image: mojaloop/thirdparty-scheme-adapter:v11.46.1
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:
