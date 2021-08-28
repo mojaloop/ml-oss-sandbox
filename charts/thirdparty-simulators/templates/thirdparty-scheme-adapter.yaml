@@ -60,8 +60,7 @@ spec:
               port: 4006
           env:
             - name: NODE_ENV
-              # set to development so we don't need to specify a
-              # config file from scratch
+              # tells config.ts to look for a `production.json` file
               value: production
             - name: REDIS_HOST
               value: {{ $participantId }}-redis
@@ -89,13 +88,6 @@ spec:
 
 ---
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ $participantId }}-config-map
-data:
-  production.json: {{ (tpl (.Files.Get "configs/thirdparty-scheme-adapter.json") . ) | quote }}
----
-apiVersion: v1
 kind: Service
 metadata:
   name: {{ $participantId }}-thirdparty-scheme-adapter
@@ -110,6 +102,7 @@ spec:
   clusterIP: None
 ---
 # TODO: ingress rules for each of the 3 apis...
+
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
