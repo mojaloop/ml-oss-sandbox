@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: thirdparty-api-adapter
-          image: mojaloop/thirdparty-api-adapter:v11.19.1
+          image: mojaloop/thirdparty-api-svc:v11.20.0
           # command: [ "tail", "-f", "/dev/null" ]
           livenessProbe:
             initialDelaySeconds: 30
@@ -35,7 +35,7 @@ spec:
               port: 3008
           volumeMounts:
             - name: thirdparty-api-adapter-config-volume
-              mountPath: /opt/thirdparty-api-adapter/config
+              mountPath: /opt/thirdparty-api-svc/config
           # TODO: remove me - for testing purposes only
           securityContext:
             allowPrivilegeEscalation: false
