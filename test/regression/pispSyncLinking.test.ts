@@ -762,7 +762,7 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe('pisp <---> bankone happy path transfer', () => {
+  describe.only('pisp <---> bankone happy path transfer', () => {
     // const userId = `61414414414`
 
     // Hardcode a consentId + thirdparty account link
@@ -780,7 +780,7 @@ describe('pisp sync API', () => {
     let authorizationResponse: any
 
   
-    describe.only('looks up a destination party', () => {
+    describe('looks up a destination party', () => {
       it('', async () => {
         /*
         curl -X POST "http://sandbox.mojaloop.io/switch-ttk-backend/thirdpartyTransaction/partyLookup" \
