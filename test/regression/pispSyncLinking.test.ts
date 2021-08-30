@@ -261,14 +261,14 @@ describe('pisp sync API', () => {
       try {
         await axios.get(uri, {})
         throw new Error('Should not be executed!')
-      } catch(err) {
+      } catch (err) {
         // Assert
         expect(err.response.status).toBe(404)
       }
     })
   });
 
-  describe('pisp <---> bankone unhappy path linking - account selection errors', () => { 
+  describe('pisp <---> bankone unhappy path linking - account selection errors', () => {
     it('returns an error if I try to link an unknown account', async () => {
       // Arrange
       const userId = `61414414414`
@@ -312,7 +312,7 @@ describe('pisp sync API', () => {
       try {
         await axios.post(uri, data, config)
         throw new Error('Should not be executed')
-      } catch(err) {
+      } catch (err) {
         // Assert
         expect(err.response.data).toStrictEqual(expected)
         // TODO: change this to a status code of 400
@@ -364,7 +364,7 @@ describe('pisp sync API', () => {
       try {
         await axios.post(uri, data, config)
         throw new Error('Should not be executed')
-      } catch(err) {
+      } catch (err) {
         // Assert
         expect(err.response.data).toStrictEqual(expected)
         expect(err.response.status).toStrictEqual(500)
@@ -372,7 +372,7 @@ describe('pisp sync API', () => {
     })
   })
 
-  describe('pisp <---> bankone unhappy path linking - invalid OTP', () => { 
+  describe('pisp <---> bankone unhappy path linking - invalid OTP', () => {
     const userId = `61414414414`
     const consentRequestId = v4()
     let accounts: Array<unknown>;
@@ -516,7 +516,7 @@ describe('pisp sync API', () => {
     })
   })
 
-  describe('pisp <---> bankone unhappy path linking - bad credential', () => { 
+  describe('pisp <---> bankone unhappy path linking - bad credential', () => {
     const userId = `61414414414`
     const consentRequestId = v4()
     let accounts: Array<unknown>;
@@ -608,7 +608,7 @@ describe('pisp sync API', () => {
         expect(response).toStrictEqual(expected)
       })
     })
-    
+
     describe('returns a Consent object when I send the correct OTP', () => {
       it('', async () => {
 
@@ -762,18 +762,26 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe.only('pisp <---> bankone happy path transfer', () => {
+  describe('pisp <---> bankone happy path transfer', () => {
     // const userId = `61414414414`
-    const transactionRequestId = v4()
-    // let accounts: Array<unknown>;
-    // let consentId: string;
 
     // Hardcode a consentId + thirdparty account link
     // ideally, we would implement a GET somewhere so we dont
     // need to hardcode
-    describe('looks up a destination party', () => {
+    const thirdpartyLinkAccountId = '16135551212'
+    const transactionRequestId = v4()
+    const config: AxiosRequestConfig = {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }
+    let lookupResponse: any
+    let authorizationResponse: any
+
+  
+    describe.only('looks up a destination party', () => {
       it('', async () => {
-        
         /*
         curl -X POST "http://sandbox.mojaloop.io/switch-ttk-backend/thirdpartyTransaction/partyLookup" \
           -H  "accept: application/json" \
@@ -785,13 +793,159 @@ describe('pisp sync API', () => {
               "partyIdentifier":"16135551212"
             }
           }'
-
         */
 
         // Arrange
         const uri = `${pispaSyncAPI}/thirdpartyTransaction/partyLookup`
         const data = {
           transactionRequestId,
+          payee: {
+            partyIdType: "MSISDN",
+            partyIdentifier: "11194979"
+          }
+        }
+        const expected = {
+          "currentState": "partyLookupSuccess",
+          "party": {
+            "name": "Alex Alligator",
+            "partyIdInfo": {
+              "partyIdType": "MSISDN",
+              "partyIdentifier": "11194979",
+              "fspId": "applebank"
+            },
+            "personalInfo": {
+              "complexName": {
+                "firstName": "Alex",
+                "lastName": "Alligator",
+                "middleName": "A",
+              },
+              "dateOfBirth": "1970-01-01",
+            }
+          }
+        }
+
+        // Act
+        console.log('POST', uri)
+        console.log('data', data)
+        lookupResponse = (await axios.post(uri, data, config)).data
+        
+        // Assert
+        expect(lookupResponse).toStrictEqual(expected)
+      })
+    })
+
+
+    describe('gets an authorization request after I send a 3rd party transaction request', () => {
+      it('', async () => {
+        // Arrange
+        expect(lookupResponse).toBeDefined()
+        /*
+        curl -X POST "http://sandbox.mojaloop.io/switch-ttk-backend/thirdpartyTransaction/b51ec534-ee48-4575-b6a9-ead2955b8069/initiate" -H  "accept: application/json"\
+          -H  "Content-Type: application/json" \
+          -d '{
+            "payee":{
+              "name":"Bob bobbington",
+              "partyIdInfo":{
+                "fspId":"dfspb",
+                "partyIdType":"MSISDN",
+                "partyIdentifier":"16135551212"
+              }
+            },
+            "payer":{
+              "partyIdType":"THIRD_PARTY_LINK",
+              "partyIdentifier":"16135551212",
+              "fspId":"dfspa"
+            },
+            "amountType":"RECEIVE",
+            "amount":{
+              "currency":"USD",
+              "amount":"123.47"
+            },
+            "transactionType":{
+              "scenario":"TRANSFER",
+              "initiator":"PAYER",
+              "initiatorType":"CONSUMER"
+            },
+            "expiration":"2021-05-24T08:38:08.699-04:00"
+          }'
+        */
+        const uri = `${pispaSyncAPI}/thirdpartyTransaction/${transactionRequestId}/initiate`
+        const now = new Date()
+        const expiryDate = new Date(now.setHours(now.getHours() + 1))
+        const data = {
+          transactionRequestId,
+          payee: {
+            name: lookupResponse.party.name,
+            partyIdInfo: lookupResponse.party.partyIdInfo
+          },
+          payer: {
+            partyIdType: 'THIRD_PARTY_LINK',
+            partyIdentifier: thirdpartyLinkAccountId,
+            fspId: 'bankone'
+          },
+          amountType: "RECEIVE",
+          amount:{
+            currency: 'USD',
+            amount: '123.47'
+          },
+          transactionType: {
+            scenario: 'TRANSFER',
+            initiator: 'PAYER',
+            initiatorType: 'CONSUMER'
+          },
+          expiration: expiryDate.toISOString()
+        }
+        const expected = {
+          "currentState": "authorizationReceived",
+          "authorization": {
+            "authorizationRequestId": "7bf48d21-03fa-439f-953e-1ced5ed7b3d2",
+            "transactionRequestId": "b51ec534-ee48-4575-b6a9-ead2955b8069",
+            "challenge": "f92ksdh3FYFDKaskdf08dnofuPPHfr",
+            "quote": {
+              "transferAmount": {
+                "amount": "124.47",
+                "currency": "USD"
+              },
+              "payeeReceiveAmount": {
+                "amount": "123.47",
+                "currency": "USD"
+              },
+              "payeeFspFee": {
+                "amount": "1.00",
+                "currency": "USD"
+              },
+              "expiration": "2022-01-01T08:38:08.699-04:00",
+              "ilpPacket": "AYIBgQAAAAAAAASwNGxldmVsb25lLmRmc3AxLm1lci45T2RTOF81MDdqUUZERmZlakgyOVc4bXFmNEpLMHlGTFGCAUBQU0svMS4wCk5vbmNlOiB1SXlweUYzY3pYSXBFdzVVc05TYWh3CkVuY3J5cHRpb246IG5vbmUKUGF5bWVudC1JZDogMTMyMzZhM2ItOGZhOC00MTYzLTg0NDctNGMzZWQzZGE5OGE3CgpDb250ZW50LUxlbmd0aDogMTM1CkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbgpTZW5kZXItSWRlbnRpZmllcjogOTI4MDYzOTEKCiJ7XCJmZWVcIjowLFwidHJhbnNmZXJDb2RlXCI6XCJpbnZvaWNlXCIsXCJkZWJpdE5hbWVcIjpcImFsaWNlIGNvb3BlclwiLFwiY3JlZGl0TmFtZVwiOlwibWVyIGNoYW50XCIsXCJkZWJpdElkZW50aWZpZXJcIjpcIjkyODA2MzkxXCJ9IgA",
+              "condition": "f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pH"
+            },
+            "transactionType": {
+              "scenario": "TRANSFER",
+              "initiator": "PAYER",
+              "initiatorType": "CONSUMER"
+            }
+          }
+        }
+
+        // Act
+        console.log('POST', uri)
+        console.log('data', data)
+        authorizationResponse = (await axios.post(uri, data, config)).data
+
+        // Assert
+        expect(authorizationResponse).toStrictEqual(expected)
+
+      })
+    })
+
+  })
+
+  describe('pisp <--> bankone unhappy path tansfer', () => {
+    describe('fails to up a destination party that does not exist', () => {
+      it('', async () => {
+        // Arrange
+        const uri = `${pispaSyncAPI}/thirdpartyTransaction/partyLookup`
+        const data = {
+          transactionRequestId: v4(),
           payee: {
             partyIdType: "MSISDN",
             partyIdentifier: "123456789"
@@ -804,14 +958,10 @@ describe('pisp sync API', () => {
           }
         }
         const expected = {
-          "currentState": "partyLookupSuccess",
-          "party": {
-            "partyIdInfo": {
-              "partyIdType": "MSISDN",
-              "partyIdentifier": "16135551212",
-              "fspId": "dfspb"
-            },
-            "name": "Bob bobbington"
+          "currentState": "partyLookupFailure",
+          "errorInformation": {
+            "errorCode": '3201',
+            "errorDescription": "Destination FSP Error"
           }
         }
 
@@ -819,21 +969,11 @@ describe('pisp sync API', () => {
         console.log('POST', uri)
         console.log('data', data)
 
-        try {
-          const lookupResponse = (await axios.post(uri, data, config)).data
-          expect(lookupResponse).toStrictEqual(expected)
-        } catch(err) {
-          console.log(err.response.data)
-        }
-        
         // Assert
+        const lookupResponse = (await axios.post(uri, data, config)).data
+        expect(lookupResponse).toStrictEqual(expected)
       })
     })
-
-
-
-
-
   })
 
   describe('pispa transfer', () => {

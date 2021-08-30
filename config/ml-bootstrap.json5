@@ -8,7 +8,7 @@
     centralLedgerAdmin: 'http://beta.moja-lab.live/api/admin/central-ledger',
   },
   oracles: [
-    { oracleIdType: "MSISDN", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator"},
+    { oracleIdType: "MSISDN", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle"},
     { oracleIdType: "CONSENT", endpoint: "http://sandbox.mojaloop.io/api/admin/oracle-consent"}
 
   ],
