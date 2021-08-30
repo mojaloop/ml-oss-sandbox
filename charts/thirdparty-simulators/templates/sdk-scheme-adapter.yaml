@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: sdk-scheme-adapter
-          image: mojaloop/sdk-scheme-adapter:v11.10.1.3-pisp
+          image: mojaloop/sdk-scheme-adapter:v11.16.2
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:

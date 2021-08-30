@@ -7,15 +7,72 @@ DFSP_BACKEND_URI: sandbox.mojaloop.io/bankone-backend/app
 thirdpartyApiSupport: true
 mojaloopApiSupport: true
 
+thirdparty_scheme_adapter:
+  config:
+    production.json: {
+      "INBOUND": {
+        "PORT": 4005,
+        "HOST": "0.0.0.0",
+        "PISP_TRANSACTION_MODE": true
+      },
+      "OUTBOUND": {
+        "PORT": 4006,
+        "HOST": "0.0.0.0"
+      },
+      "REQUEST_PROCESSING_TIMEOUT_SECONDS": 30,
+      "WSO2_AUTH": {
+        "staticToken": "0706c62f-c022-3c42-8d14-8b5df128876d",
+        "tokenEndpoint": "",
+        "clientKey": "test-client-key",
+        "clientSecret": "test-client-secret",
+        "refreshSeconds": 3600
+      },
+      "REDIS": {
+        "PORT": 6379,
+        "HOST": "bankone-redis",
+        "TIMEOUT": 100
+      },
+      "INSPECT": {
+        "DEPTH": 4,
+        "SHOW_HIDDEN": false,
+        "COLOR": true
+      },
+      "SHARED": {
+        "PEER_ENDPOINT": "beta.moja-lab.live/api/thirdparty",
+        "DFSP_ID": "bankone",
+        "DFSP_BACKEND_URI": "sandbox.mojaloop.io/bankone-backend/app",
+        "DFSP_BACKEND_HTTP_SCHEME": "http",
+        "DFSP_BACKEND_VERIFY_AUTHORIZATION_PATH": "verify-authorization",
+        "DFSP_BACKEND_VERIFY_CONSENT_PATH": "verify-consent",
+        # TODO: what is this for???
+        "SDK_REQUEST_TO_PAY_TRANSFER_URI": "beta.moja-lab.live/pispa/sdk-scheme-adapter/outbound/requestToPayTransfer",
+        # TODO: is this important???
+        "SDK_OUTGOING_URI": "bankone-sdk-scheme-adapter-outbound.sandbox.mojaloop.io",
+        "SDK_OUTGOING_HTTP_SCHEME": "http",
+        "SDK_OUTGOING_PARTIES_INFORMATION_PATH": "parties/{Type}/{ID}/{SubId}",
+        "SDK_NOTIFY_ABOUT_TRANSFER_URI": "beta.moja-lab.live/api/thirdparty/thirdpartyRequests/transctions/{ID}",
+        "JWS_SIGN": false,
+        "JWS_SIGNING_KEY": "./secrets/jwsSigningKey.key",
+        "TLS": {
+          "mutualTLS": {
+            "enabled": false
+          },
+          "creds": {
+            "ca": "./secrets/dfsp_a_client.crt",
+            "cert": "./secrets/dfsp_a_client.crt",
+            "key": "./secrets/dfsp_a_client.crt"
+          }
+        }
+      }
+    }
 mojaloop_simulator:
   jwsSigningKey: ''
-
-thirdparty_scheme_adapter:
-  AUTH_SERVICE_PARTICIPANT_ID: centralauth
 
 sdk_scheme_adapter:
   # Note: copied from `mojaloop/helm`
   env:
+    ENABLE_PISP_MODE: true
+
     # Ports the scheme adapter listens on. Shouldn't really matter for a user of this chart.
     # You probably shouldn't bother configuring them- it likely won't do you much good. But it
     # won't do any harm, either.
@@ -56,13 +113,7 @@ sdk_scheme_adapter:
     # ideally we would deploy this with proper dns, and be able to
     # give these better values
 
-    ALS_ENDPOINT: "account-lookup-service:4002"
-    QUOTES_ENDPOINT: "quoting-service:3002"
-    TRANSFERS_ENDPOINT: "ml-api-adapter:3000"
-    # TRANSACTION_REQUESTS_ENDPOINT is not yet added in SDK, so using PEER_ENDPOINT
-    TRANSACTION_REQUESTS_ENDPOINT: "transaction-requests-service:4003"
-    PEER_ENDPOINT: "transaction-requests-service:4003"
-
+    PEER_ENDPOINT: beta.moja-lab.live/api/fspiop
     # PEER_ENDPOINT: "mlapiadapter"
     # BULK_TRANSFERS_ENDPOINT="mojaloop-switch-bulk-transfers"
     # BULK_QUOTES_ENDPOINT="mojaloop-switch-bulk-quotes"
@@ -133,7 +184,8 @@ sdk_scheme_adapter:
     # Timeout for GET/POST/DELETE - PUT flow processing
     REQUEST_PROCESSING_TIMEOUT_SECONDS: "30"
 
-    # To allow transfer without a previous quote request, set this value to true.
-    # The incoming transfer request should consist of an ILP packet and a matching condition in this case.
-    # The fulfilment will be generated from the provided ILP packet, and must hash to the provided condition.
-    ALLOW_TRANSFER_WITHOUT_QUOTE: false
+    # this needs to be on because of a bug where the 
+    # redis cache key for the quote can't be looked up
+    # by the transfer step:
+    # https://github.com/mojaloop/project/issues/2367
+    ALLOW_TRANSFER_WITHOUT_QUOTE: true

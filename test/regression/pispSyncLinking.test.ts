@@ -768,7 +768,7 @@ describe('pisp sync API', () => {
     // Hardcode a consentId + thirdparty account link
     // ideally, we would implement a GET somewhere so we dont
     // need to hardcode
-    const thirdpartyLinkAccountId = '16135551212'
+    const thirdpartyLinkAccountId = '369f8bcf6870743d528026fb65439af'
     const transactionRequestId = v4()
     const config: AxiosRequestConfig = {
       headers: {
