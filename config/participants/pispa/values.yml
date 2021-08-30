@@ -92,10 +92,10 @@ sdk_scheme_adapter:
 
     # Enable JWS verification and signing
     VALIDATE_INBOUND_JWS: false
-    JWS_SIGN: false
+    JWS_SIGN: false  
     CACHE_PORT: 6379
 
-    # applicable only if VALIDATE_INBOUND_JWS is `true`
+    # applicable only if VALIDATE_INBOUND_JWS is `truek`
     # allows disabling of validation on incoming PUT /parties/{idType}/{idValue} requests
     VALIDATE_INBOUND_PUT_PARTIES_JWS: false
 
