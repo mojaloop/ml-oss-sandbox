@@ -27,7 +27,7 @@ spec:
             secretName: contrib-firebase-simulator
       containers:
         - name: contrib-firebase-simulator
-          image: mojaloop/contrib-firebase-simulator:v0.2.14
+          image: mojaloop/contrib-firebase-simulator:v0.2.15
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10
