@@ -75,7 +75,6 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
-  
 
   regression-test:
     executor: default-docker
@@ -95,6 +94,25 @@ jobs:
           webhook: "$SLACK_WEBHOOK_ANNOUNCMENT_CI_CD"
           failure_message: ':red_circle: ${CIRCLE_PROJECT_REPONAME}regression tests failed'
           success_message: ':tada: ${CIRCLE_PROJECT_REPONAME}regression tests pased'
+
+  health-checks:
+    executor: default-docker
+    steps:
+      - checkout
+      - run:
+          name: Install general dependencies
+          command: *defaults_Dependencies
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: run health checks
+          command: make health-check
+      - slack/status:
+          fail_only: false
+          webhook: "$SLACK_WEBHOOK_ANNOUNCMENT_CI_CD"
+          failure_message: ':red_circle: ${CIRCLE_PROJECT_REPONAME} health checks failed'
+          success_message: ':tada: ${CIRCLE_PROJECT_REPONAME} health tests pased'
 
 
   # # A set of scans based on cloned repos
@@ -196,12 +214,20 @@ workflows:
           context: org-global
           requires:
             - setup
+      - health-checks:
+          context: org-global
+          requires:
+            - setup
 
   run_on_commit:
     jobs:
       - setup:
           context: org-global
       - regression-test:
+          context: org-global
+          requires:
+            - setup
+      - health-checks:
           context: org-global
           requires:
             - setup
