@@ -92,7 +92,7 @@ jobs:
       - slack/status:
           fail_only: false
           webhook: "$SLACK_WEBHOOK_ANNOUNCEMENT_CI_CD"
-          failure_message: ':red_circle: ${CIRCLE_PROJECT_REPONAME}regression tests failed'
+          failure_message: ':red_circle: ${CIRCLE_PROJECT_REPONAME} regression tests failed'
           success_message: ':tada: ${CIRCLE_PROJECT_REPONAME} regression tests pased'
 
   health-checks:
