@@ -5,6 +5,7 @@ BASE_URL=sandbox.mojaloop.io
 
 up:
 	kubectl apply -f ./thirdparty_deployment_base.yaml
+	kubectl apply -f ./alias_oracle_base.yaml
 	helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART}
 	helm upgrade --install \
 		--namespace ${NAMESPACE} \
@@ -18,6 +19,7 @@ down:
 	helm del ${RELEASE_NAME}
 	helm del tp-svc
 	@echo 'warn - not deleting thirdparty_deployment_base.yaml' 
+	@echo 'warn - not deleting alias_oracle_base.yaml' 
 
 health:	
 	@echo 'Checking health of thirdparty services'

@@ -3,7 +3,6 @@ CHART=mojaloop/mojaloop
 RELEASE_NAME=mojaloop
 BASE_URL=sandbox.mojaloop.io
 
-
 up:
 	helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART} --values ./values.yaml
 	kubectl apply -f ./ingress_kong_fspiop.yaml

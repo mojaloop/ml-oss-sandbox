@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oracle-{{.values.oracleType}}
+  labels:
+    app: oracle-{{.values.oracleType}}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # exeed the replicas by 1 pod
+  selector:
+    matchLabels:
+      app: oracle-{{.values.oracleType}}
+  template:
+    metadata:
+      labels:
+        app: oracle-{{.values.oracleType}}
+    spec:
+      containers:
+        - name: oracle-{{.values.oracleType}}
+          image: mojaloop/als-consent-oracle:v0.0.6
+          # command: [ "tail", "-f", "/dev/null" ]
+          livenessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /health
+              port: 3000
+          readinessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /health
+              port: 3000
+          volumeMounts:
+            - name: oracle-{{.values.oracleType}}-config-volume
+              mountPath: /opt/als-consent-oracle/config/default.json
+              subPath: default.json
+          env:
+            - name: NODE_ENV
+              value: development
+          command:
+            - /bin/sh
+          args:
+            - -c 
+            - npm run migrate; npm run start
+      volumes:
+        - name: oracle-{{.values.oracleType}}-config-volume
+          configMap:
+            name: oracle-{{.values.oracleType}}-config
+            items:
+            - key: default.json
+              path: default.json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oracle-{{.values.oracleType}}-config
+data:
+  default.json: {{ (.Files.Get "configs/oracle.json") | quote }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oracle-{{.values.oracleType}}
+spec:
+  ports:
+  - port: 3000
+  selector:
+    app: oracle-{{.values.oracleType}}
+  clusterIP: None
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: oracle-{{.values.oracleType}}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /oracle-{{.values.oracleType}}(/|$)(.*)
+            backend:
+              serviceName: oracle-{{.values.oracleType}}
+              servicePort: 3000

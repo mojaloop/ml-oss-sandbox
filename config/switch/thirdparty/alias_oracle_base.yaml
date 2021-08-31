@@ -1,8 +1,8 @@
-# mysql-oracle-consent
+# mysql-oracle-alias
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-oracle-consent-pv-claim
+  name: mysql-oracle-alias-pv-claim
 spec:
   storageClassName: awsgp2
   accessModes:
@@ -14,53 +14,53 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-oracle-consent
+  name: mysql-oracle-alias
 spec:
   ports:
   - port: 3306
   selector:
-    app: mysql-oracle-consent
+    app: mysql-oracle-alias
   clusterIP: None
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql-oracle-consent
+  name: mysql-oracle-alias
 spec:
   selector:
     matchLabels:
-      app: mysql-oracle-consent
-  serviceName: mysql-oracle-consent-service
+      app: mysql-oracle-alias
+  serviceName: mysql-oracle-alias-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: mysql-oracle-consent
+        app: mysql-oracle-alias
     spec:
       containers:
       - image: mysql:5.6
-        name: mysql-oracle-consent
+        name: mysql-oracle-alias
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: password
         - name: MYSQL_USER
-          value: oracle_consent
+          value: oracle_alias
         - name: MYSQL_PASSWORD
           value: password
         - name: MYSQL_DATABASE
-          value: oracle_consent
+          value: oracle_alias
         - name: NODE_ENV
           value: development
         ports:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: mysql-oracle-consent-persistent-storage
+        - name: mysql-oracle-alias-persistent-storage
           mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-oracle-consent-persistent-storage
+      - name: mysql-oracle-alias-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-oracle-consent-pv-claim
+          claimName: mysql-oracle-alias-pv-claim
 ---
 # mysql-auth-service
 apiVersion: v1
