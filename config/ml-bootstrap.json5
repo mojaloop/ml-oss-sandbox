@@ -9,8 +9,8 @@
   },
   oracles: [
     { oracleIdType: "MSISDN", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle"},
-    { oracleIdType: "CONSENT", endpoint: "http://sandbox.mojaloop.io/api/admin/oracle-consent"}
-
+    { oracleIdType: "CONSENT", endpoint: "http://sandbox.mojaloop.io/api/admin/oracle-consent"},
+    { oracleIdType: "ALIAS", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle"}
   ],
   participants: [
      {
@@ -49,6 +49,15 @@
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
           idValue: "11194979"
+        },
+        {
+          displayName: "Alex Alligator",
+          firstName: "Alex",
+          middleName: "A",
+          lastName: "Alligator",
+          dateOfBirth: "1970-01-01",
+          idType: "ALIAS",
+          idValue: "0034289"
         },
       ]
     },
