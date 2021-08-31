@@ -12,6 +12,10 @@ up:
 		tp-svc \
 		mojaloop/ml-testing-toolkit \
 		--values ./tp-svc.yaml
+	helm upgrade --install \
+		--namespace ${NAMESPACE} \
+		oracle-alias \
+		../../../charts/oracle
 	kubectl apply -f ./ingress.yaml
 
 down:
@@ -24,6 +28,7 @@ down:
 health:	
 	@echo 'Checking health of thirdparty services'
 	curl -s ${BASE_URL}/api/admin/oracle-consent/health | jq
+	curl -s ${BASE_URL}/api/admin/oracle-alias/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-api-adapter/health | jq
 	curl -s ${BASE_URL}/api/admin/thirdparty-tx-requests-service/health | jq
 	curl -s $(BASE_URL)/api/admin/auth-service/health | jq

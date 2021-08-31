@@ -56,6 +56,10 @@ spec:
             backend:
               serviceName: oracle-consent
               servicePort: 3000
+          - path: /api/admin/oracle-alias/(.*)
+            backend:
+              serviceName: oracle-alias
+              servicePort: 3000
 ---
 # expose health checks for each endpoint
 # note: I'm aware that there are duplicates here, but that's ok
@@ -85,6 +89,10 @@ spec:
           - path: /api/admin/oracle-consent/health
             backend:
               serviceName: oracle-consent
+              servicePort: 3000
+          - path: /api/admin/oracle-alias/health
+            backend:
+              serviceName: oracle-alias
               servicePort: 3000
           - path: /api/admin/thirdparty-api-adapter/health
             backend:

@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oracle-{{.values.oracleType}}
+  name: oracle-{{.Values.oracleType}}
   labels:
-    app: oracle-{{.values.oracleType}}
+    app: oracle-{{.Values.oracleType}}
 spec:
   replicas: 1
   strategy:
@@ -12,14 +12,14 @@ spec:
       maxSurge: 1 # exeed the replicas by 1 pod
   selector:
     matchLabels:
-      app: oracle-{{.values.oracleType}}
+      app: oracle-{{.Values.oracleType}}
   template:
     metadata:
       labels:
-        app: oracle-{{.values.oracleType}}
+        app: oracle-{{.Values.oracleType}}
     spec:
       containers:
-        - name: oracle-{{.values.oracleType}}
+        - name: oracle-{{.Values.oracleType}}
           image: mojaloop/als-consent-oracle:v0.0.6
           # command: [ "tail", "-f", "/dev/null" ]
           livenessProbe:
@@ -33,7 +33,7 @@ spec:
               path: /health
               port: 3000
           volumeMounts:
-            - name: oracle-{{.values.oracleType}}-config-volume
+            - name: oracle-{{.Values.oracleType}}-config-volume
               mountPath: /opt/als-consent-oracle/config/default.json
               subPath: default.json
           env:
@@ -45,9 +45,9 @@ spec:
             - -c 
             - npm run migrate; npm run start
       volumes:
-        - name: oracle-{{.values.oracleType}}-config-volume
+        - name: oracle-{{.Values.oracleType}}-config-volume
           configMap:
-            name: oracle-{{.values.oracleType}}-config
+            name: oracle-{{.Values.oracleType}}-config
             items:
             - key: default.json
               path: default.json
@@ -55,25 +55,25 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: oracle-{{.values.oracleType}}-config
+  name: oracle-{{.Values.oracleType}}-config
 data:
   default.json: {{ (.Files.Get "configs/oracle.json") | quote }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: oracle-{{.values.oracleType}}
+  name: oracle-{{.Values.oracleType}}
 spec:
   ports:
   - port: 3000
   selector:
-    app: oracle-{{.values.oracleType}}
+    app: oracle-{{.Values.oracleType}}
   clusterIP: None
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: oracle-{{.values.oracleType}}
+  name: oracle-{{.Values.oracleType}}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
@@ -81,7 +81,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /oracle-{{.values.oracleType}}(/|$)(.*)
+          - path: /oracle-{{.Values.oracleType}}(/|$)(.*)
             backend:
-              serviceName: oracle-{{.values.oracleType}}
+              serviceName: oracle-{{.Values.oracleType}}
               servicePort: 3000
