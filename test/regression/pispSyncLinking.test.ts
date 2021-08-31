@@ -721,7 +721,7 @@ describe('pisp sync API', () => {
   })
 
   describe('pispa <---> bankone OTP to real number', () => {
-    it('performs a consentRequest and sends an OTP', async () => {
+    it.skip('performs a consentRequest and sends an OTP', async () => {
       // Arrange
       const liveTestNumber = '+61410237238'
       expect(liveTestNumber.length).toBeGreaterThan(0)
