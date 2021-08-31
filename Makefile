@@ -29,6 +29,7 @@ install-participants:
 	cd ./config/participants/figmm/ && make up
 	cd ./config/participants/pineapplepay/ && make up
 	cd ./config/participants/pispa/ && make up
+	cd ./config/participants/unomfi/ && make up
 
 install-tools:
 	cd ./config/tools/dev-portal/ && make up
@@ -75,6 +76,7 @@ uninstall-participants:
 	cd ./config/participants/figmm/ && make down
 	cd ./config/participants/pineapplepay/ && make down
 	cd ./config/participants/pispa/ && make down
+	cd ./config/participants/unomfi/ && make down
 
 uninstall-tools:
 	cd ./config/tools/dev-portal/ && make down
@@ -109,6 +111,7 @@ health-participants:
 	cd ./config/participants/figmm/ && make health
 	cd ./config/participants/pineapplepay/ && make health
 	cd ./config/participants/pispa/ && make health
+	cd ./config/participants/unomfi/ && make health
 
 health-tools:
 	cd ./config/tools/dev-portal/ && make health

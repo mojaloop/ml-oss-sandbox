@@ -1,0 +1,82 @@
+# TODO: templatize this chart!
+# for now, this is deployable as unomfi only
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unomfi-simulator
+  labels:
+    app: unomfi-simulator
+    app.kubernetes.io/name: unomfi-simulator
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # exeed the replicas by 1 pod
+  selector:
+    matchLabels:
+      app: unomfi-simulator
+  template:
+    metadata:
+      labels:
+        app: unomfi-simulator
+    spec:
+      volumes:
+        - name: unomfi-simulator-volume
+          secret:
+            secretName: unomfi-simulator
+      containers:
+        - name: unomfi-simulator
+          image: mojaloop/contrib-firebase-simulator:v0.2.15
+          # command: ["tail", "-f", "/dev/null"]
+          livenessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            httpGet:
+              path: /app/health
+              port: 8080
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            httpGet:
+              path: /app/health
+              port: 8080
+          env:
+            # need to bind to 0.0.0.0 for kubernetes to be able to expose this service 
+            - name: IP_ADDRESS
+              value: "0.0.0.0"
+            - name: MOJALOOP_PARTICIPANT_ID
+              value: "unomfi"
+            - name: READABLE_PARTICIPANT_NAME
+              value: "UnoMFI"
+            - name: READABLE_PARTICIPANT_NAME
+              value: "UnoMFI"
+            - name: BASE_PATH
+              value: "/unomfi"
+            - name: SHOULD_SEND_LIVE_SMS
+              value: "true"
+            - name: PUBLIC_FIREBASE_CONFIG
+              value: '{"apiKey":"AIzaSyAutx48B3lq_QZqJU2jwj-QDu-VqZ88vY8","authDomain":"contrib-firebase-simulator.firebaseapp.com","projectId":"contrib-firebase-simulator","storageBucket":"contrib-firebase-simulator.appspot.com","messagingSenderId":"951485074686","appId":"1:951485074686:web:796d64c8ab5723630069aGGG"}'
+          envFrom:
+            - secretRef:
+                name: twilio-env
+
+          # TODO: change this to another firebase service account key
+          volumeMounts:
+            - name: unomfi-simulator-volume
+              mountPath: "/opt/contrib-firebase-simulator/config/serviceAccountKey.json"
+              subPath: serviceAccountKey.json
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unomfi-simulator
+spec:
+  ports:
+    - port: 8080
+      name: ui
+  selector:
+    app: unomfi-simulator
+  clusterIP: None
+

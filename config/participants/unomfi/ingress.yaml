@@ -1,0 +1,84 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-unomfi-svc
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /unomfi-backend/(app.*)
+            backend:
+              serviceName: unomfi-simulator
+              servicePort: 8080
+            # backend:
+            #   serviceName: echo
+            #   servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-unomfi-ui
+  annotations:
+    kubernetes.io/ingress.class: kong
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /unomfi
+            backend:
+              serviceName: unomfi-simulator
+              servicePort: 8080
+          - path: /unomfi(/.*)
+            backend:
+              serviceName: unomfi-simulator
+              servicePort: 8080
+---
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-unomfi-scheme-adapter
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    - host: unomfi-backend.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: unomfi-mojaloop-simulator
+              servicePort: 3003
+    - host: unomfi-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: unomfi-sdk-scheme-adapter
+              servicePort: 4000
+    - host: unomfi-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: unomfi-sdk-scheme-adapter
+              servicePort: 4001
+    - host: unomfi-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: unomfi-thirdparty-scheme-adapter
+              servicePort: 4005
+    - host: unomfi-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: unomfi-thirdparty-scheme-adapter
+              servicePort: 4006
