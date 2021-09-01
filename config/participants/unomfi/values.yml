@@ -1,7 +1,7 @@
 
-participantName: 'BankOne'
-participantId: 'bankone'
-DFSP_BACKEND_URI: sandbox.mojaloop.io/bankone-backend/app
+participantName: 'UnoMFI'
+participantId: 'unomfi'
+DFSP_BACKEND_URI: sandbox.mojaloop.io/unomfi-backend/app
 
 # Set both to true if DFSP, set only `thirdpartyApiSupport` to true if PISP
 thirdpartyApiSupport: true
@@ -29,7 +29,7 @@ thirdparty_scheme_adapter:
       },
       "REDIS": {
         "PORT": 6379,
-        "HOST": "bankone-redis",
+        "HOST": "unomfi-redis",
         "TIMEOUT": 100
       },
       "INSPECT": {
@@ -39,15 +39,15 @@ thirdparty_scheme_adapter:
       },
       "SHARED": {
         "PEER_ENDPOINT": "beta.moja-lab.live/api/thirdparty",
-        "DFSP_ID": "bankone",
-        "DFSP_BACKEND_URI": "sandbox.mojaloop.io/bankone-backend/app",
+        "DFSP_ID": "unomfi",
+        "DFSP_BACKEND_URI": "sandbox.mojaloop.io/unomfi-backend/app",
         "DFSP_BACKEND_HTTP_SCHEME": "http",
         "DFSP_BACKEND_VERIFY_AUTHORIZATION_PATH": "verify-authorization",
         "DFSP_BACKEND_VERIFY_CONSENT_PATH": "verify-consent",
         # TODO: what is this for???
         "SDK_REQUEST_TO_PAY_TRANSFER_URI": "beta.moja-lab.live/pispa/sdk-scheme-adapter/outbound/requestToPayTransfer",
         # TODO: is this important???
-        "SDK_OUTGOING_URI": "bankone-sdk-scheme-adapter-outbound.sandbox.mojaloop.io",
+        "SDK_OUTGOING_URI": "unomfi-sdk-scheme-adapter-outbound.sandbox.mojaloop.io",
         "SDK_OUTGOING_HTTP_SCHEME": "http",
         "SDK_OUTGOING_PARTIES_INFORMATION_PATH": "parties/{Type}/{ID}/{SubId}",
         "SDK_NOTIFY_ABOUT_TRANSFER_URI": "beta.moja-lab.live/api/thirdparty/thirdpartyRequests/transctions/{ID}",

@@ -24,10 +24,10 @@ spec:
       volumes:
         - name: unomfi-simulator-volume
           secret:
-            secretName: unomfi-simulator
+            secretName: contrib-firebase-simulator
       containers:
         - name: unomfi-simulator
-          image: mojaloop/contrib-firebase-simulator:v0.2.15
+          image: mojaloop/contrib-firebase-simulator:v0.2.17
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10
@@ -47,14 +47,15 @@ spec:
               value: "0.0.0.0"
             - name: MOJALOOP_PARTICIPANT_ID
               value: "unomfi"
-            - name: READABLE_PARTICIPANT_NAME
-              value: "UnoMFI"
+            - name: PARTICIPANT_ID
+              value: "unomfi"
             - name: READABLE_PARTICIPANT_NAME
               value: "UnoMFI"
             - name: BASE_PATH
               value: "/unomfi"
             - name: SHOULD_SEND_LIVE_SMS
               value: "true"
+              # TODO: update this
             - name: PUBLIC_FIREBASE_CONFIG
               value: '{"apiKey":"AIzaSyAutx48B3lq_QZqJU2jwj-QDu-VqZ88vY8","authDomain":"contrib-firebase-simulator.firebaseapp.com","projectId":"contrib-firebase-simulator","storageBucket":"contrib-firebase-simulator.appspot.com","messagingSenderId":"951485074686","appId":"1:951485074686:web:796d64c8ab5723630069aGGG"}'
           envFrom:
