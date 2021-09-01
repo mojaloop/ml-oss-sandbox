@@ -4,6 +4,8 @@ import { v4 } from 'uuid'
 const baseUrl = 'sandbox.mojaloop.io'
 const pispaSyncAPI = `http://pispa-thirdparty-scheme-adapter-outbound.${baseUrl}`
 
+jest.setTimeout(100 * 1000)
+
 describe('pisp sync API', () => {
   const config: AxiosRequestConfig = {
     headers: {
@@ -15,7 +17,7 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe('pisp <---> bankone happy path transfer', () => {
+  describe.only('pisp <---> bankone happy path transfer', () => {
     // Hardcode a consentId + thirdparty account link
     // ideally, we would implement a GET somewhere so we dont
     // need to hardcode

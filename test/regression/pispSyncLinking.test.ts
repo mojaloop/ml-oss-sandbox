@@ -332,7 +332,7 @@ describe('pisp sync API', () => {
     /// Note: for now the 3p-scheme-adapter only handles this through a timeout
     it('returns an error if I try to link an account with a dfsp that is not bankone', async () => {
       // Arrange
-      jest.setTimeout(60 * 1000)
+      jest.setTimeout(70 * 1000)
 
       const userId = `61414414414`
       const consentRequestId = v4()
