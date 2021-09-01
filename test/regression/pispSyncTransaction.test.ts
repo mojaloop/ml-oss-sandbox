@@ -26,7 +26,7 @@ describe('pisp sync API', () => {
     let lookupResponse: any
     let authorizationResponse: any
 
-  
+
     describe('looks up a destination party', () => {
       it('', async () => {
         /*
@@ -75,7 +75,7 @@ describe('pisp sync API', () => {
         console.log('POST', uri)
         console.log('data', data)
         lookupResponse = (await axios.post(uri, data, config)).data
-        
+
         // Assert
         expect(lookupResponse).toStrictEqual(expected)
       })
@@ -131,7 +131,7 @@ describe('pisp sync API', () => {
             fspId: 'bankone'
           },
           amountType: "RECEIVE",
-          amount:{
+          amount: {
             currency: 'USD',
             amount: '123.47'
           },
@@ -148,13 +148,13 @@ describe('pisp sync API', () => {
             authorizationRequestId: expect.stringMatching('.*'),
             transactionRequestId: transactionRequestId,
             challenge: expect.stringMatching('.*'),
-            transferAmount: { 
-              currency: 'USD', 
-              amount: expect.stringMatching('.*') 
-            },
-            payeeReceiveAmount: { 
+            transferAmount: {
               currency: 'USD',
-              amount: expect.stringMatching('.*') 
+              amount: expect.stringMatching('.*')
+            },
+            payeeReceiveAmount: {
+              currency: 'USD',
+              amount: expect.stringMatching('.*')
             },
             fees: {
               amount: expect.stringMatching('.*'),
@@ -165,8 +165,8 @@ describe('pisp sync API', () => {
               partyIdentifier: thirdpartyLinkAccountId,
               fspId: 'bankone'
             },
-            payee: { 
-              name: 'Alex Alligator', 
+            payee: {
+              name: 'Alex Alligator',
               partyIdInfo: {
                 fspId: 'applebank',
                 partyIdType: 'MSISDN',
@@ -226,70 +226,31 @@ describe('pisp sync API', () => {
             "expiration":"2021-05-24T08:38:08.699-04:00"
           }'
         */
-        const uri = `${pispaSyncAPI}/thirdpartyTransaction/${transactionRequestId}/initiate`
+        const uri = `${pispaSyncAPI}/thirdpartyTransaction/${transactionRequestId}/approve`
         const now = new Date()
         const expiryDate = new Date(now.setHours(now.getHours() + 1))
         const data = {
-          transactionRequestId,
-          payee: {
-            name: lookupResponse.party.name,
-            partyIdInfo: lookupResponse.party.partyIdInfo
-          },
-          payer: {
-            partyIdType: 'THIRD_PARTY_LINK',
-            partyIdentifier: thirdpartyLinkAccountId,
-            fspId: 'bankone'
-          },
-          amountType: "RECEIVE",
-          amount:{
-            currency: 'USD',
-            amount: '123.47'
-          },
-          transactionType: {
-            scenario: 'TRANSFER',
-            initiator: 'PAYER',
-            initiatorType: 'CONSUMER'
-          },
-          expiration: expiryDate.toISOString()
+          authorizationResponse: {
+            signedPayloadType: 'FIDO',
+            signedPayload: {
+              id: '45c-TkfkjQovQeAWmOy-RLBHEJ_e4jYzQYgD8VdbkePgM5d98BaAadadNYrknxgH0jQEON8zBydLgh1EqoC9DA',
+              rawId: '45c+TkfkjQovQeAWmOy+RLBHEJ/e4jYzQYgD8VdbkePgM5d98BaAadadNYrknxgH0jQEON8zBydLgh1EqoC9DA==',
+              response: {
+                authenticatorData: 'SZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2MBAAAACA==',
+                clientDataJSON: 'eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiQUFBQUFBQUFBQUFBQUFBQUFBRUNBdyIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIxODEiLCJjcm9zc09yaWdpbiI6ZmFsc2UsIm90aGVyX2tleXNfY2FuX2JlX2FkZGVkX2hlcmUiOiJkbyBub3QgY29tcGFyZSBjbGllbnREYXRhSlNPTiBhZ2FpbnN0IGEgdGVtcGxhdGUuIFNlZSBodHRwczovL2dvby5nbC95YWJQZXgifQ==',
+                signature: 'MEUCIDcJRBu5aOLJVc/sPyECmYi23w8xF35n3RNhyUNVwQ2nAiEA+Lnd8dBn06OKkEgAq00BVbmH87ybQHfXlf1Y4RJqwQ8='
+              },
+              type: 'public-key'
+            }
+          }
+
         }
         const expected = {
-          currentState: 'authorizationReceived',
-          authorization: {
-            authorizationRequestId: expect.stringMatching('.*'),
-            transactionRequestId: transactionRequestId,
-            challenge: expect.stringMatching('.*'),
-            transferAmount: { 
-              currency: 'USD', 
-              amount: expect.stringMatching('.*') 
-            },
-            payeeReceiveAmount: { 
-              currency: 'USD',
-              amount: expect.stringMatching('.*') 
-            },
-            fees: {
-              amount: expect.stringMatching('.*'),
-              currency: "USD"
-            },
-            payer: {
-              partyIdType: 'THIRD_PARTY_LINK',
-              partyIdentifier: thirdpartyLinkAccountId,
-              fspId: 'bankone'
-            },
-            payee: { 
-              name: 'Alex Alligator', 
-              partyIdInfo: {
-                fspId: 'applebank',
-                partyIdType: 'MSISDN',
-                partyIdentifier: '11194979',
-              }
-            },
-            transactionType: {
-              scenario: 'TRANSFER',
-              initiator: 'PAYER',
-              initiatorType: 'CONSUMER'
-            },
-            expiration: expect.stringMatching('.*')
-          }
+          transactionStatus: {
+            transactionId: "8f6b2a9c-df32-4248-b115-799beada85ec",
+            transactionRequestState: "ACCEPTED"
+          },
+          currentState: "transactionStatusReceived"
         }
 
         // Act
