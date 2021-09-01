@@ -39,6 +39,7 @@ thirdparty_scheme_adapter:
         "COLOR": true
       },
       "SHARED": {
+        "AUTH_SERVICE_PARTICIPANT_ID": 'centralauth',
         "PEER_ENDPOINT": "beta.moja-lab.live/api/thirdparty",
         "DFSP_ID": "unomfi",
         "DFSP_BACKEND_URI": "sandbox.mojaloop.io/unomfi-backend/app",

@@ -14,7 +14,7 @@ describe('pisp sync API', () => {
     let accounts: Array<unknown>;
     let consentId: string;
 
-    describe.only('gets a list of available providers', () => {
+    describe('gets a list of available providers', () => {
       it('', async () => {
         // Arrange
         const uri = `${pispaSyncAPI}/linking/providers`
@@ -256,6 +256,14 @@ describe('pisp sync API', () => {
       // Arrange
       const uri = `${pispaSyncAPI}/linking/accounts/bankone/blablabla`
       console.log('GET', uri)
+      const expected = {
+        accounts: [],
+        currentState: 'COMPLETED',
+        errorInformation: {
+          errorCode: '7202',
+          errorDescription: 'No accounts found for generic ID'
+        }
+      }
 
       // Act 
       try {
@@ -263,7 +271,8 @@ describe('pisp sync API', () => {
         throw new Error('Should not be executed!')
       } catch (err) {
         // Assert
-        expect(err.response.status).toBe(404)
+        expect(err.response.data).toStrictEqual(expected)
+        expect(err.response.status).toBe(500)
       }
     })
   });
@@ -323,7 +332,7 @@ describe('pisp sync API', () => {
     /// Note: for now the 3p-scheme-adapter only handles this through a timeout
     it('returns an error if I try to link an account with a dfsp that is not bankone', async () => {
       // Arrange
-      jest.setTimeout(45 * 1000)
+      jest.setTimeout(60 * 1000)
 
       const userId = `61414414414`
       const consentRequestId = v4()
