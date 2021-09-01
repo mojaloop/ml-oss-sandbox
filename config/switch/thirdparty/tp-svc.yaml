@@ -425,6 +425,7 @@ ml-testing-toolkit-backend:
   extraEnvironments: {}
   global: {}
   image:
+    tag: v13.1.0
     # Load some config from pisp-project master branch
     command: >
       ["sh", "-c", 

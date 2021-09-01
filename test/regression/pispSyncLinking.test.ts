@@ -14,7 +14,7 @@ describe('pisp sync API', () => {
     let accounts: Array<unknown>;
     let consentId: string;
 
-    describe('gets a list of available providers', () => {
+    describe.only('gets a list of available providers', () => {
       it('', async () => {
         // Arrange
         const uri = `${pispaSyncAPI}/linking/providers`

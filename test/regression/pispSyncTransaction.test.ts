@@ -15,9 +15,7 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe.only('pisp <---> bankone happy path transfer', () => {
-    // const userId = `61414414414`
-
+  describe('pisp <---> bankone happy path transfer', () => {
     // Hardcode a consentId + thirdparty account link
     // ideally, we would implement a GET somewhere so we dont
     // need to hardcode
@@ -227,8 +225,6 @@ describe('pisp sync API', () => {
           }'
         */
         const uri = `${pispaSyncAPI}/thirdpartyTransaction/${transactionRequestId}/approve`
-        const now = new Date()
-        const expiryDate = new Date(now.setHours(now.getHours() + 1))
         const data = {
           authorizationResponse: {
             signedPayloadType: 'FIDO',
@@ -247,8 +243,9 @@ describe('pisp sync API', () => {
         }
         const expected = {
           transactionStatus: {
-            transactionId: "8f6b2a9c-df32-4248-b115-799beada85ec",
-            transactionRequestState: "ACCEPTED"
+            transactionId: expect.stringMatching('.*'),
+            transactionRequestState: "ACCEPTED",
+            transactionState: "COMPLETED"
           },
           currentState: "transactionStatusReceived"
         }
@@ -274,7 +271,7 @@ describe('pisp sync API', () => {
           transactionRequestId: v4(),
           payee: {
             partyIdType: "MSISDN",
-            partyIdentifier: "123456789"
+            partyIdentifier: "111222"
           }
         }
         const config: AxiosRequestConfig = {
@@ -286,8 +283,8 @@ describe('pisp sync API', () => {
         const expected = {
           "currentState": "partyLookupFailure",
           "errorInformation": {
-            "errorCode": '3201',
-            "errorDescription": "Destination FSP Error"
+            "errorCode": '3204',
+            "errorDescription": "Party not found"
           }
         }
 
@@ -342,9 +339,6 @@ describe('pisp sync API', () => {
       expect(response).toStrictEqual(expected)
     })
 
-    it.todo('returns an error when I lookup a party that does not exist')
-    it.todo('when I enter in a transfer amount, it  returns an authoriztion request with details about the transfer fees')
-    it.todo('when I sign the transfer with the example payload, I get confirmation that the transfer was processed')
     it.todo('if I send an invalid signed challenge, I get an error from the DFSP')
   })
 })

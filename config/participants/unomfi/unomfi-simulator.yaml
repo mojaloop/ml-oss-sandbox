@@ -53,7 +53,7 @@ spec:
               value: "/unomfi"
             - name: SHOULD_SEND_LIVE_SMS
               value: "true"
-              # TODO: update this
+              # TODO: update this - make it private!
             - name: PUBLIC_FIREBASE_CONFIG
               value: '{"apiKey":"AIzaSyAutx48B3lq_QZqJU2jwj-QDu-VqZ88vY8","authDomain":"contrib-firebase-simulator.firebaseapp.com","projectId":"contrib-firebase-simulator","storageBucket":"contrib-firebase-simulator.appspot.com","messagingSenderId":"951485074686","appId":"1:951485074686:web:796d64c8ab5723630069aGGG"}'
           envFrom:
