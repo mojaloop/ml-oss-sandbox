@@ -8,6 +8,7 @@ thirdpartyApiSupport: true
 mojaloopApiSupport: true
 
 thirdparty_scheme_adapter:
+  image: mojaloop/thirdparty-scheme-adapter:v11.48.0
   config:
     production.json: {
       "INBOUND": {

@@ -119,6 +119,19 @@ health-tools:
 	cd ./config/tools/ttk-otpsim/ && make health
 	cd ./config/tools/ttk-switch/ && make health
 
+
+get-urls:
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/applebank/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/bananabank/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/bankone/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/carrotmm/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/duriantech/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/eggmm/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/figmm/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/pineapplepay/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/pispa/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/unomfi/endpoints | jq
+
 # list-dfsp-accounts:
 # 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/applebank | jq
 # 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/bananabank | jq

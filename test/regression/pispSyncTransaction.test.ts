@@ -15,7 +15,7 @@ describe('pisp sync API', () => {
 
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
-  describe('pisp <---> bankone happy path transfer', () => {
+  describe.only('pisp <---> bankone happy path transfer', () => {
     // const userId = `61414414414`
 
     // Hardcode a consentId + thirdparty account link
@@ -342,7 +342,7 @@ describe('pisp sync API', () => {
   })
 
   describe('pispa transfer', () => {
-    it.only('allows me to lookup a user based on a social security id alias', async () => {
+    it('allows me to lookup a user based on a social security id alias', async () => {
       // Arrange
       const uri = `${pispaSyncAPI}/thirdpartyTransaction/partyLookup`
       const data = {

@@ -23,7 +23,7 @@ spec:
       containers:
         # Inbound Container
         - name: inbound
-          image: mojaloop/thirdparty-scheme-adapter:v11.48.0
+          image: {{ .Values.thirdparty_scheme_adapter.image }}
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:
@@ -47,7 +47,7 @@ spec:
 
         # Outbound Container
         - name: outbound
-          image: mojaloop/thirdparty-scheme-adapter:v11.48.0
+          image: {{ .Values.thirdparty_scheme_adapter.image }}
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:

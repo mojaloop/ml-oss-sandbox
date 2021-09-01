@@ -45,8 +45,6 @@ spec:
             # need to bind to 0.0.0.0 for kubernetes to be able to expose this service 
             - name: IP_ADDRESS
               value: "0.0.0.0"
-            - name: MOJALOOP_PARTICIPANT_ID
-              value: "unomfi"
             - name: PARTICIPANT_ID
               value: "unomfi"
             - name: READABLE_PARTICIPANT_NAME
