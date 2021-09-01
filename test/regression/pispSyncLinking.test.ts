@@ -9,7 +9,7 @@ describe('pisp sync API', () => {
   // Shared state for these flow.
   // Each has it's own describe block to ensure tests run in order
   describe('pisp <---> bankone happy path linking', () => {
-    const userId = `61414414414`
+    const userId = `61414414415`
     const consentRequestId = v4()
     let accounts: Array<unknown>;
     let consentId: string;
