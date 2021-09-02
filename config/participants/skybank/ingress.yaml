@@ -2,30 +2,30 @@
 apiVersion: extensions/v1beta1 
 kind: Ingress
 metadata:
-  name: ingress-bananabank
+  name: ingress-skybank
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/plugins: default-rewrite
 spec:
   rules:
-    - host: bananabank-backend.sandbox.mojaloop.io
+    - host: skybank-backend.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: bananabank-sim-bananabank-backend
+              serviceName: skybank-sim-skybank-backend
               servicePort: 3003
-    - host: bananabank-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+    - host: skybank-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: bananabank-sim-bananabank-scheme-adapter
+              serviceName: skybank-sim-skybank-scheme-adapter
               servicePort: 4000
-    - host: bananabank-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+    - host: skybank-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: bananabank-sim-bananabank-scheme-adapter
+              serviceName: skybank-sim-skybank-scheme-adapter
               servicePort: 4001

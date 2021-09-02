@@ -5,11 +5,11 @@ ingress:
   enabled: false
 
 simulators:
-  bananabank:
+  skybank:
     ingress:
       enabled: true
       hosts: 
-        - dev2-sim-bananabank.mojaloop.live
+        - dev2-sim-skybank.mojaloop.live
     config:
       schemeAdapter:
         secrets:

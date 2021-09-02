@@ -22,13 +22,13 @@
       thirdpartyCallbackUrl: 'http://jcash-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
       parties: [
         {
-          displayName: "Alice Alpaca",
-          firstName: "Alice",
-          middleName: "K",
-          lastName: "Alpaca",
+          displayName: "Paolo Fernandez",
+          firstName: "Paolo",
+          middleName: "P",
+          lastName: "Fernandez",
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
-          idValue: "123456789",
+          idValue: "589408120",
           accounts: [
             {
               currency: "PHP",
@@ -43,22 +43,67 @@
           ]
         },
         {
-          displayName: "Alex Alligator",
-          firstName: "Alex",
+          displayName: "Rnell Durano",
+          firstName: "Rnell",
           middleName: "A",
-          lastName: "Alligator",
+          lastName: "Durano",
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
-          idValue: "11194979"
+          idValue: "949309489"
         },
         {
-          displayName: "Alex Alligator",
-          firstName: "Alex",
+          displayName: "Mia Ruiz",
+          firstName: "Mia",
           middleName: "A",
-          lastName: "Alligator",
+          lastName: "Ruiz",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "218449123"
+        },
+        {
+          displayName: "Brownie Vilar",
+          firstName: "Brownie",
+          middleName: "A",
+          lastName: "Vilar",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "292455793"
+        },
+        {
+          displayName: "Datu Puti",
+          firstName: "Datu",
+          middleName: "A",
+          lastName: "Puti",
           dateOfBirth: "1970-01-01",
           idType: "ALIAS",
-          idValue: "0034289"
+          idValue: "000394"
+        },
+        {
+          displayName: "Rnell Durano",
+          firstName: "Rnell",
+          middleName: "A",
+          lastName: "Durano",
+          dateOfBirth: "1970-01-01",
+          idType: "ALIAS",
+          idValue: "rnell@me.com"
+        },
+        {
+          displayName: "Mr. Pandesal",
+          firstName: "M",
+          middleName: "A",
+          lastName: "Pandesal",
+          dateOfBirth: "1970-01-01",
+          idType: "BUSINESS",
+          idValue: "001239"
+        },
+        {
+          displayName: "Baboy King Pty. Ltd.r",
+          firstName: "Baboy",
+          middleName: "A",
+          lastName: "King",
+          dateOfBirth: "1970-01-01",
+          idType: "BUSINESS",
+          idValue: "023923"
         },
       ]
     },
@@ -75,11 +120,11 @@
       ]
     },
     {
-      id: 'bananabank',
+      id: 'skybank',
       type: 'DFSP',
       // For our demo, Participants are on the same deployment as switch
-      simulatorAdminUrl: 'http://bananabank-backend.sandbox.mojaloop.io',
-      fspiopCallbackUrl: 'http://bananabank-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
+      simulatorAdminUrl: 'http://skybank-backend.sandbox.mojaloop.io',
+      fspiopCallbackUrl: 'http://skybank-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
       thirdpartyCallbackUrl: 'n/a',
       parties: [
         {

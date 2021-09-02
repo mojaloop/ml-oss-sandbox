@@ -49,15 +49,15 @@ spec:
               servicePort: 4006
           
           ##
-          # bananabank
+          # skybank
           ##
-          - path: /bananabank/simulator/(.*)
+          - path: /skybank/simulator/(.*)
             backend:
-              serviceName: simulators-sim-bananabank-backend
+              serviceName: simulators-sim-skybank-backend
               servicePort: 3003
-          - path: /bananabank/sdk-scheme-adapter/(.*)
+          - path: /skybank/sdk-scheme-adapter/(.*)
             backend:
-              serviceName: simulators-sim-bananabank-scheme-adapter
+              serviceName: simulators-sim-skybank-scheme-adapter
               servicePort: 4000
 
       
@@ -111,12 +111,12 @@ spec:
             backend:
               serviceName: simulators-sim-jcash-backend
               servicePort: 3003
-    - host: bananabank-backend.beta.moja-lab.live
+    - host: skybank-backend.beta.moja-lab.live
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: simulators-sim-bananabank-backend
+              serviceName: simulators-sim-skybank-backend
               servicePort: 3003
     - host: carrotmm-backend.beta.moja-lab.live
       http:
@@ -238,19 +238,19 @@ spec:
               serviceName: simulators-sim-jcash-scheme-adapter
               servicePort: 4001
     
-    - host: bananabank-sdk-scheme-adapter-inbound.beta.moja-lab.live
+    - host: skybank-sdk-scheme-adapter-inbound.beta.moja-lab.live
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: simulators-sim-bananabank-scheme-adapter
+              serviceName: simulators-sim-skybank-scheme-adapter
               servicePort: 4000
-    - host: bananabank-sdk-scheme-adapter-outbound.beta.moja-lab.live
+    - host: skybank-sdk-scheme-adapter-outbound.beta.moja-lab.live
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: simulators-sim-bananabank-scheme-adapter
+              serviceName: simulators-sim-skybank-scheme-adapter
               servicePort: 4001
 
     - host: carrotmm-sdk-scheme-adapter-inbound.beta.moja-lab.live
