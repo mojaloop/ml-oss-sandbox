@@ -1,6 +1,6 @@
 
-participantName: 'Applebank'
-participantId: 'applebank'
+participantName: 'jcash'
+participantId: 'jcash'
 
 # Set both to true if DFSP, set only `thirdpartyApiSupport` to true if PISP
 thirdpartyApiSupport: true

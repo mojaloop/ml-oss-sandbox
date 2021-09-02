@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "2"
-    field.cattle.io/publicEndpoints: '[{"addresses":["\u003cnil\u003e"],"port":80,"protocol":"HTTP","serviceName":"ml-app:mojaloop-sim-applebank-scheme-adapter","ingressName":"ml-app:simulators","hostname":"applebank-sdk-scheme-adapter-inbound.beta.moja-lab.live","path":"/(.*)","allNodes":true},{"addresses":["\u003cnil\u003e"],"port":80,"protocol":"HTTP","serviceName":"ml-app:mojaloop-sim-applebank-scheme-adapter","ingressName":"ml-app:simulators","hostname":"applebank-sdk-scheme-adapter-outbound.beta.moja-lab.live","path":"/(.*)","allNodes":true}]'
+    field.cattle.io/publicEndpoints: '[{"addresses":["\u003cnil\u003e"],"port":80,"protocol":"HTTP","serviceName":"ml-app:mojaloop-sim-jcash-scheme-adapter","ingressName":"ml-app:simulators","hostname":"jcash-sdk-scheme-adapter-inbound.beta.moja-lab.live","path":"/(.*)","allNodes":true},{"addresses":["\u003cnil\u003e"],"port":80,"protocol":"HTTP","serviceName":"ml-app:mojaloop-sim-jcash-scheme-adapter","ingressName":"ml-app:simulators","hostname":"jcash-sdk-scheme-adapter-outbound.beta.moja-lab.live","path":"/(.*)","allNodes":true}]'
     meta.helm.sh/release-name: mojaloop
     meta.helm.sh/release-namespace: ml-app
   creationTimestamp: "2021-01-13T08:03:37Z"
@@ -11,13 +11,13 @@ metadata:
   labels:
     app.kubernetes.io/instance: mojaloop
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: mojaloop-sim-applebank-scheme-adapter
+    app.kubernetes.io/name: mojaloop-sim-jcash-scheme-adapter
     app.kubernetes.io/version: 11.2.1
     helm.sh/chart: mojaloop-simulator-11.1.0
-  name: mojaloop-sim-applebank-scheme-adapter
+  name: mojaloop-sim-jcash-scheme-adapter
   namespace: ml-app
   resourceVersion: "4684056"
-  selfLink: /apis/apps/v1/namespaces/ml-app/deployments/mojaloop-sim-applebank-scheme-adapter
+  selfLink: /apis/apps/v1/namespaces/ml-app/deployments/mojaloop-sim-jcash-scheme-adapter
   uid: 9fc187c9-f01f-4c5e-92d9-61be085e38ed
 spec:
   progressDeadlineSeconds: 600
@@ -26,7 +26,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/instance: mojaloop
-      app.kubernetes.io/name: mojaloop-sim-applebank-scheme-adapter
+      app.kubernetes.io/name: mojaloop-sim-jcash-scheme-adapter
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -38,18 +38,18 @@ spec:
       labels:
         app.kubernetes.io/instance: mojaloop
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: mojaloop-sim-applebank-scheme-adapter
+        app.kubernetes.io/name: mojaloop-sim-jcash-scheme-adapter
         app.kubernetes.io/version: 11.2.1
         helm.sh/chart: mojaloop-simulator-11.1.0
     spec:
       containers:
       - env:
         - name: CACHE_HOST
-          value: mojaloop-sim-applebank-cache
+          value: mojaloop-sim-jcash-cache
         - name: BACKEND_ENDPOINT
-          value: mojaloop-sim-applebank-backend:3000
+          value: mojaloop-sim-jcash-backend:3000
         - name: DFSP_ID
-          value: applebank
+          value: jcash
         - name: IN_CA_CERT_PATH
           value: /secrets/inbound-cacert.pem
         - name: IN_CA_CERT_PATH
@@ -150,13 +150,13 @@ spec:
         - name: SCHEME_NAME
           value: default
         - name: SIM_BACKEND_SERVICE_NAME
-          value: sim-applebank-backend
+          value: sim-jcash-backend
         - name: SIM_CACHE_SERVICE_NAME
-          value: sim-applebank-cache
+          value: sim-jcash-cache
         - name: SIM_NAME
-          value: applebank
+          value: jcash
         - name: SIM_SCHEME_ADAPTER_SERVICE_NAME
-          value: sim-applebank-scheme-adapter
+          value: sim-jcash-scheme-adapter
         - name: TEST_LISTEN_PORT
           value: "4002"
         - name: TEST_MUTUAL_TLS_ENABLED
@@ -227,7 +227,7 @@ spec:
       - name: jws-private-key
         secret:
           defaultMode: 420
-          secretName: mojaloop-sim-applebank-jws-priv-key
+          secretName: mojaloop-sim-jcash-jws-priv-key
       - configMap:
           defaultMode: 420
           name: mojaloop-sim-jws-public-keys
@@ -235,7 +235,7 @@ spec:
       - name: tls-secrets
         secret:
           defaultMode: 420
-          secretName: mojaloop-sim-applebank-tls-creds
+          secretName: mojaloop-sim-jcash-tls-creds
 status:
   availableReplicas: 1
   conditions:
@@ -247,7 +247,7 @@ status:
     type: Available
   - lastTransitionTime: "2021-01-13T08:03:45Z"
     lastUpdateTime: "2021-01-13T08:26:35Z"
-    message: ReplicaSet "mojaloop-sim-applebank-scheme-adapter-648d58798b" has successfully
+    message: ReplicaSet "mojaloop-sim-jcash-scheme-adapter-648d58798b" has successfully
       progressed.
     reason: NewReplicaSetAvailable
     status: "True"

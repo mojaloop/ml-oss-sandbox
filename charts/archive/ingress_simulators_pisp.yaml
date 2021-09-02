@@ -37,27 +37,27 @@ spec:
           
 
           # ##
-          # # applebank
+          # # jcash
           # ##
-          # - path: /applebank/simulator/(.*)
+          # - path: /jcash/simulator/(.*)
           #   backend:
-          #     serviceName: applebank-mojaloop-simulator
+          #     serviceName: jcash-mojaloop-simulator
           #     servicePort: 3003
-          # - path: /applebank/sdk-scheme-adapter/inbound/(.*)
+          # - path: /jcash/sdk-scheme-adapter/inbound/(.*)
           #   backend:
-          #     serviceName: applebank-sdk-scheme-adapter
+          #     serviceName: jcash-sdk-scheme-adapter
           #     servicePort: 4000
-          # - path: /applebank/sdk-scheme-adapter/outbound/(.*)
+          # - path: /jcash/sdk-scheme-adapter/outbound/(.*)
           #   backend:
-          #     serviceName: applebank-sdk-scheme-adapter
+          #     serviceName: jcash-sdk-scheme-adapter
           #     servicePort: 4001
-          # - path: /applebank/thirdparty-scheme-adapter/inbound/(.*)
+          # - path: /jcash/thirdparty-scheme-adapter/inbound/(.*)
           #   backend:
-          #     serviceName: applebank-thirdparty-scheme-adapter
+          #     serviceName: jcash-thirdparty-scheme-adapter
           #     servicePort: 4005
-          # - path: /applebank/thirdparty-scheme-adapter/outbound/(.*)
+          # - path: /jcash/thirdparty-scheme-adapter/outbound/(.*)
           #   backend:
-          #     serviceName: applebank-thirdparty-scheme-adapter
+          #     serviceName: jcash-thirdparty-scheme-adapter
           #     servicePort: 4006
           
           # ##
@@ -116,12 +116,12 @@ spec:
     #         backend:
     #           serviceName: simulators-sim-testfsp4-backend
     #           servicePort: 3003
-    # - host: applebank-backend.beta.moja-lab.live
+    # - host: jcash-backend.beta.moja-lab.live
     #   http:
     #     paths:
     #       - path: /(.*)
     #         backend:
-    #           serviceName: simulators-sim-applebank-backend
+    #           serviceName: simulators-sim-jcash-backend
     #           servicePort: 3003
     # - host: bananabank-backend.beta.moja-lab.live
     #   http:
@@ -235,19 +235,19 @@ spec:
     #           serviceName: simulators-sim-testfsp4-scheme-adapter
     #           servicePort: 4001
     
-    # - host: applebank-sdk-scheme-adapter-inbound.beta.moja-lab.live
+    # - host: jcash-sdk-scheme-adapter-inbound.beta.moja-lab.live
     #   http:
     #     paths:
     #       - path: /(.*)
     #         backend:
-    #           serviceName: simulators-sim-applebank-scheme-adapter
+    #           serviceName: simulators-sim-jcash-scheme-adapter
     #           servicePort: 4000
-    # - host: applebank-sdk-scheme-adapter-outbound.beta.moja-lab.live
+    # - host: jcash-sdk-scheme-adapter-outbound.beta.moja-lab.live
     #   http:
     #     paths:
     #       - path: /(.*)
     #         backend:
-    #           serviceName: simulators-sim-applebank-scheme-adapter
+    #           serviceName: simulators-sim-jcash-scheme-adapter
     #           servicePort: 4001
     
     # - host: bananabank-sdk-scheme-adapter-inbound.beta.moja-lab.live

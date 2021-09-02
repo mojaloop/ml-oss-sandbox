@@ -20,7 +20,7 @@ install-switch:
 	cd config/switch/thirdparty && make up
 
 install-participants:
-	cd ./config/participants/applebank/ && make up
+	cd ./config/participants/jcash/ && make up
 	cd ./config/participants/bananabank/ && make up
 	cd ./config/participants/bankone/ && make up
 	cd ./config/participants/carrotmm/ && make up
@@ -67,7 +67,7 @@ uninstall-switch:
 	@echo 'Warning: not uninstalling base charts - do it yourself with `cd ./config/switch/base && make down`'
 
 uninstall-participants:
-	cd ./config/participants/applebank/ && make down
+	cd ./config/participants/jcash/ && make down
 	cd ./config/participants/bananabank/ && make down
 	cd ./config/participants/bankone/ && make down
 	cd ./config/participants/carrotmm/ && make down
@@ -102,7 +102,7 @@ health-switch:
 	cd ./config/switch/thirdparty/ && make health
 	
 health-participants:
-	cd ./config/participants/applebank/ && make health
+	cd ./config/participants/jcash/ && make health
 	cd ./config/participants/bananabank/ && make health
 	cd ./config/participants/bankone/ && make health
 	cd ./config/participants/carrotmm/ && make health
@@ -121,7 +121,7 @@ health-tools:
 
 
 get-urls:
-	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/applebank/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/jcash/endpoints | jq
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/bananabank/endpoints | jq
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/bankone/endpoints | jq
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/carrotmm/endpoints | jq
@@ -133,7 +133,7 @@ get-urls:
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/unomfi/endpoints | jq
 
 # list-dfsp-accounts:
-# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/applebank | jq
+# 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/jcash | jq
 # 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/bananabank | jq
 # 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/carrotmm| jq
 # 	curl -s beta.moja-lab.live/api/admin/central-ledger/participants/duriantech | jq

@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-jcash
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    # TODO: figure out how to use path based routing for these services 
+    # - http:
+    #     paths:
+    #       - path: /jcash/simulator/(.*)
+    #         backend:
+    #           serviceName: jcash-mojaloop-simulator
+    #           servicePort: 3003
+    #       - path: /jcash/sdk-scheme-adapter/inbound/(.*)
+    #         backend:
+    #           serviceName: jcash-sdk-scheme-adapter
+    #           servicePort: 4000
+    #       - path: /jcash/sdk-scheme-adapter/outbound/(.*)
+    #         backend:
+    #           serviceName: jcash-sdk-scheme-adapter
+    #           servicePort: 4001
+    #       - path: /jcash/thirdparty-scheme-adapter/inbound/(.*)
+    #         backend:
+    #           serviceName: jcash-thirdparty-scheme-adapter
+    #           servicePort: 4005
+    #       - path: /jcash/thirdparty-scheme-adapter/outbound/(.*)
+    #         backend:
+    #           serviceName: jcash-thirdparty-scheme-adapter
+    #           servicePort: 4006
+    - host: jcash-backend.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: jcash-mojaloop-simulator
+              servicePort: 3003
+    - host: jcash-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: jcash-sdk-scheme-adapter
+              servicePort: 4000
+    - host: jcash-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: jcash-sdk-scheme-adapter
+              servicePort: 4001
+    - host: jcash-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: jcash-thirdparty-scheme-adapter
+              servicePort: 4005
+    - host: jcash-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: jcash-thirdparty-scheme-adapter
+              servicePort: 4006

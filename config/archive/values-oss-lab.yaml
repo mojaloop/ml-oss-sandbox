@@ -3486,10 +3486,10 @@ mojaloop-simulator:
                 tObeQKg9o+YfeIf3ZPVs6Fn7fP4WsSNzqhaGjjkJh3pkrNyiZ3S/j8sy++iQjJbB
                 wQIDAQAB
                 -----END PUBLIC KEY-----
-    applebank:
+    jcash:
       ingress:
         hosts: 
-          - dev2-sim-applebank.mojaloop.live
+          - dev2-sim-jcash.mojaloop.live
       config:
         schemeAdapter:
           secrets:

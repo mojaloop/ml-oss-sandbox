@@ -15,11 +15,11 @@
   ],
   participants: [
      {
-      id: 'applebank',
+      id: 'jcash',
       type: 'DFSP_SUPPORTING_PISP',
-      simulatorAdminUrl: 'http://applebank-backend.sandbox.mojaloop.io',
-      fspiopCallbackUrl: 'http://applebank-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
-      thirdpartyCallbackUrl: 'http://applebank-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+      simulatorAdminUrl: 'http://jcash-backend.sandbox.mojaloop.io',
+      fspiopCallbackUrl: 'http://jcash-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
+      thirdpartyCallbackUrl: 'http://jcash-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
       parties: [
         {
           displayName: "Alice Alpaca",

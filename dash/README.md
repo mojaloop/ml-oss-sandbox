@@ -62,12 +62,12 @@ curl beta.moja-lab.live/api/admin/central-ledger/participants
 
 ```json
 {
-    "name": "applebank",
-    "id": "central-ledger.local/participants/applebank",
+    "name": "jcash",
+    "id": "central-ledger.local/participants/jcash",
     "created": "\"2021-03-09T04:07:58.000Z\"",
     "isActive": 1,
     "links": {
-      "self": "central-ledger.local/participants/applebank"
+      "self": "central-ledger.local/participants/jcash"
     },
     "accounts": [
       {

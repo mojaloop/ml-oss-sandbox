@@ -364,7 +364,7 @@ Let's try running the ttk for ourselves... maybe we can even pre-populate the te
 
 ```bash
 
-helm upgrade --install --namespace ml-app ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-applebank.yaml
+helm upgrade --install --namespace ml-app ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-jcash.yaml
 
 #2 ttk instances?
 helm upgrade --install --namespace ml-app figmm-ttk mojaloop/ml-testing-toolkit --values ./config/values-ttk-figmm.yaml

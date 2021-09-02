@@ -58,7 +58,7 @@ describe('pisp sync API', () => {
             "partyIdInfo": {
               "partyIdType": "MSISDN",
               "partyIdentifier": "11194979",
-              "fspId": "applebank"
+              "fspId": "jcash"
             },
             "personalInfo": {
               "complexName": {
@@ -168,7 +168,7 @@ describe('pisp sync API', () => {
             payee: {
               name: 'Alex Alligator',
               partyIdInfo: {
-                fspId: 'applebank',
+                fspId: 'jcash',
                 partyIdType: 'MSISDN',
                 partyIdentifier: '11194979',
               }
@@ -319,7 +319,7 @@ describe('pisp sync API', () => {
           "partyIdInfo": {
             "partyIdType": "ALIAS",
             "partyIdentifier": "0034289",
-            "fspId": "applebank"
+            "fspId": "jcash"
           },
           "personalInfo": {
             "complexName": {
