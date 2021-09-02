@@ -122,10 +122,10 @@ jobs:
 ##
 workflows:
   version: 2
-  run_hourly:
+  run_daily:
     triggers:
       - schedule:
-          cron: "0 0-23 * * *"
+          cron: "0 1 * * *"
           filters:
             branches:
               only:
