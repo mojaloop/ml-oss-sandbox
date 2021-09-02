@@ -1,44 +1,44 @@
 apiVersion: extensions/v1beta1 
 kind: Ingress
 metadata:
-  name: ingress-pispa
+  name: ingress-paynow
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/plugins: default-rewrite
 spec:
   rules:
-    - host: pispa-backend.sandbox.mojaloop.io
+    - host: paynow-backend.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: pispa-mojaloop-simulator
+              serviceName: paynow-mojaloop-simulator
               servicePort: 3003
-    - host: pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
+    - host: paynow-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: pispa-thirdparty-scheme-adapter
+              serviceName: paynow-thirdparty-scheme-adapter
               servicePort: 4005
-    - host: pispa-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
+    - host: paynow-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: pispa-thirdparty-scheme-adapter
+              serviceName: paynow-thirdparty-scheme-adapter
               servicePort: 4006
-    - host: pispa-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+    - host: paynow-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: pispa-sdk-scheme-adapter
+              serviceName: paynow-sdk-scheme-adapter
               servicePort: 4000
-    - host: pispa-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+    - host: paynow-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
       http:
         paths:
           - path: /(.*)
             backend:
-              serviceName: pispa-sdk-scheme-adapter
+              serviceName: paynow-sdk-scheme-adapter
               servicePort: 4001

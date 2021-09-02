@@ -28,7 +28,7 @@ install-participants:
 	cd ./config/participants/eggmm/ && make up
 	cd ./config/participants/figmm/ && make up
 	cd ./config/participants/pineapplepay/ && make up
-	cd ./config/participants/pispa/ && make up
+	cd ./config/participants/paynow/ && make up
 	cd ./config/participants/unomfi/ && make up
 
 install-tools:
@@ -75,7 +75,7 @@ uninstall-participants:
 	cd ./config/participants/eggmm/ && make down
 	cd ./config/participants/figmm/ && make down
 	cd ./config/participants/pineapplepay/ && make down
-	cd ./config/participants/pispa/ && make down
+	cd ./config/participants/paynow/ && make down
 	cd ./config/participants/unomfi/ && make down
 
 uninstall-tools:
@@ -110,7 +110,7 @@ health-participants:
 	cd ./config/participants/eggmm/ && make health
 	cd ./config/participants/figmm/ && make health
 	cd ./config/participants/pineapplepay/ && make health
-	cd ./config/participants/pispa/ && make health
+	cd ./config/participants/paynow/ && make health
 	cd ./config/participants/unomfi/ && make health
 
 health-tools:
@@ -129,7 +129,7 @@ get-urls:
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/eggmm/endpoints | jq
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/figmm/endpoints | jq
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/pineapplepay/endpoints | jq
-	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/pispa/endpoints | jq
+	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/paynow/endpoints | jq
 	curl -s sandbox.mojaloop.io/api/admin/central-ledger/participants/unomfi/endpoints | jq
 
 # list-dfsp-accounts:

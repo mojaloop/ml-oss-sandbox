@@ -21,19 +21,19 @@ spec:
     - http:
         paths:
           ##
-          # pispa
+          # paynow
           ##
-          - path: /pispa/thirdparty-scheme-adapter/inbound/(.*)
+          - path: /paynow/thirdparty-scheme-adapter/inbound/(.*)
             backend: 
-              serviceName: pispa-thirdparty-scheme-adapter
+              serviceName: paynow-thirdparty-scheme-adapter
               servicePort: 4005
 
-          - path: /pispa/thirdparty-scheme-adapter/outbound/(.*)
+          - path: /paynow/thirdparty-scheme-adapter/outbound/(.*)
             backend: 
-              serviceName: pispa-thirdparty-scheme-adapter
+              serviceName: paynow-thirdparty-scheme-adapter
               servicePort: 4006
           
-          # TODO: should there be a mojaloop-simulator for pispa?
+          # TODO: should there be a mojaloop-simulator for paynow?
           
 
           # ##

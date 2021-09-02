@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import { v4 } from 'uuid'
 
 const baseUrl = 'sandbox.mojaloop.io'
-const pispaSyncAPI = `http://pispa-thirdparty-scheme-adapter-outbound.${baseUrl}`
+const paynowSyncAPI = `http://paynow-thirdparty-scheme-adapter-outbound.${baseUrl}`
 
 jest.setTimeout(10 * 1000)
 
@@ -43,7 +43,7 @@ describe('pisp sync API', () => {
         */
 
         // Arrange
-        const uri = `${pispaSyncAPI}/thirdpartyTransaction/partyLookup`
+        const uri = `${paynowSyncAPI}/thirdpartyTransaction/partyLookup`
         const data = {
           transactionRequestId,
           payee: {
@@ -116,7 +116,7 @@ describe('pisp sync API', () => {
             "expiration":"2021-05-24T08:38:08.699-04:00"
           }'
         */
-        const uri = `${pispaSyncAPI}/thirdpartyTransaction/${transactionRequestId}/initiate`
+        const uri = `${paynowSyncAPI}/thirdpartyTransaction/${transactionRequestId}/initiate`
         const now = new Date()
         const expiryDate = new Date(now.setHours(now.getHours() + 1))
         const data = {
@@ -226,7 +226,7 @@ describe('pisp sync API', () => {
             "expiration":"2021-05-24T08:38:08.699-04:00"
           }'
         */
-        const uri = `${pispaSyncAPI}/thirdpartyTransaction/${transactionRequestId}/approve`
+        const uri = `${paynowSyncAPI}/thirdpartyTransaction/${transactionRequestId}/approve`
         const data = {
           authorizationResponse: {
             signedPayloadType: 'FIDO',
@@ -268,7 +268,7 @@ describe('pisp sync API', () => {
     describe('fails to up a destination party that does not exist', () => {
       it('', async () => {
         // Arrange
-        const uri = `${pispaSyncAPI}/thirdpartyTransaction/partyLookup`
+        const uri = `${paynowSyncAPI}/thirdpartyTransaction/partyLookup`
         const data = {
           transactionRequestId: v4(),
           payee: {
@@ -301,10 +301,10 @@ describe('pisp sync API', () => {
     })
   })
 
-  describe('pispa transfer', () => {
+  describe('paynow transfer', () => {
     it('allows me to lookup a user based on a social security id alias', async () => {
       // Arrange
-      const uri = `${pispaSyncAPI}/thirdpartyTransaction/partyLookup`
+      const uri = `${paynowSyncAPI}/thirdpartyTransaction/partyLookup`
       const data = {
         transactionRequestId: v4(),
         payee: {

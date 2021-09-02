@@ -19,7 +19,6 @@ ml-operator:
        "SERVICES": [
           # List the services you want to watch
           "dev-portal",
-          "contrib-firebase-simulator",
         ],
         "UPGRADE_STRATEGY": "MINOR",
         "CHECK_FOR_UPDATE_CRON": "0/5 * * * *",

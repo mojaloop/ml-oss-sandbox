@@ -35,5 +35,5 @@ health:
 	curl -s $(BASE_URL)/api/admin/auth-service/health | jq
 	curl -s tp-svc.sandbox.mojaloop.io/services/THIRD_PARTY_DFSP \
 		-H "Date: hello"\
-		-H "FSPIOP-Source: pispa"
+		-H "FSPIOP-Source: paynow"
 

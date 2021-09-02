@@ -1036,7 +1036,7 @@
           "Content-Type": "application/vnd.interoperability.thirdparty+json;version=1.0"
         },
         "body": {
-          "initiatorId": "pispA",
+          "initiatorId": "paynow",
           "authChannels": [
             "OTP"
           ],
@@ -1101,7 +1101,7 @@
         "body": {
           "requestId": "4cab6274-8b3e-41b4-83ce-fc0847409155",
           "participantId": "dfspA",
-          "initiatorId": "pispA",
+          "initiatorId": "paynow",
           "scopes": [
             {
               "accountId": "dfspa.alice.1234",

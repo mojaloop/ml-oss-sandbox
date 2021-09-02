@@ -1,6 +1,6 @@
 
-participantName: 'pispa'
-participantId: 'pispa'
+participantName: 'paynow'
+participantId: 'paynow'
 
 # Set both to true if DFSP, set only `thirdpartyApiSupport` to true if PISP
 thirdpartyApiSupport: true
@@ -43,7 +43,7 @@ thirdparty_scheme_adapter:
         # "QUOTES_ENDPOINT": "ml-testing-toolkit:5000",
         # "TRANSFERS_ENDPOINT": "ml-testing-toolkit:5000",
         "PEER_ENDPOINT": "beta.moja-lab.live/api/thirdparty",
-        "DFSP_ID": "pispa",
+        "DFSP_ID": "paynow",
         "DFSP_BACKEND_URI": "pisp-simulator:3000",
         "DFSP_BACKEND_HTTP_SCHEME": "http",
         "DFSP_BACKEND_VERIFY_AUTHORIZATION_PATH": "verify-authorization",
@@ -52,8 +52,8 @@ thirdparty_scheme_adapter:
         "PISP_BACKEND_HTTP_SCHEME": "http",
         "PISP_BACKEND_SIGN_AUTHORIZATION_PATH": "signchallenge",
         # TODO: what is this for???
-        "SDK_REQUEST_TO_PAY_TRANSFER_URI": "beta.moja-lab.live/pispa/sdk-scheme-adapter/outbound/requestToPayTransfer",
-        "SDK_OUTGOING_URI": "pispa-sdk-scheme-adapter-outbound.sandbox.mojaloop.io",
+        "SDK_REQUEST_TO_PAY_TRANSFER_URI": "beta.moja-lab.live/paynow/sdk-scheme-adapter/outbound/requestToPayTransfer",
+        "SDK_OUTGOING_URI": "paynow-sdk-scheme-adapter-outbound.sandbox.mojaloop.io",
         "SDK_OUTGOING_HTTP_SCHEME": "http",
         "SDK_OUTGOING_PARTIES_INFORMATION_PATH": "parties/{Type}/{ID}/{SubId}",
         "SDK_NOTIFY_ABOUT_TRANSFER_URI": "beta.moja-lab.live/api/thirdparty/thirdpartyRequests/transctions/{ID}",
@@ -135,7 +135,7 @@ sdk_scheme_adapter:
     # value. This config item has been copied from the service repo for consistency with that,
     # so that if you come here and find this variable, with this comment, it's less confusing
     # than if you come here and it's missing entirely.
-    # TODO: fix this! it should be something like pispa... something
+    # TODO: fix this! it should be something like paynow... something
     BACKEND_ENDPOINT: "contrib-firebase-simulator"
 
     # FSPID of this DFSP

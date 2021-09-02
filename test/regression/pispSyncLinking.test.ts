@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import { v4 } from 'uuid'
 
 const baseUrl = 'sandbox.mojaloop.io'
-const pispaSyncAPI = `http://pispa-thirdparty-scheme-adapter-outbound.${baseUrl}`
+const paynowSyncAPI = `http://paynow-thirdparty-scheme-adapter-outbound.${baseUrl}`
 
 describe('pisp sync API', () => {
 
@@ -17,7 +17,7 @@ describe('pisp sync API', () => {
     describe('gets a list of available providers', () => {
       it('', async () => {
         // Arrange
-        const uri = `${pispaSyncAPI}/linking/providers`
+        const uri = `${paynowSyncAPI}/linking/providers`
         console.log('GET', uri)
         const expected = {
           currentState: 'providersLookupSuccess',
@@ -38,7 +38,7 @@ describe('pisp sync API', () => {
     describe('gets a list of accounts for linking from bankone', () => {
       it('', async () => {
         // Arrange
-        const uri = `${pispaSyncAPI}/linking/accounts/bankone/${userId}`
+        const uri = `${paynowSyncAPI}/linking/accounts/bankone/${userId}`
         console.log('GET', uri)
         const expected = {
           accounts: [
@@ -77,7 +77,7 @@ describe('pisp sync API', () => {
           -H  'Content-Type: application/json' -d '{\'consentRequestId\':\'f6ab43b0-71cc-49f9-b763-2ac3f05ac8c1\',\'toParticipantId\':\'dfspa\',\'accounts\':[{\'accountNickname\':\'SpeXXXXXXXXnt\',\'id\':\'dfspa.username.5678\',\'currency\':\'USD\'}],\'actions\':[\'accounts.transfer\'],\'userId\':\'username1234\',\'callbackUri\':\'pisp-app://callback\'}'
   
         */
-        const uri = `${pispaSyncAPI}/linking/request-consent`
+        const uri = `${paynowSyncAPI}/linking/request-consent`
         const data = {
           consentRequestId,
           toParticipantId: 'bankone',
@@ -136,7 +136,7 @@ describe('pisp sync API', () => {
                -H  'Content-Type: application/json' \
                -d '{\'authToken\':\'111222\'}'
         */
-        const uri = `${pispaSyncAPI}/linking/request-consent/${consentRequestId}/authenticate`
+        const uri = `${paynowSyncAPI}/linking/request-consent/${consentRequestId}/authenticate`
         const data = {
           // token 111222 is a special token that will alway succeed
           authToken: '111222'
@@ -206,7 +206,7 @@ describe('pisp sync API', () => {
                 }
               }"
          */
-        const uri = `${pispaSyncAPI}/linking/request-consent/${consentRequestId}/pass-credential`
+        const uri = `${paynowSyncAPI}/linking/request-consent/${consentRequestId}/pass-credential`
         const data = {
           credential: {
             credentialType: 'FIDO',
@@ -254,7 +254,7 @@ describe('pisp sync API', () => {
   describe('pisp <---> bankone unhappy path linking - no accounts found', () => {
     it('returns an appropriate error when the accounts cannot be found', async () => {
       // Arrange
-      const uri = `${pispaSyncAPI}/linking/accounts/bankone/blablabla`
+      const uri = `${paynowSyncAPI}/linking/accounts/bankone/blablabla`
       console.log('GET', uri)
       const expected = {
         accounts: [],
@@ -288,7 +288,7 @@ describe('pisp sync API', () => {
         id: 'some-random-string-bankone-wont-like'
       }]
 
-      const uri = `${pispaSyncAPI}/linking/request-consent`
+      const uri = `${paynowSyncAPI}/linking/request-consent`
       const data = {
         consentRequestId,
         toParticipantId: 'bankone',
@@ -342,7 +342,7 @@ describe('pisp sync API', () => {
         id: 'some-random-string-bankone-wont-like'
       }]
 
-      const uri = `${pispaSyncAPI}/linking/request-consent`
+      const uri = `${paynowSyncAPI}/linking/request-consent`
       const data = {
         consentRequestId,
         toParticipantId: 'notbankone',
@@ -389,7 +389,7 @@ describe('pisp sync API', () => {
     describe('gets a list of accounts for linking from bankone', () => {
       it('', async () => {
         // Arrange
-        const uri = `${pispaSyncAPI}/linking/accounts/bankone/${userId}`
+        const uri = `${paynowSyncAPI}/linking/accounts/bankone/${userId}`
         console.log('GET', uri)
         const expected = {
           accounts: [
@@ -428,7 +428,7 @@ describe('pisp sync API', () => {
           -H  'Content-Type: application/json' -d '{\'consentRequestId\':\'f6ab43b0-71cc-49f9-b763-2ac3f05ac8c1\',\'toParticipantId\':\'dfspa\',\'accounts\':[{\'accountNickname\':\'SpeXXXXXXXXnt\',\'id\':\'dfspa.username.5678\',\'currency\':\'USD\'}],\'actions\':[\'accounts.transfer\'],\'userId\':\'username1234\',\'callbackUri\':\'pisp-app://callback\'}'
   
         */
-        const uri = `${pispaSyncAPI}/linking/request-consent`
+        const uri = `${paynowSyncAPI}/linking/request-consent`
         const data = {
           consentRequestId,
           toParticipantId: 'bankone',
@@ -481,7 +481,7 @@ describe('pisp sync API', () => {
         expect(userId).toBeDefined()
         expect(consentRequestId).toBeDefined()
 
-        const uri = `${pispaSyncAPI}/linking/request-consent/${consentRequestId}/authenticate`
+        const uri = `${paynowSyncAPI}/linking/request-consent/${consentRequestId}/authenticate`
         const data = {
           // This will not be correct
           authToken: '000000'
@@ -534,7 +534,7 @@ describe('pisp sync API', () => {
     describe('gets a list of accounts for linking from bankone', () => {
       it('', async () => {
         // Arrange
-        const uri = `${pispaSyncAPI}/linking/accounts/bankone/${userId}`
+        const uri = `${paynowSyncAPI}/linking/accounts/bankone/${userId}`
         console.log('GET', uri)
         const expected = {
           accounts: [
@@ -573,7 +573,7 @@ describe('pisp sync API', () => {
           -H  'Content-Type: application/json' -d '{\'consentRequestId\':\'f6ab43b0-71cc-49f9-b763-2ac3f05ac8c1\',\'toParticipantId\':\'dfspa\',\'accounts\':[{\'accountNickname\':\'SpeXXXXXXXXnt\',\'id\':\'dfspa.username.5678\',\'currency\':\'USD\'}],\'actions\':[\'accounts.transfer\'],\'userId\':\'username1234\',\'callbackUri\':\'pisp-app://callback\'}'
   
         */
-        const uri = `${pispaSyncAPI}/linking/request-consent`
+        const uri = `${paynowSyncAPI}/linking/request-consent`
         const data = {
           consentRequestId,
           toParticipantId: 'bankone',
@@ -632,7 +632,7 @@ describe('pisp sync API', () => {
                -H  'Content-Type: application/json' \
                -d '{\'authToken\':\'111222\'}'
         */
-        const uri = `${pispaSyncAPI}/linking/request-consent/${consentRequestId}/authenticate`
+        const uri = `${paynowSyncAPI}/linking/request-consent/${consentRequestId}/authenticate`
         const data = {
           // token 111222 is a special token that will alway succeed
           authToken: '111222'
@@ -683,7 +683,7 @@ describe('pisp sync API', () => {
         expect(consentRequestId).toBeDefined()
         expect(consentId).toBeDefined()
 
-        const uri = `${pispaSyncAPI}/linking/request-consent/${consentRequestId}/pass-credential`
+        const uri = `${paynowSyncAPI}/linking/request-consent/${consentRequestId}/pass-credential`
         const data = {
           // The below credential doesn't match the consentId
           credential: {
@@ -729,7 +729,7 @@ describe('pisp sync API', () => {
     })
   })
 
-  describe('pispa <---> bankone OTP to real number', () => {
+  describe('paynow <---> bankone OTP to real number', () => {
     it.skip('performs a consentRequest and sends an OTP', async () => {
       // Arrange
       const liveTestNumber = '+61410237238'
@@ -737,13 +737,13 @@ describe('pisp sync API', () => {
       const userId = liveTestNumber.replace('+', '')
 
       // get the list of accounts
-      const uriAccounts = `${pispaSyncAPI}/linking/accounts/bankone/${userId}`
+      const uriAccounts = `${paynowSyncAPI}/linking/accounts/bankone/${userId}`
       const accountsResult = (await axios.get(uriAccounts)).data
       console.log('accountsResult', accountsResult)
 
       // request consent
       const consentRequestId = v4()
-      const uriConsentRequest = `${pispaSyncAPI}/linking/request-consent`
+      const uriConsentRequest = `${paynowSyncAPI}/linking/request-consent`
       const data = {
         consentRequestId,
         toParticipantId: 'bankone',

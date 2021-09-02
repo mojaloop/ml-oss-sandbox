@@ -72,7 +72,7 @@ paths:
                 - callbackUri
             example:
               id: 4cab6274-8b3e-41b4-83ce-fc0847409155
-              initiatorId: pispA
+              initiatorId: paynow
               authChannels:
                 - WEB
                 - OTP
@@ -281,7 +281,7 @@ paths:
             examples:
               sample1:
                 value:
-                  initiatorId: pispA
+                  initiatorId: paynow
                   authChannels:
                     - WEB
                   scopes:
@@ -297,7 +297,7 @@ paths:
                   authUri: dfspa.com/authorize?consentRequestId=xxxxx
               sample2:
                 value:
-                  initiatorId: pispA
+                  initiatorId: paynow
                   authChannels:
                     - WEB
                   scopes:
@@ -452,7 +452,7 @@ paths:
               id: 9d553d59-610f-44aa-b7ec-b483af24e98a
               requestId: 4cab6274-8b3e-41b4-83ce-fc0847409155
               participantId: dfspA
-              initiatorId: pispA
+              initiatorId: paynow
               scopes:
                 - accountId: dfspa.alice.1234
                   actions:
@@ -957,7 +957,7 @@ paths:
                 value:
                   requestId: 4cab6274-8b3e-41b4-83ce-fc0847409155
                   participantId: dfspA
-                  initiatorId: pispA
+                  initiatorId: paynow
                   scopes:
                     - accountId: dfspa.alice.1234
                       actions:
@@ -976,7 +976,7 @@ paths:
                 value:
                   requestId: 4cab6274-8b3e-41b4-83ce-fc0847409155
                   participantId: dfspA
-                  initiatorId: pispA
+                  initiatorId: paynow
                   scopes:
                     - accountId: dfspa.alice.1234
                       actions:
@@ -998,7 +998,7 @@ paths:
                 value:
                   requestId: 4cab6274-8b3e-41b4-83ce-fc0847409155
                   participantId: dfspA
-                  initiatorId: pispA
+                  initiatorId: paynow
                   scopes:
                     - accountId: dfspa.alice.1234
                       actions:

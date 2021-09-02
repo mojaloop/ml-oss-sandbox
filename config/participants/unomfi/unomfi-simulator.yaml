@@ -27,7 +27,7 @@ spec:
             secretName: unomfi-simulator-secret
       containers:
         - name: unomfi-simulator
-          image: mojaloop/contrib-firebase-simulator:v0.2.18
+          image: mojaloop/contrib-firebase-simulator:v0.2.20
           # command: ["tail", "-f", "/dev/null"]
           livenessProbe:
             initialDelaySeconds: 10

@@ -1,6 +1,6 @@
 
-participantName: 'PISPA'
-participantId: 'pispa'
+participantName: 'PAYNOW'
+participantId: 'paynow'
 
 # Set both to true if DFSP, set only `thirdpartyApiSupport` to true if PISP
 thirdpartyApiSupport: true

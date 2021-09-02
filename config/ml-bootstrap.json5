@@ -204,10 +204,10 @@
       thirdpartyCallbackUrl: 'https://fresh-liger-77.loca.lt/mojaloop',
     },
     {
-      id: 'pispa',
+      id: 'paynow',
       type: 'PISP',
-      fspiopCallbackUrl: 'http://pispa-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
-      thirdpartyCallbackUrl: 'http://pispa-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
+      fspiopCallbackUrl: 'http://paynow-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
+      thirdpartyCallbackUrl: 'http://paynow-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
     },
     {
       id: 'centralauth',
