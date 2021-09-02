@@ -74,7 +74,7 @@ describe('pisp sync API', () => {
         /*
         curl -X POST 'http://sandbox.mojaloop.io/switch-ttk-backend/linking/request-consent' \
           -H  'accept: application/json' \
-          -H  'Content-Type: application/json' -d '{\'consentRequestId\':\'f6ab43b0-71cc-49f9-b763-2ac3f05ac8c1\',\'toParticipantId\':\'dfspa\',\'accounts\':[{\'accountNickname\':\'SpeXXXXXXXXnt\',\'id\':\'dfspa.username.5678\',\'currency\':\'USD\'}],\'actions\':[\'accounts.transfer\'],\'userId\':\'username1234\',\'callbackUri\':\'pisp-app://callback\'}'
+          -H  'Content-Type: application/json' -d '{\'consentRequestId\':\'f6ab43b0-71cc-49f9-b763-2ac3f05ac8c1\',\'toParticipantId\':\'dfspa\',\'accounts\':[{\'accountNickname\':\'SpeXXXXXXXXnt\',\'id\':\'dfspa.username.5678\',\'currency\':\'PHP\'}],\'actions\':[\'accounts.transfer\'],\'userId\':\'username1234\',\'callbackUri\':\'pisp-app://callback\'}'
   
         */
         const uri = `${paynowSyncAPI}/linking/request-consent`
@@ -284,7 +284,7 @@ describe('pisp sync API', () => {
       const consentRequestId = v4()
       const accounts = [{
         accountNickname: 'Everyday Spend',
-        currency: 'USD',
+        currency: 'PHP',
         id: 'some-random-string-bankone-wont-like'
       }]
 
@@ -338,7 +338,7 @@ describe('pisp sync API', () => {
       const consentRequestId = v4()
       const accounts = [{
         accountNickname: 'Everyday Spend',
-        currency: 'USD',
+        currency: 'PHP',
         id: 'some-random-string-bankone-wont-like'
       }]
 

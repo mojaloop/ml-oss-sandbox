@@ -1,7 +1,7 @@
 // this is a json5 formatted file
 // https://json5.org/
 {
-  currency: 'USD',
+  currency: 'PHP',
   urls: {
     fspiop: 'http://beta.moja-lab.live/api/fspiop',
     alsAdmin: 'http://beta.moja-lab.live/api/admin/account-lookup-service-admin',
@@ -30,12 +30,12 @@
           idValue: "123456789",
           accounts: [
             {
-              currency: "USD",
+              currency: "PHP",
               description: "savings",
               address: "moja.amber.53451233-b82a5456a-4fa9-838b-123456789"
             },
             {
-              currency: "USD",
+              currency: "PHP",
               description: "checkings",
               address: "moja.amber.8f027046-b8236345a-4fa9-838b-123456789"
             }

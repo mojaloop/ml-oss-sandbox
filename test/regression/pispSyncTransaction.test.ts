@@ -105,7 +105,7 @@ describe('pisp sync API', () => {
             },
             "amountType":"RECEIVE",
             "amount":{
-              "currency":"USD",
+              "currency":"PHP",
               "amount":"123.47"
             },
             "transactionType":{
@@ -132,7 +132,7 @@ describe('pisp sync API', () => {
           },
           amountType: "RECEIVE",
           amount: {
-            currency: 'USD',
+            currency: 'PHP',
             amount: '123.47'
           },
           transactionType: {
@@ -149,16 +149,16 @@ describe('pisp sync API', () => {
             transactionRequestId: transactionRequestId,
             challenge: expect.stringMatching('.*'),
             transferAmount: {
-              currency: 'USD',
+              currency: 'PHP',
               amount: expect.stringMatching('.*')
             },
             payeeReceiveAmount: {
-              currency: 'USD',
+              currency: 'PHP',
               amount: expect.stringMatching('.*')
             },
             fees: {
               amount: expect.stringMatching('.*'),
-              currency: "USD"
+              currency: "PHP"
             },
             payer: {
               partyIdType: 'THIRD_PARTY_LINK',
@@ -215,7 +215,7 @@ describe('pisp sync API', () => {
             },
             "amountType":"RECEIVE",
             "amount":{
-              "currency":"USD",
+              "currency":"PHP",
               "amount":"123.47"
             },
             "transactionType":{

@@ -29,7 +29,7 @@ curl beta.moja-lab.live/api/admin/central-ledger/participants/Hub
     {
       "id": 1,
       "ledgerAccountType": "HUB_MULTILATERAL_SETTLEMENT",
-      "currency": "USD",
+      "currency": "PHP",
       "isActive": 1,
       "createdDate": null,
       "createdBy": "unknown"
@@ -37,7 +37,7 @@ curl beta.moja-lab.live/api/admin/central-ledger/participants/Hub
     {
       "id": 2,
       "ledgerAccountType": "HUB_RECONCILIATION",
-      "currency": "USD",
+      "currency": "PHP",
       "isActive": 1,
       "createdDate": null,
       "createdBy": "unknown"
@@ -73,7 +73,7 @@ curl beta.moja-lab.live/api/admin/central-ledger/participants
       {
         "id": 9,
         "ledgerAccountType": "POSITION",
-        "currency": "USD",
+        "currency": "PHP",
         "isActive": 1,
         "createdDate": null,
         "createdBy": "unknown"
@@ -81,7 +81,7 @@ curl beta.moja-lab.live/api/admin/central-ledger/participants
       {
         "id": 10,
         "ledgerAccountType": "SETTLEMENT",
-        "currency": "USD",
+        "currency": "PHP",
         "isActive": 1,
         "createdDate": null,
         "createdBy": "unknown"
@@ -120,7 +120,7 @@ curl beta.moja-lab.live/api/admin/account-lookup-service-admin/oracles \
       "value": "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle",
       "endpointType": "URL"
     },
-    "currency": "USD",
+    "currency": "PHP",
     "isDefault": 1
   }
 ]

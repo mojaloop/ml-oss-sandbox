@@ -55,6 +55,8 @@ spec:
               value: "true"
             - name: PUBLIC_FIREBASE_CONFIG
               value: '{"apiKey":"AIzaSyAj9m32nSl5J_XdsOdU37Kwy4JEShEhxUU","authDomain":"unomfi-simulator.firebaseapp.com","projectId":"unomfi-simulator","storageBucket":"unomfi-simulator.appspot.com","messagingSenderId":"526639962800","appId":"1:526639962800:web:eaca447f949c64305ef975"}'
+            - name: DEMO_CURRENCY
+              value: "PHP"
           envFrom:
             - secretRef:
                 name: twilio-env

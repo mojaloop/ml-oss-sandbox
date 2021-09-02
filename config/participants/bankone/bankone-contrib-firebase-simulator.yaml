@@ -49,11 +49,11 @@ spec:
               value: "bankone"
             - name: SHOULD_SEND_LIVE_SMS
               value: "true"
-            # TODO: create secrets for twilio and load them here!
+            - name: DEMO_CURRENCY
+              value: "PHP"
           envFrom:
             - secretRef:
                 name: twilio-env
-
           volumeMounts:
             - name: contrib-firebase-simulator-volume
               mountPath: "/opt/contrib-firebase-simulator/config/serviceAccountKey.json"
