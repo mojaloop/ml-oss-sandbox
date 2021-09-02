@@ -10,7 +10,8 @@
   oracles: [
     { oracleIdType: "MSISDN", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle"},
     { oracleIdType: "CONSENT", endpoint: "http://sandbox.mojaloop.io/api/admin/oracle-consent"},
-    { oracleIdType: "ALIAS", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle"}
+    { oracleIdType: "ALIAS", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle"},
+    { oracleIdType: "BUSINESS", endpoint: "http://beta.moja-lab.live/api/admin/oracle-simulator/oracle"}
   ],
   participants: [
      {
@@ -107,6 +108,15 @@
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
           idValue: "255255255255"
+        },
+        {
+          displayName: "Frankie Fish Store",
+          firstName: "Frankie",
+          middleName: "Fish",
+          lastName: "Store",
+          dateOfBirth: "1970-01-01",
+          idType: "BUSINESS",
+          idValue: "109492"
         },
       ]
     },
