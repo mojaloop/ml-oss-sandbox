@@ -166,11 +166,11 @@ describe('pisp sync API', () => {
               fspId: 'bankone'
             },
             payee: {
-              name: 'Alex Alligator',
+              name: 'Rnell Durano',
               partyIdInfo: {
                 fspId: 'jcash',
                 partyIdType: 'MSISDN',
-                partyIdentifier: '11194979',
+                partyIdentifier: '949309489',
               }
             },
             transactionType: {
@@ -309,23 +309,23 @@ describe('pisp sync API', () => {
         transactionRequestId: v4(),
         payee: {
           partyIdType: "ALIAS",
-          partyIdentifier: "0034289"
+          partyIdentifier: "1123989"
         }
       }
       const expected = {
         "currentState": "partyLookupSuccess",
         "party": {
-          "name": "Alex Alligator",
+          "name": "Mga Amiga",
           "partyIdInfo": {
             "partyIdType": "ALIAS",
-            "partyIdentifier": "0034289",
-            "fspId": "jcash"
+            "partyIdentifier": "1123989",
+            "fspId": "skybank"
           },
           "personalInfo": {
             "complexName": {
-              "firstName": "Alex",
-              "lastName": "Alligator",
-              "middleName": "A",
+              "firstName": "Mga",
+              "lastName": "Amiga",
+              "middleName": "M",
             },
             "dateOfBirth": "1970-01-01",
           }
