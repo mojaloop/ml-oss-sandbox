@@ -48,22 +48,22 @@ describe('pisp sync API', () => {
           transactionRequestId,
           payee: {
             partyIdType: "MSISDN",
-            partyIdentifier: "11194979"
+            partyIdentifier: "949309489"
           }
         }
         const expected = {
           "currentState": "partyLookupSuccess",
           "party": {
-            "name": "Alex Alligator",
+            "name": "Rnell Durano",
             "partyIdInfo": {
               "partyIdType": "MSISDN",
-              "partyIdentifier": "11194979",
+              "partyIdentifier": "949309489",
               "fspId": "jcash"
             },
             "personalInfo": {
               "complexName": {
-                "firstName": "Alex",
-                "lastName": "Alligator",
+                "firstName": "Rnell",
+                "lastName": "Durano",
                 "middleName": "A",
               },
               "dateOfBirth": "1970-01-01",

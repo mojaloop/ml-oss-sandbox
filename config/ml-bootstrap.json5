@@ -128,40 +128,76 @@
       thirdpartyCallbackUrl: 'n/a',
       parties: [
         {
-          displayName: "Bob Bobbish",
-          firstName: "Bob",
+          displayName: "Daniel Rizal",
+          firstName: "Daniel",
           middleName: "B",
-          lastName: "Bobbish",
+          lastName: "Rizal",
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
-          idValue: "218493479"
+          idValue: "329294234"
         },
         {
-          displayName: "Belinda Bells",
-          firstName: "Belinda",
+          displayName: "Alejandro Leon",
+          firstName: "Alejandro",
           middleName: "B",
-          lastName: "Bells",
+          lastName: "Leon",
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
-          idValue: "292455793"
+          idValue: "32929124"
         },
         {
-          displayName: "Billy Bagshot",
-          firstName: "Billy",
+          displayName: "Dobby Labella",
+          firstName: "Dobby",
           middleName: "B",
-          lastName: "Bagshot",
+          lastName: "Labella",
           dateOfBirth: "1970-01-01",
           idType: "MSISDN",
-          idValue: "255255255255"
+          idValue: "910498498"
         },
         {
-          displayName: "Frankie Fish Store",
-          firstName: "Frankie",
+          displayName: "Marvin Garcia",
+          firstName: "Marvin",
           middleName: "Fish",
-          lastName: "Store",
+          lastName: "Garcia",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "4448483173"
+        },
+        {
+          displayName: "Daniel Rizal",
+          firstName: "Daniel",
+          middleName: "M",
+          lastName: "Rizal",
+          dateOfBirth: "1970-01-01",
+          idType: "ALIAS",
+          idValue: "dr@skybank"
+        },
+        {
+          displayName: "Mga Amiga",
+          firstName: "Mga",
+          middleName: "M",
+          lastName: "Amiga",
+          dateOfBirth: "1970-01-01",
+          idType: "ALIAS",
+          idValue: "1123989"
+        },
+        {
+          displayName: "Outstanding Butanding",
+          firstName: "Outstanding",
+          middleName: "Fish",
+          lastName: "Butanding",
           dateOfBirth: "1970-01-01",
           idType: "BUSINESS",
-          idValue: "109492"
+          idValue: "499488"
+        },
+        {
+          displayName: "Voyage PH",
+          firstName: "Voyage",
+          middleName: "V",
+          lastName: "PH",
+          dateOfBirth: "1970-01-01",
+          idType: "BUSINESS",
+          idValue: "049049"
         },
       ]
     },
