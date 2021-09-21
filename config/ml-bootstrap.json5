@@ -113,7 +113,53 @@
       simulatorAdminUrl: 'http://anz-backend.sandbox.mojaloop.io',
       fspiopCallbackUrl: 'http://anz-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
       thirdpartyCallbackUrl: 'http://anz-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io',
-      parties: []
+      parties: [
+        {
+          displayName: "Greg Smith",
+          firstName: "Greg",
+          middleName: "A",
+          lastName: "Smith",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "9579347902"
+        },
+        {
+          displayName: "Sebastian Mark",
+          firstName: "Sebastian",
+          middleName: "A",
+          lastName: "Mark",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "9348092311"
+        },
+        {
+          displayName: "Alice Alison",
+          firstName: "Alice",
+          middleName: "A",
+          lastName: "Alison",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "2390842092"
+        },
+        {
+          displayName: "Ju Fen",
+          firstName: "Ju",
+          middleName: "J",
+          lastName: "Fen",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "000332"
+        },
+        {
+          displayName: "Alice Alison",
+          firstName: "Alice",
+          middleName: "A",
+          lastName: "Alison",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "alice@me.com"
+        },
+      ]
     },
      {
       id: 'bankone',

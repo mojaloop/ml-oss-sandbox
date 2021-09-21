@@ -114,12 +114,12 @@ sdk_scheme_adapter:
     # if set to false the SDK will not automatically accept all returned quotes
     # but will halt the transfer after a quote response is received. A further
     # confirmation call will be required to complete the final transfer stage.
-    AUTO_ACCEPT_QUOTES: false
+    AUTO_ACCEPT_QUOTES: true
 
     # if set to false the SDK will not automatically accept a resolved party
     # but will halt the transer after a party lookup response is received. A further
     # confirmation call will be required to progress the transfer to quotes state.
-    AUTO_ACCEPT_PARTY: false
+    AUTO_ACCEPT_PARTY: true
 
     # when set to true, when sending money via the outbound API, the SDK will use the value
     # of FSPIOP-Source header from the received quote response as the payeeFsp value in the
