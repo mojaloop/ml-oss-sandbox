@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-anz
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    # TODO: figure out how to use path based routing for these services 
+    # - http:
+    #     paths:
+    #       - path: /anz/simulator/(.*)
+    #         backend:
+    #           serviceName: anz-mojaloop-simulator
+    #           servicePort: 3003
+    #       - path: /anz/sdk-scheme-adapter/inbound/(.*)
+    #         backend:
+    #           serviceName: anz-sdk-scheme-adapter
+    #           servicePort: 4000
+    #       - path: /anz/sdk-scheme-adapter/outbound/(.*)
+    #         backend:
+    #           serviceName: anz-sdk-scheme-adapter
+    #           servicePort: 4001
+    #       - path: /anz/thirdparty-scheme-adapter/inbound/(.*)
+    #         backend:
+    #           serviceName: anz-thirdparty-scheme-adapter
+    #           servicePort: 4005
+    #       - path: /anz/thirdparty-scheme-adapter/outbound/(.*)
+    #         backend:
+    #           serviceName: anz-thirdparty-scheme-adapter
+    #           servicePort: 4006
+    - host: anz-backend.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: anz-mojaloop-simulator
+              servicePort: 3003
+    - host: anz-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: anz-sdk-scheme-adapter
+              servicePort: 4000
+    - host: anz-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: anz-sdk-scheme-adapter
+              servicePort: 4001
+    - host: anz-thirdparty-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: anz-thirdparty-scheme-adapter
+              servicePort: 4005
+    - host: anz-thirdparty-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: anz-thirdparty-scheme-adapter
+              servicePort: 4006
