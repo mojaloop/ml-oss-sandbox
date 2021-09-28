@@ -90,7 +90,6 @@ account-lookup-service:
       db_host: mysql-als
       db_port: 3306
       db_password: password
-  
 
   mysql:
     enabled: false

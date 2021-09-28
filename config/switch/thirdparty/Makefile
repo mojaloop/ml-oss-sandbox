@@ -5,7 +5,7 @@ BASE_URL=sandbox.mojaloop.io
 
 up:
 	kubectl apply -f ./thirdparty_deployment_base.yaml
-# kubectl apply -f ./alias_oracle_base.yaml
+	kubectl apply -f ./alias_oracle_base.yaml
 	helm upgrade --install --namespace ${NAMESPACE} ${RELEASE_NAME} ${CHART}
 	helm upgrade --install \
 		--namespace ${NAMESPACE} \
