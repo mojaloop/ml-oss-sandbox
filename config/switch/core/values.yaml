@@ -83,14 +83,14 @@ emailnotifier:
 account-lookup-service:
   account-lookup-service:
     config:
-      featureEnableExtendedPartyIdType: false
+      featureEnableExtendedPartyIdType: true
       db_host: mysql-als
       db_port: 3306
       db_password: password
   
   account-lookup-service-admin:
     config:
-      featureEnableExtendedPartyIdType: false
+      featureEnableExtendedPartyIdType: true
       db_host: mysql-als
       db_port: 3306
       db_password: password
