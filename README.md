@@ -2,6 +2,8 @@
 
 This directory contains common setup notes, configs and scripts for the Mojaloop OSS-Sandbox.
 
+Documentation repository: https://github.com/mojaloop/contrib-dev-portal/
+
 __See the sandbox live!: http://sandbox.mojaloop.io__
 
 ## Quick Start
