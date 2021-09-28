@@ -58,10 +58,14 @@ central:
 
   centralsettlement:
     centralsettlement-service:
+      enabled: true
       config:
         db_host: mysql-cl
         db_port: 3306
         db_password: password
+
+    centralsettlement-handler-deferredsettlement:
+      enabled: false
 
     centralsettlement-handler-settlementwindow:
       config:
@@ -79,14 +83,14 @@ emailnotifier:
 account-lookup-service:
   account-lookup-service:
     config:
-      featureEnableExtendedPartyIdType: true
+      featureEnableExtendedPartyIdType: false
       db_host: mysql-als
       db_port: 3306
       db_password: password
   
   account-lookup-service-admin:
     config:
-      featureEnableExtendedPartyIdType: true
+      featureEnableExtendedPartyIdType: false
       db_host: mysql-als
       db_port: 3306
       db_password: password
