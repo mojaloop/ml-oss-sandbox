@@ -1,7 +1,10 @@
 // this is a json5 formatted file
 // https://json5.org/
 {
-  currency: 'PHP',
+  currencies: [
+    'PHP',
+    'MMK'
+  ],  
   urls: {
     fspiop: 'http://beta.moja-lab.live/api/fspiop',
     alsAdmin: 'http://beta.moja-lab.live/api/admin/account-lookup-service-admin',
