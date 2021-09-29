@@ -1,8 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { v4 } from 'uuid'
 
-// const paynowSyncAPI = `http://paynow-thirdparty-scheme-adapter-outbound.${baseUrl}`
-
 jest.setTimeout(10 * 1000)
 
 

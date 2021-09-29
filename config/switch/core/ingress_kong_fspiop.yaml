@@ -91,11 +91,7 @@ spec:
             backend:
               serviceName: mojaloop-account-lookup-service
               servicePort: 80
-          - path: /api/admin/transactionRequests/health
-            backend:
-              serviceName: mojaloop-transaction-requests-service
-              servicePort: 80
-          - path: /api/admin/authorizations/health
+          - path: /api/admin/transaction-requests-service/health
             backend:
               serviceName: mojaloop-transaction-requests-service
               servicePort: 80

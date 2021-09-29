@@ -20,3 +20,4 @@ health:
 	curl -s ${BASE_URL}/api/admin/account-lookup-service-admin/health | jq
 	curl -s ${BASE_URL}/api/admin/oracle-simulator/health | jq
 	curl -s ${BASE_URL}/api/admin/quoting-service/health | jq
+	curl -s ${BASE_URL}/api/admin/transaction-requests-service/health | jq
