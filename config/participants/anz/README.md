@@ -56,3 +56,27 @@ curl -X POST anz-sdk-scheme-adapter-outbound.sandbox.mojaloop.io/transfers\
   "note": "Note sent to Payee."
 }'
 ```
+
+Send 10000 MMK from `MSISDN/9579347902` to `MSISDN/329294234`. 
+
+```bash
+curl -X POST anz-sdk-scheme-adapter-outbound.sandbox.mojaloop.io/transfers\
+  -H 'Accept: application/json'\
+  -H 'Content-Type: application/json'\
+  -d '{
+  "homeTransactionId": "c3b2e35c-f3ba-40e2-a13a-7e63b191cb5e",
+  "from": {
+    "idType": "MSISDN",
+    "idValue": "9579347902"
+  },
+  "to": {
+    "idType": "MSISDN",
+    "idValue": "329294234"
+  },
+  "amountType": "RECEIVE",
+  "currency": "MMK",
+  "amount": "10000",
+  "transactionType": "TRANSFER",
+  "note": "Note sent to Payee."
+}'
+```
