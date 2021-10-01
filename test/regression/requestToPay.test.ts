@@ -12,7 +12,7 @@ const config: AxiosRequestConfig = {
 const baseUrl = 'sandbox.mojaloop.io'
 
 
-describe('request to pay', () => {
+describe.skip('request to pay', () => {
 
 
   it('issues a requestToPay', async () => {
