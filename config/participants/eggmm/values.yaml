@@ -616,7 +616,7 @@ ml-testing-toolkit-backend:
 ml-testing-toolkit-frontend:
   affinity: {}
   config:
-    API_BASE_URL: http://eggmm.beta.moja-lab.live
+    API_BASE_URL: http://eggmm.sandbox.mojaloop.io
     AUTH_ENABLED: "FALSE"
   enabled: true
   global: {}

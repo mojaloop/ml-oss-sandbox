@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: kong
 spec:
   rules:
-  # TODO: are these still valid?
+   # Deprecated - keping for backwards compatability
     - host: eggmm.beta.moja-lab.live
       http:
         paths:
@@ -24,11 +24,18 @@ spec:
               serviceName: eggmm-ml-testing-toolkit-backend
               servicePort: 5050
 
-    - host: eggmm-backend-fspiop.beta.moja-lab.live
+    - host: eggmm.sandbox.mojaloop.io
       http:
         paths:
-          - path: /(.*)
+          - path: /api
             backend:
               serviceName: eggmm-ml-testing-toolkit-backend
-              servicePort: 5000
-
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: eggmm-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: eggmm-ml-testing-toolkit-backend
+              servicePort: 5050

@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: kong
 spec:
   rules:
-  # TODO: are these still valid?
+    # Deprecated - keping for backwards compatability
     - host: figmm.beta.moja-lab.live
       http:
         paths:
@@ -24,14 +24,6 @@ spec:
               serviceName: figmm-ml-testing-toolkit-backend
               servicePort: 5050
 
-    # - host: figmm-backend-fspiop.beta.moja-lab.live
-    #   http:
-    #     paths:
-    #       - path: /(.*)
-    #         backend:
-    #           serviceName: figmm-ml-testing-toolkit-backend
-    #           servicePort: 5000
-
     - host: figmm.sandbox.mojaloop.io
       http:
         paths:
@@ -47,12 +39,3 @@ spec:
             backend:
               serviceName: figmm-ml-testing-toolkit-backend
               servicePort: 5050
-
-    # - host: figmm-backend-fspiop.beta.moja-lab.live
-    #   http:
-    #     paths:
-    #       - path: /(.*)
-    #         backend:
-    #           serviceName: figmm-ml-testing-toolkit-backend
-    #           servicePort: 5000
-
