@@ -24,11 +24,35 @@ spec:
               serviceName: figmm-ml-testing-toolkit-backend
               servicePort: 5050
 
-    - host: figmm-backend-fspiop.beta.moja-lab.live
+    # - host: figmm-backend-fspiop.beta.moja-lab.live
+    #   http:
+    #     paths:
+    #       - path: /(.*)
+    #         backend:
+    #           serviceName: figmm-ml-testing-toolkit-backend
+    #           servicePort: 5000
+
+    - host: figmm.sandbox.mojaloop.io
       http:
         paths:
-          - path: /(.*)
+          - path: /api
             backend:
               serviceName: figmm-ml-testing-toolkit-backend
-              servicePort: 5000
+              servicePort: 5050 
+          - path: /
+            backend:
+              serviceName: figmm-ml-testing-toolkit-frontend
+              servicePort: 6060
+          - path: /socket.io/
+            backend:
+              serviceName: figmm-ml-testing-toolkit-backend
+              servicePort: 5050
+
+    # - host: figmm-backend-fspiop.beta.moja-lab.live
+    #   http:
+    #     paths:
+    #       - path: /(.*)
+    #         backend:
+    #           serviceName: figmm-ml-testing-toolkit-backend
+    #           servicePort: 5000
 
