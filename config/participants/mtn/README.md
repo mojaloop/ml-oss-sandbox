@@ -49,6 +49,7 @@ Get the TRANSFER_ID from the response here!
 ### Part 2 - Payee Accept
 
 ```bash
+export TRANSFER_ID=<enter in transfer id from above response> 
 curl -X PUT mtn-sdk-scheme-adapter-outbound.sandbox.mojaloop.io/transfers/$TRANSFER_ID\
   -H 'Accept: application/json'\
   -H 'Content-Type: application/json'\
