@@ -1,0 +1,31 @@
+
+apiVersion: extensions/v1beta1 
+kind: Ingress
+metadata:
+  name: ingress-stanbic
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: default-rewrite
+spec:
+  rules:
+    - host: stanbic-backend.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: stanbic-sim-stanbic-backend
+              servicePort: 3003
+    - host: stanbic-sdk-scheme-adapter-inbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: stanbic-sim-stanbic-scheme-adapter
+              servicePort: 4000
+    - host: stanbic-sdk-scheme-adapter-outbound.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: stanbic-sim-stanbic-scheme-adapter
+              servicePort: 4001

@@ -80,3 +80,6 @@ curl -X POST anz-sdk-scheme-adapter-outbound.sandbox.mojaloop.io/transfers\
   "note": "Note sent to Payee."
 }'
 ```
+
+
+### Increase net debit cap for MNK

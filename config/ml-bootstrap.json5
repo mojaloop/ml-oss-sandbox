@@ -3,7 +3,8 @@
 {
   currencies: [
     'PHP',
-    'MMK'
+    'MMK',
+    'UGX'
   ],  
   urls: {
     fspiop: 'http://beta.moja-lab.live/api/fspiop',
@@ -255,6 +256,44 @@
           dateOfBirth: "1970-01-01",
           idType: "BUSINESS",
           idValue: "049049"
+        },
+      ]
+    },
+    {
+      id: 'mtn',
+      type: 'DFSP',
+      // For our demo, Participants are on the same deployment as switch
+      simulatorAdminUrl: 'http://mtn-backend.sandbox.mojaloop.io',
+      fspiopCallbackUrl: 'http://mtn-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
+      thirdpartyCallbackUrl: 'n/a',
+      parties: [
+        {
+          displayName: "Rodney Nkoba",
+          firstName: "Rodney",
+          middleName: "R",
+          lastName: "Nkoba",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "256782447958"
+        },
+      ]
+    },
+    {
+      id: 'stanbic',
+      type: 'DFSP',
+      // For our demo, Participants are on the same deployment as switch
+      simulatorAdminUrl: 'http://stanbic-backend.sandbox.mojaloop.io',
+      fspiopCallbackUrl: 'http://stanbic-sdk-scheme-adapter-inbound.sandbox.mojaloop.io',
+      thirdpartyCallbackUrl: 'n/a',
+      parties: [
+        {
+          displayName: "Kuzimba",
+          firstName: "Kuzimba",
+          // middleName: "B",
+          // lastName: "",
+          dateOfBirth: "1970-01-01",
+          idType: "BUSINESS",
+          idValue: "construction@kuzimba.com"
         },
       ]
     },
