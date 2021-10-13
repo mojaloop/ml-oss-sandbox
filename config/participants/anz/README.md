@@ -83,3 +83,11 @@ curl -X POST anz-sdk-scheme-adapter-outbound.sandbox.mojaloop.io/transfers\
 
 
 ### Increase net debit cap for MNK
+
+```bash
+
+curl -X PUT sandbox.mojaloop.io/api/admin/central-ledger/participants/anz/limits\
+ -H "Content-Type: application/json" \
+ -d '{ "currency": "MMK", "limit": { "type": "NET_DEBIT_CAP", "value": 10000000000, "alarmPercentage": 10 }}'
+
+```

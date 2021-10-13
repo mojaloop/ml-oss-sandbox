@@ -289,8 +289,8 @@
         {
           displayName: "Kuzimba",
           firstName: "Kuzimba",
-          // middleName: "B",
-          // lastName: "",
+          middleName: "B",
+          lastName: "Construction",
           dateOfBirth: "1970-01-01",
           idType: "BUSINESS",
           idValue: "construction@kuzimba.com"

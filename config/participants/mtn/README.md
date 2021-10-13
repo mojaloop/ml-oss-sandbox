@@ -4,6 +4,14 @@ mtn is a plain old DFSP simulator
 
 Deployed for the Hipipo include everyone hackathon.
 
+## Parties:
+
+The following Parties are pre-registered along with mtn, and can be used to make transfers from.
+
+### `MSISDN`
+| Id Type | Id Value | participantId |Display Name |
+| --- | --- | --- | --- |
+| `MSISDN` | `256782447958`  | `mtn`   | Rodney Nkoba |
 
 ## Examples
 
@@ -58,5 +66,16 @@ curl -X PUT mtn-sdk-scheme-adapter-outbound.sandbox.mojaloop.io/transfers/$TRANS
   -d '{
     "acceptQuote": true
   }'
+
+```
+
+
+### Increase net debit cap for UGX
+
+```bash
+
+curl -X PUT sandbox.mojaloop.io/api/admin/central-ledger/participants/mtn/limits\
+ -H "Content-Type: application/json" \
+ -d '{ "currency": "UGX", "limit": { "type": "NET_DEBIT_CAP", "value": 10000000000, "alarmPercentage": 10 }}'
 
 ```
