@@ -358,6 +358,15 @@
       fspiopCallbackUrl: 'http://eggmm-backend.sandbox.mojaloop.io',
       thirdpartyCallbackUrl: 'n/a',
       parties: [
+        {
+          displayName: "Dobby Elf",
+          firstName: "Dobby",
+          middleName: "E",
+          lastName: "Elf",
+          dateOfBirth: "1970-01-01",
+          idType: "MSISDN",
+          idValue: "410123876"
+        }
       ]
     },
     {
