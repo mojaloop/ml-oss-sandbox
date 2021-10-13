@@ -39,3 +39,11 @@ spec:
             backend:
               serviceName: eggmm-ml-testing-toolkit-backend
               servicePort: 5050
+
+    - host: eggmm-backend.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: eggmm-ml-testing-toolkit-backend
+              servicePort: 5000

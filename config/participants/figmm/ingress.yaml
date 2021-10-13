@@ -39,3 +39,11 @@ spec:
             backend:
               serviceName: figmm-ml-testing-toolkit-backend
               servicePort: 5050
+    
+    - host: figmm-backend.sandbox.mojaloop.io
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: figmm-ml-testing-toolkit-backend
+              servicePort: 5000

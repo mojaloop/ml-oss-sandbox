@@ -315,8 +315,8 @@
     {
       id: 'eggmm',
       type: 'DFSP',
-      simulatorAdminUrl: 'http://eggmm-backend.beta.moja-lab.live',
-      fspiopCallbackUrl: 'http://eggmm-ttk-backend-fspiop.beta.moja-lab.live',
+      simulatorAdminUrl: 'n/a',
+      fspiopCallbackUrl: 'http://eggmm-backend.sandbox.mojaloop.io',
       thirdpartyCallbackUrl: 'n/a',
       parties: [
       ]
@@ -324,8 +324,8 @@
     {
       id: 'figmm',
       type: 'DFSP',
-      simulatorAdminUrl: 'http://figmm-backend.beta.moja-lab.live',
-      fspiopCallbackUrl: 'http://figmm-ttk-backend-fspiop.beta.moja-lab.live',
+      simulatorAdminUrl: 'n/a',
+      fspiopCallbackUrl: 'http://figmm-backend.sandbox.mojaloop.io',
       thirdpartyCallbackUrl: 'n/a',
       parties: [
       ]
