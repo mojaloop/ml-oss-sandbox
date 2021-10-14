@@ -360,7 +360,7 @@ ml-testing-toolkit-backend:
       # Endpoint of FSPIOP API... I think
       CALLBACK_ENDPOINT: http://beta.moja-lab.live/api/fspiop
       CALLBACK_RESOURCE_ENDPOINTS:
-        enabled: true
+        enabled: false
         endpoints:
         - endpoint: http://moja-account-lookup-service.demo
           method: put
