@@ -1,0 +1,80 @@
+---
+##
+# Dev Portal is a new service that devs can log in to 
+# to access the environment, get access tokens, view demos, etc.
+##
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fido-test-ui
+  labels:
+    app: fido-test-ui
+    app.kubernetes.io/name: fido-test-ui
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # exeed the replicas by 1 pod
+  selector:
+    matchLabels:
+      app: fido-test-ui
+  template:
+    metadata:
+      labels:
+        app: fido-test-ui
+    spec:
+      containers:
+        - name: fido-test-ui
+          image: mojaloop/contrib-fido-test-ui:v0.1.2
+          livenessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 8080
+          # TODO: expose some sort of base url for easy configuration
+          # env:
+          #   - name: DFSP_ID
+          #     value: {{ $participantId }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fido-test-ui
+spec:
+  ports:
+    - port: 8080
+      name: ui
+  selector:
+    app: fido-test-ui
+  clusterIP: None
+
+---
+# Ingresses for Kong API Gateway to talk to the portal
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fido-test-ui
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/strip-path: "true"
+    konghq.com/protocols: "http,https"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /fido
+            backend:
+              serviceName: fido-test-ui
+              servicePort: 8080
+          - path: /fido(/.*)
+            backend:
+              serviceName: fido-test-ui
+              servicePort: 8080
+---
