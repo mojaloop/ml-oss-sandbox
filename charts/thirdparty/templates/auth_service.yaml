@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: auth-service
-        image: mojaloop/auth-service:v11.8.2
+        image: mojaloop/auth-service:v11.11.1
         livenessProbe:
           initialDelaySeconds: 30
           httpGet:
