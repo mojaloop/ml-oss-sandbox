@@ -26,21 +26,21 @@ spec:
     spec:
       containers:
         - name: fido-test-ui
-          image: mojaloop/contrib-fido-test-ui:v0.1.2
+          image: mojaloop/contrib-fido-test-ui:v0.1.4
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:
-              path: /
+              path: /fido
               port: 8080
           readinessProbe:
             initialDelaySeconds: 30
             httpGet:
-              path: /
+              path: /fido
               port: 8080
           # TODO: expose some sort of base url for easy configuration
-          # env:
-          #   - name: DFSP_ID
-          #     value: {{ $participantId }}
+          env:
+            - name: BASE_PATH
+              value: "/fido"
 
 ---
 apiVersion: v1
@@ -56,15 +56,12 @@ spec:
   clusterIP: None
 
 ---
-# Ingresses for Kong API Gateway to talk to the portal
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: fido-test-ui
   annotations:
     kubernetes.io/ingress.class: kong
-    konghq.com/strip-path: "true"
-    konghq.com/protocols: "http,https"
 spec:
   rules:
     - http:

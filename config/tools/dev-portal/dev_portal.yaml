@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: dev-portal
-          image: mojaloop/contrib-dev-portal:v0.2.14
+          image: mojaloop/contrib-dev-portal:v0.2.19
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:
@@ -80,7 +80,11 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/strip-path: "true"
-    konghq.com/protocols: "http,https"
+    # konghq.com/protocols: "http,https"
+    # TODO: change the above to just https when we
+    # have set up SSL for sandbox.mojaloop.io
+    konghq.com/protocols: "https"
+    konghq.com/https-redirect-status-code: "301"
 spec:
   tls:
     - secretName: tls-secret
