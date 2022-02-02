@@ -11,4 +11,4 @@ down:
 	helm del ${RELEASE_NAME}
 
 health:
-	@echo 'TODO! - this service doesnt expose any health checks'
+	curl -X GET "http://sandbox.mojaloop.io/switch-ttk-backend/linking/providers" -H  "accept: application/json"
